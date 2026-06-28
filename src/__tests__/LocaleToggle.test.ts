@@ -1,7 +1,7 @@
 import { mount } from '@vue/test-utils'
 import { beforeEach, describe, expect, it } from 'vitest'
+import { i18n } from '@/i18n'
 import LocaleToggle from '../components/LocaleToggle.vue'
-import { i18n } from '../i18n'
 
 function mountToggle() {
   return mount(LocaleToggle, { global: { plugins: [i18n] } })
