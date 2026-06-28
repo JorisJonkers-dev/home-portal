@@ -1,11 +1,12 @@
-import { afterEach, describe, expect, it, vi } from 'vitest'
+import type { AdminUserResponse } from '@jorisjonkers-dev/auth-api-client'
 import {
+
   deleteUser as deleteUserRequest,
   listUsers,
-  type AdminUserResponse,
   updateRole,
   updateServicePermissions,
 } from '@jorisjonkers-dev/auth-api-client'
+import { afterEach, describe, expect, it, vi } from 'vitest'
 import { deleteUser, fetchUsers, updateUserRole, updateUserServices } from '../features/admin/services/adminService'
 
 vi.mock('@jorisjonkers-dev/auth-api-client', () => ({
@@ -32,6 +33,14 @@ function adminUser(overrides: Partial<AdminUserResponse> = {}): AdminUserRespons
   }
 }
 
+function clientResult<T>(data: T): { data: T; request: Request; response: Response } {
+  return {
+    data,
+    request: new Request('https://auth.jorisjonkers.dev'),
+    response: new Response(null),
+  }
+}
+
 function lastHeaders(operation: ReturnType<typeof vi.fn>): Headers {
   const call = operation.mock.calls.at(-1)
   expect(call).toBeDefined()
@@ -53,7 +62,7 @@ afterEach(() => {
 describe('fetchUsers', () => {
   it('returns list of users', async () => {
     const users = [adminUser()]
-    vi.mocked(listUsers).mockResolvedValue(users)
+    vi.mocked(listUsers).mockResolvedValue(clientResult(users))
     const result = await fetchUsers()
     expect(result).toHaveLength(1)
     expect(result[0]?.username).toBe('alice')
@@ -68,7 +77,7 @@ describe('fetchUsers', () => {
 describe('updateUserRole', () => {
   it('sends PATCH request and returns updated user', async () => {
     const updated = adminUser({ role: 'ADMIN' })
-    vi.mocked(updateRole).mockResolvedValue(updated)
+    vi.mocked(updateRole).mockResolvedValue(clientResult(updated))
     const result = await updateUserRole('1', 'ADMIN')
     expect(result.role).toBe('ADMIN')
   })
@@ -77,7 +86,7 @@ describe('updateUserRole', () => {
 describe('updateUserServices', () => {
   it('sends PUT request and returns updated user', async () => {
     const updated = adminUser({ servicePermissions: ['GRAFANA'] })
-    vi.mocked(updateServicePermissions).mockResolvedValue(updated)
+    vi.mocked(updateServicePermissions).mockResolvedValue(clientResult(updated))
     const result = await updateUserServices('1', ['GRAFANA'])
     expect(result.servicePermissions).toContain('GRAFANA')
   })
@@ -85,7 +94,7 @@ describe('updateUserServices', () => {
 
 describe('deleteUser', () => {
   it('sends DELETE request without error', async () => {
-    vi.mocked(deleteUserRequest).mockResolvedValue(undefined)
+    vi.mocked(deleteUserRequest).mockResolvedValue(clientResult(undefined))
     await expect(deleteUser('1')).resolves.toBeUndefined()
   })
 
@@ -97,14 +106,14 @@ describe('deleteUser', () => {
 
 describe('request details', () => {
   it('fetchUsers calls client with credentials', async () => {
-    vi.mocked(listUsers).mockResolvedValue([])
+    vi.mocked(listUsers).mockResolvedValue(clientResult([]))
     await fetchUsers()
 
     expect(listUsers).toHaveBeenCalledWith(expect.objectContaining({ credentials: 'include' }))
   })
 
   it('updateUserRole sends role body and path', async () => {
-    vi.mocked(updateRole).mockResolvedValue(adminUser({ role: 'ADMIN' }))
+    vi.mocked(updateRole).mockResolvedValue(clientResult(adminUser({ role: 'ADMIN' })))
     await updateUserRole('1', 'ADMIN')
 
     expect(updateRole).toHaveBeenCalledWith(
@@ -114,7 +123,7 @@ describe('request details', () => {
 
   it('updateUserRole sends CSRF header when token cookie exists', async () => {
     document.cookie = 'XSRF-TOKEN=test-csrf-token; path=/'
-    vi.mocked(updateRole).mockResolvedValue(adminUser({ role: 'ADMIN' }))
+    vi.mocked(updateRole).mockResolvedValue(clientResult(adminUser({ role: 'ADMIN' })))
 
     await updateUserRole('1', 'ADMIN')
 
@@ -122,7 +131,9 @@ describe('request details', () => {
   })
 
   it('updateUserServices sends services array', async () => {
-    vi.mocked(updateServicePermissions).mockResolvedValue(adminUser({ servicePermissions: ['GRAFANA', 'VAULT'] }))
+    vi.mocked(updateServicePermissions).mockResolvedValue(
+      clientResult(adminUser({ servicePermissions: ['GRAFANA', 'VAULT'] })),
+    )
     await updateUserServices('1', ['GRAFANA', 'VAULT'])
 
     expect(updateServicePermissions).toHaveBeenCalledWith(
@@ -135,7 +146,7 @@ describe('request details', () => {
   })
 
   it('deleteUser sends path', async () => {
-    vi.mocked(deleteUserRequest).mockResolvedValue(undefined)
+    vi.mocked(deleteUserRequest).mockResolvedValue(clientResult(undefined))
     await deleteUser('42')
 
     expect(deleteUserRequest).toHaveBeenCalledWith(
@@ -145,7 +156,7 @@ describe('request details', () => {
 
   it('deleteUser sends CSRF header when token cookie exists', async () => {
     document.cookie = 'XSRF-TOKEN=delete-token; path=/'
-    vi.mocked(deleteUserRequest).mockResolvedValue(undefined)
+    vi.mocked(deleteUserRequest).mockResolvedValue(clientResult(undefined))
 
     await deleteUser('42')
 
@@ -153,19 +164,19 @@ describe('request details', () => {
   })
 
   it('all requests use credentials include', async () => {
-    vi.mocked(listUsers).mockResolvedValue([])
+    vi.mocked(listUsers).mockResolvedValue(clientResult([]))
     await fetchUsers()
     expect(listUsers).toHaveBeenCalledWith(expect.objectContaining({ credentials: 'include' }))
 
-    vi.mocked(updateRole).mockResolvedValue(adminUser())
+    vi.mocked(updateRole).mockResolvedValue(clientResult(adminUser()))
     await updateUserRole('1', 'USER')
     expect(updateRole).toHaveBeenCalledWith(expect.objectContaining({ credentials: 'include' }))
 
-    vi.mocked(updateServicePermissions).mockResolvedValue(adminUser())
+    vi.mocked(updateServicePermissions).mockResolvedValue(clientResult(adminUser()))
     await updateUserServices('1', [])
     expect(updateServicePermissions).toHaveBeenCalledWith(expect.objectContaining({ credentials: 'include' }))
 
-    vi.mocked(deleteUserRequest).mockResolvedValue(undefined)
+    vi.mocked(deleteUserRequest).mockResolvedValue(clientResult(undefined))
     await deleteUser('1')
     expect(deleteUserRequest).toHaveBeenCalledWith(expect.objectContaining({ credentials: 'include' }))
   })

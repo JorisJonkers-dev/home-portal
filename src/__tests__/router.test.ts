@@ -13,4 +13,10 @@ describe('router', () => {
     expect(route).toBeDefined()
     expect(route?.name).toBe('apps')
   })
+
+  it('has an auth callback route at /callback', () => {
+    const route = router.getRoutes().find((r) => r.path === '/callback')
+    expect(route).toBeDefined()
+    expect(route?.name).toBe('auth-callback')
+  })
 })

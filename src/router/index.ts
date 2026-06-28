@@ -22,6 +22,11 @@ const routes: RouteRecordRaw[] = [
     name: 'admin',
     component: () => import('@/features/admin/views/AdminView.vue'),
   },
+  {
+    path: '/callback',
+    name: 'auth-callback',
+    component: () => import('@/features/auth/views/AuthCallbackView.vue'),
+  },
 ]
 
 export const router = createRouter({

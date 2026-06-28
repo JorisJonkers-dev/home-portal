@@ -1,19 +1,23 @@
+import type { AdminUserResponse } from '@jorisjonkers-dev/auth-api-client'
 import {
   deleteUser as deleteUserRequest,
   getUser as getUserRequest,
   listUsers,
   updateRole,
   updateServicePermissions,
-  type AdminUserResponse,
 } from '@jorisjonkers-dev/auth-api-client'
 import { SERVICE_REGISTRY } from '@/features/apps'
 import { authApiOptions, toRequestError } from '@/lib/authApiClient'
 
 export type AdminUser = AdminUserResponse
 
-async function runAdminRequest<T>(operation: () => Promise<T>, fallback: string): Promise<T> {
+interface AuthApiResult<T> {
+  data: T
+}
+
+async function runAdminRequest<T>(operation: () => Promise<AuthApiResult<T>>, fallback: string): Promise<T> {
   try {
-    return await operation()
+    return (await operation()).data
   } catch (error) {
     throw toRequestError(error, fallback)
   }

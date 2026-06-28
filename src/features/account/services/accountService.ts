@@ -1,20 +1,22 @@
+import type { ChangePasswordRequest, ProfileResponse, UpdateProfileRequest } from '@jorisjonkers-dev/auth-api-client'
 import {
   changePassword as changePasswordRequest,
   forgotPassword as forgotPasswordRequest,
   getProfile,
   resetPassword as resetPasswordRequest,
   updateProfile as updateProfileRequest,
-  type ChangePasswordRequest,
-  type ProfileResponse,
-  type UpdateProfileRequest,
 } from '@jorisjonkers-dev/auth-api-client'
 import { authApiOptions, toRequestError } from '@/lib/authApiClient'
 
 export type ProfileData = ProfileResponse
 
-async function runAccountRequest<T>(operation: () => Promise<T>, fallback: string): Promise<T> {
+interface AuthApiResult<T> {
+  data: T
+}
+
+async function runAccountRequest<T>(operation: () => Promise<AuthApiResult<T>>, fallback: string): Promise<T> {
   try {
-    return await operation()
+    return (await operation()).data
   } catch (error) {
     throw toRequestError(error, fallback)
   }

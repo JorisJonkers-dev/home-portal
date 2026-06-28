@@ -1,10 +1,18 @@
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { me } from '@jorisjonkers-dev/auth-api-client'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { buildLogoutUrl, checkSession, startLoginFlow } from '../features/auth/services/authService'
 
 vi.mock('@jorisjonkers-dev/auth-api-client', () => ({
   me: vi.fn(),
 }))
+
+function clientResult<T>(data: T): { data: T; request: Request; response: Response } {
+  return {
+    data,
+    request: new Request('https://auth.jorisjonkers.dev'),
+    response: new Response(null),
+  }
+}
 
 describe('startLoginFlow', () => {
   const originalLocation = window.location
@@ -46,7 +54,7 @@ describe('checkSession', () => {
       role: 'USER',
       roles: ['ROLE_USER'],
     }
-    vi.mocked(me).mockResolvedValue(mockUser)
+    vi.mocked(me).mockResolvedValue(clientResult(mockUser))
 
     const result = await checkSession()
     expect(result.username).toBe('alice')
@@ -68,7 +76,7 @@ describe('checkSession', () => {
       role: 'USER',
       roles: ['ROLE_USER'],
     }
-    vi.mocked(me).mockResolvedValue(mockUser)
+    vi.mocked(me).mockResolvedValue(clientResult(mockUser))
 
     await checkSession()
 

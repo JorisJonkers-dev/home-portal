@@ -3,12 +3,23 @@ import { mount } from '@vue/test-utils'
 import { createPinia, setActivePinia } from 'pinia'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import UserTable from '../features/admin/components/UserTable.vue'
+import { deleteUser, updateUserRole } from '../features/admin/services/adminService'
 import { useAuthStore } from '../features/auth'
+
+vi.mock('../features/admin/services/adminService', () => ({
+  ALL_ROLES: ['ADMIN', 'USER', 'READONLY'],
+  ALL_SERVICES: ['GRAFANA', 'VAULT'],
+  deleteUser: vi.fn(),
+  updateUserRole: vi.fn(),
+  updateUserServices: vi.fn(),
+}))
 
 const mockUser: AdminUser = {
   id: 'u1',
   username: 'alice',
   email: 'alice@example.com',
+  firstName: 'Alice',
+  lastName: 'Smith',
   role: 'USER',
   emailConfirmed: true,
   totpEnabled: false,
@@ -71,19 +82,13 @@ describe('userTable', () => {
   it('role selector triggers onRoleChange callback', async () => {
     authenticateStore()
 
-    vi.stubGlobal(
-      'fetch',
-      vi.fn().mockResolvedValue({
-        ok: true,
-        json: () => Promise.resolve({ ...mockUser, role: 'ADMIN' }),
-      }),
-    )
+    vi.mocked(updateUserRole).mockResolvedValue({ ...mockUser, role: 'ADMIN' })
 
     const wrapper = mount(UserTable, { props: { users: [mockUser] } })
     const select = wrapper.find('select')
     await select.setValue('ADMIN')
 
-    expect(fetch).toHaveBeenCalled()
+    expect(updateUserRole).toHaveBeenCalledWith('u1', 'ADMIN')
   })
 
   it('service permissions editor renders for each user', () => {
@@ -104,13 +109,7 @@ describe('userTable', () => {
   it('delete confirmation triggers onDelete callback', async () => {
     authenticateStore()
 
-    vi.stubGlobal(
-      'fetch',
-      vi.fn().mockResolvedValue({
-        ok: true,
-        json: () => Promise.resolve(null),
-      }),
-    )
+    vi.mocked(deleteUser).mockResolvedValue(undefined)
 
     const wrapper = mount(UserTable, { props: { users: [mockUser] } })
 
@@ -120,7 +119,7 @@ describe('userTable', () => {
     const confirmBtn = wrapper.findAll('button').find((b) => b.text() === 'Delete' && b.element !== deleteBtn?.element)
     await confirmBtn?.trigger('click')
 
-    expect(fetch).toHaveBeenCalled()
+    expect(deleteUser).toHaveBeenCalledWith('u1')
   })
 
   it('cancel button closes delete dialog', async () => {

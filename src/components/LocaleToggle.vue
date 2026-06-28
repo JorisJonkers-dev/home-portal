@@ -3,7 +3,7 @@ import { computed, useId } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { setLocale } from '@/i18n'
 
-const { locale } = useI18n()
+const { locale } = useI18n({ useScope: 'global' })
 
 // Union Jack needs two clip paths; the extras slot renders both in
 // the desktop cluster and the mobile drawer, so the ids must be

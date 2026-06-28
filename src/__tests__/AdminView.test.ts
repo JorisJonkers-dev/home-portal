@@ -22,6 +22,8 @@ const mockUsers: AdminUser[] = [
     id: 'u1',
     username: 'alice',
     email: 'alice@example.com',
+    firstName: 'Alice',
+    lastName: 'Smith',
     role: 'USER',
     emailConfirmed: true,
     totpEnabled: false,

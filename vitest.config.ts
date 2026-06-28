@@ -12,6 +12,11 @@ export default defineConfig({
   test: {
     environment: 'jsdom',
     include: ['src/**/*.test.ts'],
+    server: {
+      deps: {
+        inline: ['@jorisjonkers-dev/auth-api-client'],
+      },
+    },
     coverage: {
       provider: 'v8',
       reporter: ['text', 'lcov'],

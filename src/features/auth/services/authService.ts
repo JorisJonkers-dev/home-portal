@@ -1,6 +1,6 @@
+import type { AuthUser } from '../types'
 import { me } from '@jorisjonkers-dev/auth-api-client'
 import { AUTH_BASE_URL, authApiOptions, toRequestError } from '@/lib/authApiClient'
-import type { AuthUser } from '../types'
 
 export function startLoginFlow(): void {
   const redirect = encodeURIComponent(window.location.href)
@@ -9,7 +9,7 @@ export function startLoginFlow(): void {
 
 export async function checkSession(): Promise<AuthUser> {
   try {
-    const payload = await me(authApiOptions())
+    const { data: payload } = await me(authApiOptions())
     return {
       sub: payload.id,
       username: payload.username,

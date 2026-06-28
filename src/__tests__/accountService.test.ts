@@ -1,12 +1,13 @@
-import { afterEach, describe, expect, it, vi } from 'vitest'
+import type { ProfileResponse } from '@jorisjonkers-dev/auth-api-client'
 import {
   changePassword as changePasswordRequest,
   forgotPassword as forgotPasswordRequest,
   getProfile,
-  type ProfileResponse,
+
   resetPassword as resetPasswordRequest,
   updateProfile as updateProfileRequest,
 } from '@jorisjonkers-dev/auth-api-client'
+import { afterEach, describe, expect, it, vi } from 'vitest'
 import {
   changePassword,
   fetchProfile,
@@ -38,6 +39,14 @@ function profile(overrides: Partial<ProfileResponse> = {}): ProfileResponse {
   }
 }
 
+function clientResult<T>(data: T): { data: T; request: Request; response: Response } {
+  return {
+    data,
+    request: new Request('https://auth.jorisjonkers.dev'),
+    response: new Response(null),
+  }
+}
+
 function lastHeaders(operation: ReturnType<typeof vi.fn>): Headers {
   const call = operation.mock.calls.at(-1)
   expect(call).toBeDefined()
@@ -58,7 +67,7 @@ afterEach(() => {
 
 describe('fetchProfile', () => {
   it('fetches profile with credentials', async () => {
-    vi.mocked(getProfile).mockResolvedValue(profile())
+    vi.mocked(getProfile).mockResolvedValue(clientResult(profile()))
 
     const result = await fetchProfile()
 
@@ -70,7 +79,7 @@ describe('fetchProfile', () => {
 describe('updateProfile', () => {
   it('sends firstName/lastName body', async () => {
     const updated = profile({ firstName: 'Bob', lastName: 'Jones' })
-    vi.mocked(updateProfileRequest).mockResolvedValue(updated)
+    vi.mocked(updateProfileRequest).mockResolvedValue(clientResult(updated))
 
     const result = await updateProfile({ firstName: 'Bob', lastName: 'Jones' })
 
@@ -83,7 +92,7 @@ describe('updateProfile', () => {
 
 describe('changePassword', () => {
   it('sends passwords', async () => {
-    vi.mocked(changePasswordRequest).mockResolvedValue(undefined)
+    vi.mocked(changePasswordRequest).mockResolvedValue(clientResult(undefined))
 
     await changePassword({ currentPassword: 'old123', newPassword: 'new456' })
 
@@ -98,7 +107,7 @@ describe('changePassword', () => {
 
 describe('forgotPassword', () => {
   it('sends email', async () => {
-    vi.mocked(forgotPasswordRequest).mockResolvedValue({})
+    vi.mocked(forgotPasswordRequest).mockResolvedValue(clientResult({}))
 
     await forgotPassword('alice@example.com')
 
@@ -110,7 +119,7 @@ describe('forgotPassword', () => {
 
 describe('resetPassword', () => {
   it('sends token and newPassword', async () => {
-    vi.mocked(resetPasswordRequest).mockResolvedValue({})
+    vi.mocked(resetPasswordRequest).mockResolvedValue(clientResult({}))
 
     await resetPassword('reset-token-123', 'newPass456')
 
@@ -134,7 +143,7 @@ describe('authApiOptions', () => {
 
   it('sends CSRF token for mutating account calls', async () => {
     document.cookie = 'XSRF-TOKEN=account-token; path=/'
-    vi.mocked(updateProfileRequest).mockResolvedValue(profile({ firstName: 'Bob', lastName: 'Jones' }))
+    vi.mocked(updateProfileRequest).mockResolvedValue(clientResult(profile({ firstName: 'Bob', lastName: 'Jones' })))
 
     await updateProfile({ firstName: 'Bob', lastName: 'Jones' })
 

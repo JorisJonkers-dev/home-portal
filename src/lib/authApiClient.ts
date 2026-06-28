@@ -6,7 +6,6 @@ export interface AuthApiOptions {
   baseUrl: string
   credentials: RequestCredentials
   headers: Headers
-  responseStyle: 'data'
   throwOnError: true
 }
 
@@ -27,7 +26,6 @@ export function authApiOptions(includeCsrf = false): AuthApiOptions {
     baseUrl: AUTH_BASE_URL,
     credentials: 'include' as const,
     headers,
-    responseStyle: 'data' as const,
     throwOnError: true as const,
   }
 }

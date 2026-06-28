@@ -20,13 +20,13 @@
     "verify": "pnpm lint && pnpm typecheck && pnpm test:coverage && pnpm depcruise && pnpm build"
   },
   "dependencies": {
-    "@jorisjonkers-dev/auth-api-client": "0.1.0",
-    "@jorisjonkers-dev/vue-web-commons": "0.4.0",
     "@grafana/faro-web-sdk": "^2.7.1",
     "@grafana/faro-web-tracing": "^2.7.1",
     "@iconify-json/mdi": "^1.2.3",
     "@iconify-json/simple-icons": "^1.2.84",
     "@iconify/vue": "^5.0.1",
+    "@jorisjonkers-dev/auth-api-client": "0.2.0",
+    "@jorisjonkers-dev/vue-web-commons": "0.4.0",
     "pinia": "^3.0.4",
     "primevue": "^4.5.5",
     "vue": "^3.5.35",
