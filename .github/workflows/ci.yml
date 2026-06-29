@@ -140,7 +140,7 @@ jobs:
       packages: write
     uses: JorisJonkers-dev/github-workflows/.github/workflows/deploy-bundle.yml@v0.8.0
     with:
-      images: 'ghcr.io/jorisjonkers-dev/home-portal:ci-${{ github.sha }}'
+      images: deploy/images.json
       bundle-name: home-portal
       package-version: 0.9.0
       publish: false

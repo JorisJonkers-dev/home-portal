@@ -89,11 +89,80 @@ jobs:
       - release-please
       - publish-image
     if: '${{ needs.release-please.outputs.release_created == ''true'' }}'
-    uses: JorisJonkers-dev/github-workflows/.github/workflows/deploy-bundle.yml@v0.8.0
-    with:
-      images: '${{ needs.publish-image.outputs.bundle-image }}'
-      version: '${{ needs.release-please.outputs.tag_name }}'
-      bundle-name: home-portal
-      package-version: 0.9.0
-      publish: true
-    secrets: inherit
+    runs-on: ubuntu-latest
+    outputs:
+      bundle-ref: '${{ steps.bundle-ref.outputs.bundle-ref }}'
+      bundle-path: '${{ steps.bundle.outputs.bundle-path }}'
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: '${{ needs.release-please.outputs.tag_name }}'
+
+      - uses: actions/checkout@v6
+        with:
+          repository: JorisJonkers-dev/github-workflows
+          ref: v0.8.0
+          path: .github-workflows
+          persist-credentials: false
+
+      - name: Write deploy bundle images
+        env:
+          IMAGE_REF: '${{ needs.publish-image.outputs.bundle-image }}'
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/deploy-bundle-input"
+          printf '{"images":["%s"]}\n' "$IMAGE_REF" > "$RUNNER_TEMP/deploy-bundle-input/images.json"
+
+      - name: Pack deploy bundle
+        id: bundle
+        uses: ./.github-workflows/actions/deploy-bundle
+        with:
+          deploy-dir: deploy
+          images: '${{ runner.temp }}/deploy-bundle-input/images.json'
+          package-version: 0.9.0
+          version: '${{ needs.release-please.outputs.tag_name }}'
+          bundle-name: home-portal
+          node-auth-token: '${{ github.token }}'
+
+      - name: Resolve bundle ref
+        id: bundle-ref
+        env:
+          BUNDLE_NAME: '${{ steps.bundle.outputs.bundle-name }}'
+          BUNDLE_VERSION: '${{ steps.bundle.outputs.bundle-version }}'
+          GITHUB_REPOSITORY_OWNER: '${{ github.repository_owner }}'
+        run: |
+          set -euo pipefail
+
+          owner="$(printf '%s' "$GITHUB_REPOSITORY_OWNER" | tr '[:upper:]' '[:lower:]')"
+          name="$(printf '%s' "$BUNDLE_NAME" | tr '[:upper:]' '[:lower:]')"
+          printf 'bundle-ref=ghcr.io/%s/%s-deploy-bundle:%s\n' "$owner" "$name" "$BUNDLE_VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Upload deploy bundle artifact
+        uses: actions/upload-artifact@v5
+        with:
+          name: deploy-bundle
+          path: '${{ steps.bundle.outputs.bundle-path }}'
+          if-no-files-found: error
+          retention-days: 7
+
+      - uses: oras-project/setup-oras@v2
+
+      - name: Log in to GHCR
+        env:
+          GHCR_TOKEN: '${{ github.token }}'
+        run: |
+          set -euo pipefail
+
+          oras login ghcr.io --username "$GITHUB_ACTOR" --password-stdin <<< "$GHCR_TOKEN"
+
+      - name: Publish deploy bundle
+        env:
+          BUNDLE_PATH: '${{ steps.bundle.outputs.bundle-path }}'
+          BUNDLE_REF: '${{ steps.bundle-ref.outputs.bundle-ref }}'
+        run: |
+          set -euo pipefail
+
+          oras push "$BUNDLE_REF" "$BUNDLE_PATH:application/vnd.jorisjonkers.deployment.bundle.v1+tar"
