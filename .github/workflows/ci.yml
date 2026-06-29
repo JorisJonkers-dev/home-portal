@@ -135,6 +135,9 @@ jobs:
 
   deploy-bundle:
     name: Deploy Bundle
+    permissions:
+      contents: read
+      packages: write
     uses: JorisJonkers-dev/github-workflows/.github/workflows/deploy-bundle.yml@v0.8.0
     with:
       images: 'ghcr.io/jorisjonkers-dev/home-portal:ci-${{ github.sha }}'
