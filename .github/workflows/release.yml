@@ -94,5 +94,6 @@ jobs:
       images: '${{ needs.publish-image.outputs.bundle-image }}'
       version: '${{ needs.release-please.outputs.tag_name }}'
       bundle-name: home-portal
+      package-version: 0.9.0
       publish: true
     secrets: inherit
