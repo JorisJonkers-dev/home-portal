@@ -1,0 +1,29 @@
+# Build output
+build/
+dist/
+out/
+coverage/
+
+# Package managers
+node_modules/
+.pnpm-store/
+
+# Test output
+playwright-report/
+test-results/
+.stryker-tmp/
+
+# Env / secrets
+.env
+.env.*
+!.env.example
+*.local
+
+# Editor / OS
+.idea/
+.vscode/
+.DS_Store
+*.swp
+
+# Logs
+*.log
