@@ -3,107 +3,162 @@ name: CI
 on:
   pull_request:
   push:
-    branches: [main]
+    branches:
+      - main
   workflow_dispatch:
 
 concurrency:
-  group: ci-${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
+  group: 'ci-${{ github.workflow }}-${{ github.ref }}'
+  cancel-in-progress: '${{ github.ref != ''refs/heads/main'' }}'
 
 permissions:
   contents: read
   packages: read
 
 env:
-  NODE_VERSION: '22'
+  NODE_VERSION: '24'
 
 jobs:
   workflow-lint:
     name: Workflow Lint
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - name: Run actionlint
+      - uses: actions/checkout@v6
+
+      - name: Install actionlint
         shell: bash
         run: |
-          curl -sSfL https://raw.githubusercontent.com/rhysd/actionlint/main/scripts/download-actionlint.bash -o /tmp/download-actionlint.bash
-          bash /tmp/download-actionlint.bash
-          ./actionlint .github/workflows/*.yml
+          set -euo pipefail
+          mkdir -p /tmp/actionlint
+          bash <(curl -sSfL https://raw.githubusercontent.com/rhysd/actionlint/main/scripts/download-actionlint.bash) latest /tmp/actionlint
+
+      - name: Run actionlint
+        run: '/tmp/actionlint/actionlint .github/workflows/*.yml'
 
   web-check:
-    name: Lint, Typecheck, Test, Build
+    name: 'Lint, Typecheck, Test, Build'
     runs-on: ubuntu-latest
-    env:
-      NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
-      - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
+      - uses: actions/checkout@v6
+
+      - uses: pnpm/action-setup@v6
         with:
           version: 9.15.4
-      - uses: actions/setup-node@v4
+
+      - uses: actions/setup-node@v6
         with:
-          node-version: ${{ env.NODE_VERSION }}
+          node-version: '${{ env.NODE_VERSION }}'
           cache: pnpm
-      - run: pnpm install --no-frozen-lockfile
+          cache-dependency-path: pnpm-lock.yaml
+
+      - name: Install dependencies
+        env:
+          NODE_AUTH_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
+        run: |
+          pnpm config set //npm.pkg.github.com/:_authToken "$NODE_AUTH_TOKEN"
+          pnpm install --frozen-lockfile
+
       - run: pnpm lint
       - run: pnpm typecheck
-      - run: pnpm test:coverage
+      - run: 'pnpm test:coverage'
       - run: pnpm depcruise
       - run: pnpm build
 
   e2e:
     name: Playwright E2E
     runs-on: ubuntu-latest
-    env:
-      NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
-      - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
+      - uses: actions/checkout@v6
+
+      - uses: pnpm/action-setup@v6
         with:
           version: 9.15.4
-      - uses: actions/setup-node@v4
+
+      - uses: actions/setup-node@v6
         with:
-          node-version: ${{ env.NODE_VERSION }}
+          node-version: '${{ env.NODE_VERSION }}'
           cache: pnpm
-      - run: pnpm install --no-frozen-lockfile
+          cache-dependency-path: pnpm-lock.yaml
+
+      - name: Install dependencies
+        env:
+          NODE_AUTH_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
+        run: |
+          pnpm config set //npm.pkg.github.com/:_authToken "$NODE_AUTH_TOKEN"
+          pnpm install --frozen-lockfile
+
       - run: pnpm exec playwright install --with-deps
-      - run: pnpm test:e2e
+      - run: 'pnpm test:e2e'
 
   mutation:
     name: Mutation Tests
     runs-on: ubuntu-latest
-    env:
-      NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
-      - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
+      - uses: actions/checkout@v6
+
+      - uses: pnpm/action-setup@v6
         with:
           version: 9.15.4
-      - uses: actions/setup-node@v4
+
+      - uses: actions/setup-node@v6
         with:
-          node-version: ${{ env.NODE_VERSION }}
+          node-version: '${{ env.NODE_VERSION }}'
           cache: pnpm
-      - run: pnpm install --no-frozen-lockfile
+          cache-dependency-path: pnpm-lock.yaml
+
+      - name: Install dependencies
+        env:
+          NODE_AUTH_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
+        run: |
+          pnpm config set //npm.pkg.github.com/:_authToken "$NODE_AUTH_TOKEN"
+          pnpm install --frozen-lockfile
+
       - run: pnpm stryker
 
   docker-build:
     name: Docker Build
     runs-on: ubuntu-latest
-    env:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
-      - uses: actions/checkout@v4
-      - uses: docker/setup-buildx-action@v3
+      - uses: actions/checkout@v6
+
+      - uses: docker/setup-buildx-action@v4
+
       - name: Build image
-        run: docker build --secret id=github_token,env=GITHUB_TOKEN -t ghcr.io/jorisjonkers-dev/home-portal:verify .
+        uses: docker/build-push-action@v7
+        with:
+          context: .
+          file: Dockerfile
+          push: false
+          tags: 'ghcr.io/jorisjonkers-dev/home-portal:ci-${{ github.sha }}'
+          secrets: |
+            github_token=${{ secrets.GITHUB_TOKEN }}
+
+  deploy-bundle:
+    name: Deploy Bundle
+    permissions:
+      contents: read
+      packages: write
+    uses: JorisJonkers-dev/github-workflows/.github/workflows/deploy-bundle.yml@v0.8.0
+    with:
+      images: deploy/images.json
+      bundle-name: home-portal
+      package-version: 0.9.0
+      publish: false
+    secrets: inherit
 
   pipeline-complete:
     name: Pipeline Complete
-    if: ${{ always() }}
-    needs: [workflow-lint, web-check, e2e, mutation, docker-build]
+    if: '${{ always() }}'
+    needs:
+      - workflow-lint
+      - web-check
+      - e2e
+      - mutation
+      - docker-build
+      - deploy-bundle
     runs-on: ubuntu-latest
     steps:
       - name: Check required jobs
         uses: re-actors/alls-green@release/v1
         with:
-          jobs: ${{ toJSON(needs) }}
+          jobs: '${{ toJSON(needs) }}'

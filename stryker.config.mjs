@@ -5,9 +5,6 @@ const config = {
   mutate: [
     'src/**/*.ts',
     '!src/**/*.test.ts',
-    '!src/**/*.spec.ts',
-    '!src/**/generated/**',
-    '!src/**/*.d.ts',
   ],
   ignoreStatic: true,
   ignorePatterns: ['/coverage', '/dist', '/playwright-report', '/test-results'],
