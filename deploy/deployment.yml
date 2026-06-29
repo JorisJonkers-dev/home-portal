@@ -1,0 +1,40 @@
+apiVersion: deployment.jorisjonkers.dev/v2
+kind: Deployment
+metadata:
+  name: home-portal
+  labels:
+    app.kubernetes.io/part-of: home
+spec:
+  services:
+    home-portal:
+      image: ghcr.io/jorisjonkers-dev/home-portal:${BUNDLE_VERSION}
+      namespace: home-system
+      account: home-portal
+      ports:
+        - name: http
+          containerPort: 80
+      placement:
+        site: frankfurt
+        nodeSelector:
+          platform.jorisjonkers.dev/site: frankfurt
+      autoscaling:
+        minReplicas: 1
+        maxReplicas: 1
+      observability:
+        gatus:
+          - name: home-portal
+            url: https://jorisjonkers.dev/
+      routes:
+        - host: jorisjonkers.dev
+          expose:
+            tier: public-frankfurt
+          rules:
+            - path: /
+              port: http
+              operation: prefix
+              auth:
+                scope: anonymous
+      safety:
+        gateOn:
+          - parity
+          - routeOrAuthChange

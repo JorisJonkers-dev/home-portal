@@ -1,0 +1,11 @@
+.git
+.github
+coverage
+dist
+node_modules
+playwright-report
+test-results
+.stryker-tmp
+.env
+.env.*
+*.log
