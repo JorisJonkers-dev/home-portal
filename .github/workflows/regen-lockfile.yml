@@ -1,0 +1,50 @@
+name: Regen lockfile temporary
+
+on:
+  push:
+    branches: [feat/migrate-jorisjonkers]
+    paths: [package.json, .github/workflows/regen-lockfile.yml]
+
+permissions:
+  contents: write
+  packages: read
+
+jobs:
+  regen:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/create-github-app-token@v2
+        id: app-token
+        with:
+          app-id: ${{ secrets.RELEASE_APP_ID }}
+          private-key: ${{ secrets.RELEASE_APP_PRIVATE_KEY }}
+
+      - uses: actions/checkout@v4
+        with:
+          ref: feat/migrate-jorisjonkers
+          token: ${{ steps.app-token.outputs.token }}
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9.15.4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Regenerate lockfile
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: pnpm install --no-frozen-lockfile
+
+      - name: Commit lockfile
+        run: |
+          git config user.name 'jorisjonkers.dev Agents[bot]'
+          git config user.email 'noreply@jorisjonkers.dev'
+          git add pnpm-lock.yaml
+          if ! git diff --cached --quiet; then
+            git commit -m 'chore: regenerate pnpm lockfile'
+            git push origin HEAD:feat/migrate-jorisjonkers
+          else
+            echo 'No lockfile change'
+          fi
