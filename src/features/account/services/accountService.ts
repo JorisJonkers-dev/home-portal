@@ -27,29 +27,24 @@ export async function fetchProfile(): Promise<ProfileData> {
 }
 
 export async function updateProfile(data: UpdateProfileRequest): Promise<ProfileData> {
-  return runAccountRequest(
-    () => updateProfileRequest({ ...authApiOptions(true), body: data }),
-    'Request failed',
-  )
+  return runAccountRequest(() => updateProfileRequest({ ...authApiOptions(true), body: data }), 'Request failed')
 }
 
 export async function changePassword(data: ChangePasswordRequest): Promise<void> {
-  await runAccountRequest(
-    () => changePasswordRequest({ ...authApiOptions(true), body: data }),
-    'Request failed',
-  )
+  await runAccountRequest(() => changePasswordRequest({ ...authApiOptions(true), body: data }), 'Request failed')
 }
 
 export async function forgotPassword(email: string): Promise<void> {
-  await runAccountRequest(
-    () => forgotPasswordRequest({ ...authApiOptions(true), body: { email } }),
-    'Request failed',
-  )
+  await runAccountRequest(() => forgotPasswordRequest({ ...authApiOptions(true), body: { email } }), 'Request failed')
 }
 
 export async function resetPassword(token: string, newPassword: string): Promise<void> {
   await runAccountRequest(
-    () => resetPasswordRequest({ ...authApiOptions(true), body: { token, newPassword } }),
+    () =>
+      resetPasswordRequest({
+        ...authApiOptions(true),
+        body: { token, newPassword },
+      }),
     'Request failed',
   )
 }

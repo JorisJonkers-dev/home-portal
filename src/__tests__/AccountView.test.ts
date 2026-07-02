@@ -45,7 +45,13 @@ describe('accountView', () => {
     vi.mocked(fetchProfile).mockResolvedValue(mockProfile)
 
     const authStore = useAuthStore()
-    authStore.user = { sub: '1', username: 'alice', email: 'alice@example.com', firstName: 'Test', lastName: 'User' }
+    authStore.user = {
+      sub: '1',
+      username: 'alice',
+      email: 'alice@example.com',
+      firstName: 'Test',
+      lastName: 'User',
+    }
 
     const wrapper = mount(AccountView)
     await flushPromises()
@@ -67,10 +73,19 @@ describe('accountView', () => {
   it('saves profile on button click', async () => {
     const { fetchProfile, updateProfile } = await import('../features/account/services/accountService')
     vi.mocked(fetchProfile).mockResolvedValue(mockProfile)
-    vi.mocked(updateProfile).mockResolvedValue({ ...mockProfile, firstName: 'Bob' })
+    vi.mocked(updateProfile).mockResolvedValue({
+      ...mockProfile,
+      firstName: 'Bob',
+    })
 
     const authStore = useAuthStore()
-    authStore.user = { sub: '1', username: 'alice', email: 'alice@example.com', firstName: 'Test', lastName: 'User' }
+    authStore.user = {
+      sub: '1',
+      username: 'alice',
+      email: 'alice@example.com',
+      firstName: 'Test',
+      lastName: 'User',
+    }
 
     const wrapper = mount(AccountView)
     await flushPromises()
@@ -97,7 +112,13 @@ describe('accountView', () => {
     vi.mocked(changePassword).mockRejectedValue(new Error('Bad request'))
 
     const authStore = useAuthStore()
-    authStore.user = { sub: '1', username: 'alice', email: 'alice@example.com', firstName: 'Test', lastName: 'User' }
+    authStore.user = {
+      sub: '1',
+      username: 'alice',
+      email: 'alice@example.com',
+      firstName: 'Test',
+      lastName: 'User',
+    }
 
     const wrapper = mount(AccountView)
     await flushPromises()
@@ -121,7 +142,13 @@ describe('accountView', () => {
     vi.mocked(fetchProfile).mockResolvedValue(mockProfile)
 
     const authStore = useAuthStore()
-    authStore.user = { sub: '1', username: 'alice', email: 'alice@example.com', firstName: 'Test', lastName: 'User' }
+    authStore.user = {
+      sub: '1',
+      username: 'alice',
+      email: 'alice@example.com',
+      firstName: 'Test',
+      lastName: 'User',
+    }
 
     const wrapper = mount(AccountView)
     await flushPromises()

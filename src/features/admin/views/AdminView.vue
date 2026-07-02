@@ -117,7 +117,9 @@ const filtered = computed<AdminUser[]>(() => {
     </div>
 
     <div v-if="loading" class="font-mono text-xs text-[var(--color-text-muted)]">Loading…</div>
-    <div v-else-if="error" class="font-mono text-xs text-red-400">{{ error }}</div>
+    <div v-else-if="error" class="font-mono text-xs text-red-400">
+      {{ error }}
+    </div>
     <UserTable v-else :users="filtered" @refresh="loadUsers" />
   </div>
 </template>

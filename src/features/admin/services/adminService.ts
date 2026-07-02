@@ -32,15 +32,17 @@ export async function fetchUser(id: string): Promise<AdminUser> {
 }
 
 export async function updateUserRole(id: string, role: string): Promise<AdminUser> {
-  return runAdminRequest(
-    () => updateRole({ ...authApiOptions(true), body: { role }, path: { id } }),
-    'Request failed',
-  )
+  return runAdminRequest(() => updateRole({ ...authApiOptions(true), body: { role }, path: { id } }), 'Request failed')
 }
 
 export async function updateUserServices(id: string, services: string[]): Promise<AdminUser> {
   return runAdminRequest(
-    () => updateServicePermissions({ ...authApiOptions(true), body: { services }, path: { id } }),
+    () =>
+      updateServicePermissions({
+        ...authApiOptions(true),
+        body: { services },
+        path: { id },
+      }),
     'Request failed',
   )
 }

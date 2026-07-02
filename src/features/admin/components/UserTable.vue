@@ -104,7 +104,9 @@ async function confirmDelete(): Promise<void> {
                 unconfirmed
               </span>
             </div>
-            <div class="truncate font-mono text-xs text-[var(--color-text-muted)]">{{ user.email }}</div>
+            <div class="truncate font-mono text-xs text-[var(--color-text-muted)]">
+              {{ user.email }}
+            </div>
           </div>
           <div class="flex items-center gap-3">
             <RoleSelector

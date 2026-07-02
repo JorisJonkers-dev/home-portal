@@ -25,7 +25,13 @@ describe('profileDropdown', () => {
     vi.clearAllMocks()
 
     const authStore = useAuthStore(pinia)
-    authStore.user = { sub: '1', username: 'testuser', email: 'test@example.com', firstName: 'Test', lastName: 'User' }
+    authStore.user = {
+      sub: '1',
+      username: 'testuser',
+      email: 'test@example.com',
+      firstName: 'Test',
+      lastName: 'User',
+    }
   })
 
   afterEach(() => {

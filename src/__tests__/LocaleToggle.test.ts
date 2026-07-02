@@ -43,7 +43,10 @@ describe('localeToggle', () => {
     // The extras slot renders the toggle twice (desktop + drawer) in a
     // single app, so the per-instance useId() values must not collide.
     const wrapper = mount(
-      { components: { LocaleToggle }, template: '<div><LocaleToggle /><LocaleToggle /></div>' },
+      {
+        components: { LocaleToggle },
+        template: '<div><LocaleToggle /><LocaleToggle /></div>',
+      },
       { global: { plugins: [i18n] } },
     )
     const ids = wrapper.findAll('clipPath').map((c) => c.attributes('id'))
