@@ -27,8 +27,8 @@ importers:
         specifier: 0.2.1
         version: 0.2.1
       '@jorisjonkers-dev/vue-web-commons':
-        specifier: 0.4.1
-        version: 0.4.1(@grafana/faro-web-sdk@2.8.0)(@grafana/faro-web-tracing@2.8.0)(@playwright/test@1.61.1)(@vitejs/plugin-vue@6.0.7(vite@8.1.0(jiti@2.7.0)(yaml@2.9.0))(vue@3.5.39(typescript@6.0.3)))(dependency-cruiser@17.4.3)(pinia@3.0.4(typescript@6.0.3)(vue@3.5.39(typescript@6.0.3)))(vite@8.1.0(jiti@2.7.0)(yaml@2.9.0))(vitest@4.1.9)(vue-router@5.1.0(@vue/compiler-sfc@3.5.39)(pinia@3.0.4(typescript@6.0.3)(vue@3.5.39(typescript@6.0.3)))(rolldown@1.1.3)(vite@8.1.0(jiti@2.7.0)(yaml@2.9.0))(vue@3.5.39(typescript@6.0.3)))(vue@3.5.39(typescript@6.0.3))
+        specifier: ^0.5.0
+        version: 0.5.0(@antfu/eslint-config@9.1.0(@typescript-eslint/rule-tester@8.62.0(eslint@10.6.0(jiti@2.7.0))(typescript@6.0.3))(@typescript-eslint/typescript-estree@8.62.0(typescript@6.0.3))(@typescript-eslint/utils@8.62.0(eslint@10.6.0(jiti@2.7.0))(typescript@6.0.3))(@vue/compiler-sfc@3.5.39)(eslint@10.6.0(jiti@2.7.0))(typescript@6.0.3)(vitest@4.1.9))(@grafana/faro-web-sdk@2.8.0)(@grafana/faro-web-tracing@2.8.0)(@playwright/test@1.61.1)(@vitejs/plugin-vue@6.0.7(vite@8.1.0(jiti@2.7.0)(yaml@2.9.0))(vue@3.5.39(typescript@6.0.3)))(dependency-cruiser@17.4.3)(eslint@10.6.0(jiti@2.7.0))(pinia@3.0.4(typescript@6.0.3)(vue@3.5.39(typescript@6.0.3)))(prettier@3.9.1)(typescript@6.0.3)(vite@8.1.0(jiti@2.7.0)(yaml@2.9.0))(vitest@4.1.9)(vue-router@5.1.0(@vue/compiler-sfc@3.5.39)(pinia@3.0.4(typescript@6.0.3)(vue@3.5.39(typescript@6.0.3)))(rolldown@1.1.3)(vite@8.1.0(jiti@2.7.0)(yaml@2.9.0))(vue@3.5.39(typescript@6.0.3)))(vue@3.5.39(typescript@6.0.3))
       pinia:
         specifier: ^3.0.4
         version: 3.0.4(typescript@6.0.3)(vue@3.5.39(typescript@6.0.3))
@@ -698,19 +698,42 @@ packages:
   '@jorisjonkers-dev/auth-api-client@0.2.1':
     resolution: {integrity: sha512-WJuq5AzTpVccwQuR1xS0puueblWdmfjMtnfNbjUCqi3d3VCHAZr7PbcEfMfrq/ppNlhl0hmNpb6xb0dp93i7hg==, tarball: https://npm.pkg.github.com/download/@jorisjonkers-dev/auth-api-client/0.2.1/840f51722a7dee12528b597eb6c3c9a67319a6bd}
 
-  '@jorisjonkers-dev/vue-web-commons@0.4.1':
-    resolution: {integrity: sha512-CItc779tLy5RmOz9Ql7jdrCtRR+p65PoFZZwSDr42lTDaZL3ASnylnSVQyYJkgpK37xyLn+9FRPVNWLJ/ROq8A==, tarball: https://npm.pkg.github.com/download/@jorisjonkers-dev/vue-web-commons/0.4.1/0aad362b8c36b5140e314d14534b988a26ef5244}
+  '@jorisjonkers-dev/vue-web-commons@0.5.0':
+    resolution: {integrity: sha512-u6XLjPTeq//diw1q5BxBjwXlaqsEpg2nEXDOJuUV6BqE5UVndsFzRp7kJqAVqfPazL9d19wns2/wHLYNErGMcg==, tarball: https://npm.pkg.github.com/download/@jorisjonkers-dev/vue-web-commons/0.5.0/e4b99111ecd5f966af25d58ae1862a3435f93969}
     peerDependencies:
-      '@grafana/faro-web-sdk': ^2.7.1
-      '@grafana/faro-web-tracing': ^2.7.1
+      '@antfu/eslint-config': ^9.0.0
+      '@grafana/faro-web-sdk': ^2.8.2
+      '@grafana/faro-web-tracing': ^2.8.2
       '@playwright/test': ^1.0.0
       '@vitejs/plugin-vue': ^6.0.0
       dependency-cruiser: ^17.0.0
+      eslint: ^10.4.1
       pinia: ^3.0.4
+      prettier: ^3.9.4
+      typescript: ^6.0.3
       vite: ^8.0.0
       vitest: ^4.0.0
       vue: ^3.5.35
       vue-router: ^5.1.0
+    peerDependenciesMeta:
+      '@antfu/eslint-config':
+        optional: true
+      '@playwright/test':
+        optional: true
+      '@vitejs/plugin-vue':
+        optional: true
+      dependency-cruiser:
+        optional: true
+      eslint:
+        optional: true
+      prettier:
+        optional: true
+      typescript:
+        optional: true
+      vite:
+        optional: true
+      vitest:
+        optional: true
 
   '@jridgewell/gen-mapping@0.3.13':
     resolution: {integrity: sha512-2kkt/7niJ6MgEPxF0bYdQ6etZaA+fQvDcLKckhy1yIQOzaoKjBBjSj63/aLVjYE3qhRt5dvM+uUyfCg6UKCBbA==}
@@ -3989,18 +4012,23 @@ snapshots:
     dependencies:
       zod: 4.4.3
 
-  '@jorisjonkers-dev/vue-web-commons@0.4.1(@grafana/faro-web-sdk@2.8.0)(@grafana/faro-web-tracing@2.8.0)(@playwright/test@1.61.1)(@vitejs/plugin-vue@6.0.7(vite@8.1.0(jiti@2.7.0)(yaml@2.9.0))(vue@3.5.39(typescript@6.0.3)))(dependency-cruiser@17.4.3)(pinia@3.0.4(typescript@6.0.3)(vue@3.5.39(typescript@6.0.3)))(vite@8.1.0(jiti@2.7.0)(yaml@2.9.0))(vitest@4.1.9)(vue-router@5.1.0(@vue/compiler-sfc@3.5.39)(pinia@3.0.4(typescript@6.0.3)(vue@3.5.39(typescript@6.0.3)))(rolldown@1.1.3)(vite@8.1.0(jiti@2.7.0)(yaml@2.9.0))(vue@3.5.39(typescript@6.0.3)))(vue@3.5.39(typescript@6.0.3))':
+  '@jorisjonkers-dev/vue-web-commons@0.5.0(@antfu/eslint-config@9.1.0(@typescript-eslint/rule-tester@8.62.0(eslint@10.6.0(jiti@2.7.0))(typescript@6.0.3))(@typescript-eslint/typescript-estree@8.62.0(typescript@6.0.3))(@typescript-eslint/utils@8.62.0(eslint@10.6.0(jiti@2.7.0))(typescript@6.0.3))(@vue/compiler-sfc@3.5.39)(eslint@10.6.0(jiti@2.7.0))(typescript@6.0.3)(vitest@4.1.9))(@grafana/faro-web-sdk@2.8.0)(@grafana/faro-web-tracing@2.8.0)(@playwright/test@1.61.1)(@vitejs/plugin-vue@6.0.7(vite@8.1.0(jiti@2.7.0)(yaml@2.9.0))(vue@3.5.39(typescript@6.0.3)))(dependency-cruiser@17.4.3)(eslint@10.6.0(jiti@2.7.0))(pinia@3.0.4(typescript@6.0.3)(vue@3.5.39(typescript@6.0.3)))(prettier@3.9.1)(typescript@6.0.3)(vite@8.1.0(jiti@2.7.0)(yaml@2.9.0))(vitest@4.1.9)(vue-router@5.1.0(@vue/compiler-sfc@3.5.39)(pinia@3.0.4(typescript@6.0.3)(vue@3.5.39(typescript@6.0.3)))(rolldown@1.1.3)(vite@8.1.0(jiti@2.7.0)(yaml@2.9.0))(vue@3.5.39(typescript@6.0.3)))(vue@3.5.39(typescript@6.0.3))':
     dependencies:
       '@grafana/faro-web-sdk': 2.8.0
       '@grafana/faro-web-tracing': 2.8.0
+      pinia: 3.0.4(typescript@6.0.3)(vue@3.5.39(typescript@6.0.3))
+      vue: 3.5.39(typescript@6.0.3)
+      vue-router: 5.1.0(@vue/compiler-sfc@3.5.39)(pinia@3.0.4(typescript@6.0.3)(vue@3.5.39(typescript@6.0.3)))(rolldown@1.1.3)(vite@8.1.0(jiti@2.7.0)(yaml@2.9.0))(vue@3.5.39(typescript@6.0.3))
+    optionalDependencies:
+      '@antfu/eslint-config': 9.1.0(@typescript-eslint/rule-tester@8.62.0(eslint@10.6.0(jiti@2.7.0))(typescript@6.0.3))(@typescript-eslint/typescript-estree@8.62.0(typescript@6.0.3))(@typescript-eslint/utils@8.62.0(eslint@10.6.0(jiti@2.7.0))(typescript@6.0.3))(@vue/compiler-sfc@3.5.39)(eslint@10.6.0(jiti@2.7.0))(typescript@6.0.3)(vitest@4.1.9)
       '@playwright/test': 1.61.1
       '@vitejs/plugin-vue': 6.0.7(vite@8.1.0(jiti@2.7.0)(yaml@2.9.0))(vue@3.5.39(typescript@6.0.3))
       dependency-cruiser: 17.4.3
-      pinia: 3.0.4(typescript@6.0.3)(vue@3.5.39(typescript@6.0.3))
+      eslint: 10.6.0(jiti@2.7.0)
+      prettier: 3.9.1
+      typescript: 6.0.3
       vite: 8.1.0(jiti@2.7.0)(yaml@2.9.0)
       vitest: 4.1.9(@opentelemetry/api@1.9.1)(@vitest/coverage-v8@4.1.9)(jsdom@29.1.1)(vite@8.1.0(jiti@2.7.0)(yaml@2.9.0))
-      vue: 3.5.39(typescript@6.0.3)
-      vue-router: 5.1.0(@vue/compiler-sfc@3.5.39)(pinia@3.0.4(typescript@6.0.3)(vue@3.5.39(typescript@6.0.3)))(rolldown@1.1.3)(vite@8.1.0(jiti@2.7.0)(yaml@2.9.0))(vue@3.5.39(typescript@6.0.3))
 
   '@jridgewell/gen-mapping@0.3.13':
     dependencies:

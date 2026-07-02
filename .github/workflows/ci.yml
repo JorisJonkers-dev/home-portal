@@ -37,32 +37,16 @@ jobs:
 
   web-check:
     name: 'Lint, Typecheck, Test, Build'
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v6
-
-      - uses: pnpm/action-setup@v6
-        with:
-          version: 9.15.4
-
-      - uses: actions/setup-node@v6
-        with:
-          node-version: '${{ env.NODE_VERSION }}'
-          cache: pnpm
-          cache-dependency-path: pnpm-lock.yaml
-
-      - name: Install dependencies
-        env:
-          NODE_AUTH_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
-        run: |
-          pnpm config set //npm.pkg.github.com/:_authToken "$NODE_AUTH_TOKEN"
-          pnpm install --frozen-lockfile
-
-      - run: pnpm lint
-      - run: pnpm typecheck
-      - run: 'pnpm test:coverage'
-      - run: pnpm depcruise
-      - run: pnpm build
+    uses: JorisJonkers-dev/github-workflows/.github/workflows/node-ci.yml@v0.10.2
+    with:
+      node-version: '24'
+      package-manager: pnpm
+      typecheck-command: pnpm typecheck
+      test-command: 'pnpm test:coverage'
+      build-command: pnpm build
+      lint-command: pnpm depcruise
+    secrets:
+      packages-token: '${{ secrets.GITHUB_TOKEN }}'
 
   e2e:
     name: Playwright E2E
