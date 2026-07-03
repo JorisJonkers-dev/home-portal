@@ -54,7 +54,12 @@ describe('auth store', () => {
 
   it('isAdmin is true when ROLE_ADMIN is in roles', async () => {
     vi.mocked(checkSession).mockResolvedValue(
-      authUser({ sub: 'admin-1', username: 'admin', email: 'admin@example.com', roles: ['ROLE_ADMIN'] }),
+      authUser({
+        sub: 'admin-1',
+        username: 'admin',
+        email: 'admin@example.com',
+        roles: ['ROLE_ADMIN'],
+      }),
     )
 
     const store = useAuthStore()
@@ -88,7 +93,10 @@ describe('auth store', () => {
 
   it('servicePermissions filters only SERVICE_ prefixed roles', async () => {
     vi.mocked(checkSession).mockResolvedValue(
-      authUser({ sub: 'u1', roles: ['ROLE_USER', 'ROLE_ADMIN', 'SERVICE_GRAFANA', 'SERVICE_VAULT'] }),
+      authUser({
+        sub: 'u1',
+        roles: ['ROLE_USER', 'ROLE_ADMIN', 'SERVICE_GRAFANA', 'SERVICE_VAULT'],
+      }),
     )
 
     const store = useAuthStore()

@@ -6,7 +6,11 @@ vi.mock('@jorisjonkers-dev/auth-api-client', () => ({
   me: vi.fn(),
 }))
 
-function clientResult<T>(data: T): { data: T; request: Request; response: Response } {
+function clientResult<T>(data: T): {
+  data: T
+  request: Request
+  response: Response
+} {
   return {
     data,
     request: new Request('https://auth.jorisjonkers.dev'),
@@ -20,7 +24,10 @@ describe('startLoginFlow', () => {
   beforeEach(() => {
     Object.defineProperty(window, 'location', {
       writable: true,
-      value: { origin: 'http://localhost:5175', href: 'http://localhost:5175/apps' },
+      value: {
+        origin: 'http://localhost:5175',
+        href: 'http://localhost:5175/apps',
+      },
     })
   })
 
@@ -80,9 +87,7 @@ describe('checkSession', () => {
 
     await checkSession()
 
-    expect(me).toHaveBeenCalledWith(
-      expect.objectContaining({ credentials: 'include' }),
-    )
+    expect(me).toHaveBeenCalledWith(expect.objectContaining({ credentials: 'include' }))
   })
 })
 

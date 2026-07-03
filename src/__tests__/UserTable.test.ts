@@ -29,7 +29,13 @@ const mockUser: AdminUser = {
 
 function authenticateStore(): void {
   const authStore = useAuthStore()
-  authStore.user = { sub: 'a1', username: 'admin', email: 'admin@example.com', firstName: 'Test', lastName: 'User' }
+  authStore.user = {
+    sub: 'a1',
+    username: 'admin',
+    email: 'admin@example.com',
+    firstName: 'Test',
+    lastName: 'User',
+  }
   authStore.roles = ['ROLE_ADMIN']
 }
 
@@ -71,7 +77,12 @@ describe('userTable', () => {
   })
 
   it('renders multiple users', () => {
-    const second: AdminUser = { ...mockUser, id: 'u2', username: 'bob', email: 'bob@example.com' }
+    const second: AdminUser = {
+      ...mockUser,
+      id: 'u2',
+      username: 'bob',
+      email: 'bob@example.com',
+    }
     authenticateStore()
 
     const wrapper = mount(UserTable, { props: { users: [mockUser, second] } })
@@ -102,7 +113,9 @@ describe('userTable', () => {
     authenticateStore()
 
     const wrapper = mount(UserTable, { props: { users: [mockUser, second] } })
-    const serviceEditors = wrapper.findAllComponents({ name: 'ServicePermissionsEditor' })
+    const serviceEditors = wrapper.findAllComponents({
+      name: 'ServicePermissionsEditor',
+    })
     expect(serviceEditors).toHaveLength(2)
   })
 
@@ -138,7 +151,13 @@ describe('userTable', () => {
   })
 
   it('shows email and role for each user', () => {
-    const second: AdminUser = { ...mockUser, id: 'u2', username: 'bob', email: 'bob@example.com', role: 'ADMIN' }
+    const second: AdminUser = {
+      ...mockUser,
+      id: 'u2',
+      username: 'bob',
+      email: 'bob@example.com',
+      role: 'ADMIN',
+    }
     authenticateStore()
 
     const wrapper = mount(UserTable, { props: { users: [mockUser, second] } })

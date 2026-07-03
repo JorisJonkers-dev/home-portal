@@ -5,7 +5,7 @@ export default antfu(
     vue: true,
     typescript: true,
     formatters: false,
-    ignores: ['.release-please-manifest.json'],
+    ignores: ['.release-please-manifest.json', '.github-workflows/**'],
   },
   {
     rules: {

@@ -50,7 +50,13 @@ describe('adminView', () => {
     vi.mocked(fetchUsers).mockResolvedValue(mockUsers)
 
     const authStore = useAuthStore()
-    authStore.user = { sub: 'a1', username: 'admin', email: 'admin@example.com', firstName: 'Test', lastName: 'User' }
+    authStore.user = {
+      sub: 'a1',
+      username: 'admin',
+      email: 'admin@example.com',
+      firstName: 'Test',
+      lastName: 'User',
+    }
     authStore.roles = ['ROLE_ADMIN']
 
     const wrapper = mount(AdminView, {
@@ -87,7 +93,13 @@ describe('adminView', () => {
     vi.mocked(fetchUsers).mockResolvedValue(mockUsers)
 
     const authStore = useAuthStore()
-    authStore.user = { sub: 'a1', username: 'admin', email: 'admin@example.com', firstName: 'Test', lastName: 'User' }
+    authStore.user = {
+      sub: 'a1',
+      username: 'admin',
+      email: 'admin@example.com',
+      firstName: 'Test',
+      lastName: 'User',
+    }
     authStore.roles = ['ROLE_ADMIN']
 
     mount(AdminView, {
@@ -107,7 +119,13 @@ describe('adminView', () => {
     vi.mocked(fetchUsers).mockReturnValue(new Promise(() => {}))
 
     const authStore = useAuthStore()
-    authStore.user = { sub: 'a1', username: 'admin', email: 'admin@example.com', firstName: 'Test', lastName: 'User' }
+    authStore.user = {
+      sub: 'a1',
+      username: 'admin',
+      email: 'admin@example.com',
+      firstName: 'Test',
+      lastName: 'User',
+    }
     authStore.roles = ['ROLE_ADMIN']
 
     const wrapper = mount(AdminView, {
@@ -126,7 +144,13 @@ describe('adminView', () => {
     vi.mocked(fetchUsers).mockRejectedValue(new Error('Network error'))
 
     const authStore = useAuthStore()
-    authStore.user = { sub: 'a1', username: 'admin', email: 'admin@example.com', firstName: 'Test', lastName: 'User' }
+    authStore.user = {
+      sub: 'a1',
+      username: 'admin',
+      email: 'admin@example.com',
+      firstName: 'Test',
+      lastName: 'User',
+    }
     authStore.roles = ['ROLE_ADMIN']
 
     const wrapper = mount(AdminView, {

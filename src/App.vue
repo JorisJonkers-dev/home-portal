@@ -14,11 +14,31 @@ const authStore = useAuthStore()
 // nav link routes back to `/` first so anchors resolve correctly
 // even when the user is on another route like /admin.
 const navItems: AppShellNavItem[] = [
-  { label: t('nav.about'), to: { path: '/', hash: '#about' }, testid: 'nav-about' },
-  { label: t('nav.experience'), to: { path: '/', hash: '#experience' }, testid: 'nav-experience' },
-  { label: t('nav.projects'), to: { path: '/', hash: '#projects' }, testid: 'nav-projects' },
-  { label: t('nav.skills'), to: { path: '/', hash: '#skills' }, testid: 'nav-skills' },
-  { label: t('nav.contact'), to: { path: '/', hash: '#contact' }, testid: 'nav-contact' },
+  {
+    label: t('nav.about'),
+    to: { path: '/', hash: '#about' },
+    testid: 'nav-about',
+  },
+  {
+    label: t('nav.experience'),
+    to: { path: '/', hash: '#experience' },
+    testid: 'nav-experience',
+  },
+  {
+    label: t('nav.projects'),
+    to: { path: '/', hash: '#projects' },
+    testid: 'nav-projects',
+  },
+  {
+    label: t('nav.skills'),
+    to: { path: '/', hash: '#skills' },
+    testid: 'nav-skills',
+  },
+  {
+    label: t('nav.contact'),
+    to: { path: '/', hash: '#contact' },
+    testid: 'nav-contact',
+  },
 ]
 </script>
 

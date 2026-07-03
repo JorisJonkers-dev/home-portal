@@ -1,6 +1,5 @@
 import type { AdminUserResponse } from '@jorisjonkers-dev/auth-api-client'
 import {
-
   deleteUser as deleteUserRequest,
   listUsers,
   updateRole,
@@ -33,7 +32,11 @@ function adminUser(overrides: Partial<AdminUserResponse> = {}): AdminUserRespons
   }
 }
 
-function clientResult<T>(data: T): { data: T; request: Request; response: Response } {
+function clientResult<T>(data: T): {
+  data: T
+  request: Request
+  response: Response
+} {
   return {
     data,
     request: new Request('https://auth.jorisjonkers.dev'),
@@ -117,7 +120,11 @@ describe('request details', () => {
     await updateUserRole('1', 'ADMIN')
 
     expect(updateRole).toHaveBeenCalledWith(
-      expect.objectContaining({ body: { role: 'ADMIN' }, credentials: 'include', path: { id: '1' } }),
+      expect.objectContaining({
+        body: { role: 'ADMIN' },
+        credentials: 'include',
+        path: { id: '1' },
+      }),
     )
   })
 

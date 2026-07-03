@@ -59,18 +59,24 @@ describe('contactSection', () => {
 
 describe('experienceTimeline', () => {
   it('renders the section title', () => {
-    const wrapper = mount(ExperienceTimeline, { global: { plugins: plugins() } })
+    const wrapper = mount(ExperienceTimeline, {
+      global: { plugins: plugins() },
+    })
     expect(wrapper.text()).toContain('Experience')
   })
 
   it('renders experience entries', () => {
-    const wrapper = mount(ExperienceTimeline, { global: { plugins: plugins() } })
+    const wrapper = mount(ExperienceTimeline, {
+      global: { plugins: plugins() },
+    })
     expect(wrapper.text()).toContain('Nedap N.V.')
     expect(wrapper.text()).toContain('DynaLynx B.V.')
   })
 
   it('renders technology tags', () => {
-    const wrapper = mount(ExperienceTimeline, { global: { plugins: plugins() } })
+    const wrapper = mount(ExperienceTimeline, {
+      global: { plugins: plugins() },
+    })
     expect(wrapper.text()).toContain('Ruby on Rails')
     expect(wrapper.text()).toContain('Docker')
   })

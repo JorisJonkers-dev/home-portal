@@ -35,7 +35,7 @@ jobs:
     name: Publish Image
     needs:
       - release-please
-    if: '${{ needs.release-please.outputs.release_created == ''true'' }}'
+    if: "${{ needs.release-please.outputs.release_created == 'true' }}"
     runs-on: ubuntu-latest
     outputs:
       bundle-image: '${{ steps.bundle-image.outputs.ref }}'
@@ -88,7 +88,7 @@ jobs:
     needs:
       - release-please
       - publish-image
-    if: '${{ needs.release-please.outputs.release_created == ''true'' }}'
+    if: "${{ needs.release-please.outputs.release_created == 'true' }}"
     runs-on: ubuntu-latest
     outputs:
       bundle-ref: '${{ steps.bundle-ref.outputs.bundle-ref }}'

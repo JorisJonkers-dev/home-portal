@@ -1,5 +1,3 @@
 {
-  "images": [
-    "ghcr.io/jorisjonkers-dev/home-portal:ci"
-  ]
+  "images": ["ghcr.io/jorisjonkers-dev/home-portal:ci"]
 }

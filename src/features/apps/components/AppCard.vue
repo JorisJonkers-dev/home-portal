@@ -41,7 +41,9 @@ function handleIconError(): void {
       <p class="font-mono text-sm font-bold text-[var(--color-text-primary)] group-hover:text-terminal-green">
         {{ service.label }}
       </p>
-      <p class="font-mono text-xs text-[var(--color-text-muted)]">{{ service.description }}</p>
+      <p class="font-mono text-xs text-[var(--color-text-muted)]">
+        {{ service.description }}
+      </p>
     </div>
   </a>
 </template>

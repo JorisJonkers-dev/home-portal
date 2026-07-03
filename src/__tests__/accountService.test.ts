@@ -3,7 +3,6 @@ import {
   changePassword as changePasswordRequest,
   forgotPassword as forgotPasswordRequest,
   getProfile,
-
   resetPassword as resetPasswordRequest,
   updateProfile as updateProfileRequest,
 } from '@jorisjonkers-dev/auth-api-client'
@@ -39,7 +38,11 @@ function profile(overrides: Partial<ProfileResponse> = {}): ProfileResponse {
   }
 }
 
-function clientResult<T>(data: T): { data: T; request: Request; response: Response } {
+function clientResult<T>(data: T): {
+  data: T
+  request: Request
+  response: Response
+} {
   return {
     data,
     request: new Request('https://auth.jorisjonkers.dev'),
@@ -85,7 +88,10 @@ describe('updateProfile', () => {
 
     expect(result.firstName).toBe('Bob')
     expect(updateProfileRequest).toHaveBeenCalledWith(
-      expect.objectContaining({ body: { firstName: 'Bob', lastName: 'Jones' }, credentials: 'include' }),
+      expect.objectContaining({
+        body: { firstName: 'Bob', lastName: 'Jones' },
+        credentials: 'include',
+      }),
     )
   })
 })
@@ -112,7 +118,10 @@ describe('forgotPassword', () => {
     await forgotPassword('alice@example.com')
 
     expect(forgotPasswordRequest).toHaveBeenCalledWith(
-      expect.objectContaining({ body: { email: 'alice@example.com' }, credentials: 'include' }),
+      expect.objectContaining({
+        body: { email: 'alice@example.com' },
+        credentials: 'include',
+      }),
     )
   })
 })
