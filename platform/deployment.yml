@@ -1,0 +1,30 @@
+# Deployment contract for home-portal (deployment v2).
+# Validated by deploy-preview.yml on every PR touching platform/ and rendered
+# into the deploy artifact by publish.yml. Run ./platform/render-local.sh for
+# a local CI-parity check.
+apiVersion: deployment.jorisjonkers.dev/v2
+kind: Deployment
+metadata:
+  name: home-portal
+spec:
+  schemaVersion: 0.16.0
+  namespace: home-system
+  # platform.layer is REQUIRED for the first homelab-deploy registration
+  # (register-service derives the registry layer from it).
+  platform:
+    layer: apps-core
+  workloads:
+    - name: home-portal
+      image: home-portal
+      health:
+        path: /
+        port: 80
+        timeoutClass: stateless
+        mandatory: true
+      rollbackTargetRetention:
+        minimumDays: 90
+        acknowledged: true
+      routes:
+        - host: jorisjonkers.dev
+          owner: home-portal
+          authMode: anonymous
