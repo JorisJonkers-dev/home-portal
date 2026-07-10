@@ -23,7 +23,7 @@ jobs:
   publish-image:
     uses: JorisJonkers-dev/github-workflows/.github/workflows/container-publish.yml@4b444f9a50edf76e4aea4148d73407c34a1e43a4 # v0.12.1
     with:
-      image-name: 'home-portal'
+      image-name: home-portal
       version: ${{ github.ref_name }}
     permissions:
       contents: read
@@ -93,10 +93,10 @@ jobs:
     uses: JorisJonkers-dev/github-workflows/.github/workflows/deploy-artifact.yml@4b444f9a50edf76e4aea4148d73407c34a1e43a4 # v0.12.1
     with:
       ref: ${{ github.ref }}
-      artifact-name: 'home-portal'
+      artifact-name: home-portal
       artifact-version: ${{ github.ref_name }}
-      schema-version: '0.16.0'
-      context-ref: 'ghcr.io/jorisjonkers-dev/cluster-deploy-context-public@sha256:0423d9bcfc091f3b6e9bd6bdd91128bb0278b97e9c9de1907e6b0817c5500232'
+      schema-version: 0.16.0
+      context-ref: ghcr.io/jorisjonkers-dev/cluster-deploy-context-public@sha256:0423d9bcfc091f3b6e9bd6bdd91128bb0278b97e9c9de1907e6b0817c5500232
       image-lock-artifact: ${{ needs.resolve-image-lock.outputs.images-lock-artifact }}
       environments: production
       deploy-dir: platform
@@ -145,7 +145,7 @@ jobs:
           GH_TOKEN: ${{ steps.app-token.outputs.token }}
           ARTIFACT_REF: ${{ needs.publish-deploy-artifact.outputs.artifact-ref }}
           ARTIFACT_DIGEST: ${{ needs.publish-deploy-artifact.outputs.artifact-digest }}
-          SERVICE_NAME: 'home-portal'
+          SERVICE_NAME: home-portal
           REPO_OWNER: ${{ github.repository_owner }}
           SOURCE_REPOSITORY: ${{ github.repository }}
           TAG: ${{ github.ref_name }}
