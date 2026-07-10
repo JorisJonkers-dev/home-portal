@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.1](https://github.com/JorisJonkers-dev/home-portal/compare/v0.3.0...v0.3.1) (2026-07-10)
+
+
+### Bug Fixes
+
+* **platform:** correct public context-ref digest to match cluster ([#8](https://github.com/JorisJonkers-dev/home-portal/issues/8)) ([f7f6301](https://github.com/JorisJonkers-dev/home-portal/commit/f7f630176a04a6468f275207cdcebeef389a648e))
+
 ## [0.3.0](https://github.com/JorisJonkers-dev/home-portal/compare/v0.2.0...v0.3.0) (2026-07-10)
 
 ### Features
