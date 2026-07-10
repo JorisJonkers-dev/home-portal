@@ -2,10 +2,9 @@
 
 ## [0.3.0](https://github.com/JorisJonkers-dev/home-portal/compare/v0.2.0...v0.3.0) (2026-07-10)
 
-
 ### Features
 
-* **platform:** adopt deploy platform v1.3.1 ([fd57a3d](https://github.com/JorisJonkers-dev/home-portal/commit/fd57a3dd0379974f8441e23d2acf7a4994305653))
+- **platform:** adopt deploy platform v1.3.1 ([fd57a3d](https://github.com/JorisJonkers-dev/home-portal/commit/fd57a3dd0379974f8441e23d2acf7a4994305653))
 
 ## [0.2.0](https://github.com/JorisJonkers-dev/home-portal/compare/v0.1.0...v0.2.0) (2026-06-29)
 
