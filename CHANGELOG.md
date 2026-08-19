@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.3.2](https://github.com/JorisJonkers-dev/home-portal/compare/v0.3.1...v0.3.2) (2026-08-19)
+
+
+### Bug Fixes
+
+* **ci:** bump the reusable workflow pins so job timeouts apply ([#16](https://github.com/JorisJonkers-dev/home-portal/issues/16)) ([a469bfe](https://github.com/JorisJonkers-dev/home-portal/commit/a469bfe95588407b4dc5eede311dad68bb86b6ec))
+* **ci:** restore the arm64 image build ([#11](https://github.com/JorisJonkers-dev/home-portal/issues/11)) ([0d5c0ca](https://github.com/JorisJonkers-dev/home-portal/commit/0d5c0caaf1a3e19fafd5faafbbdc0c118e416606))
+* **ci:** stop gating release-please's generated files on Prettier ([#13](https://github.com/JorisJonkers-dev/home-portal/issues/13)) ([88badc4](https://github.com/JorisJonkers-dev/home-portal/commit/88badc4f31fdcadaa8489c94f058493721350b89))
+
 ## [0.3.1](https://github.com/JorisJonkers-dev/home-portal/compare/v0.3.0...v0.3.1) (2026-07-10)
 
 ### Bug Fixes
