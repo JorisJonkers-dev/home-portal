@@ -1,2 +1,9 @@
 .github-workflows/**
 pnpm-lock.yaml
+
+# release-please regenerates these on every release PR and does not format
+# them: it writes "*" list bullets where Prettier wants "-", and a compact
+# {".":"x.y.z"} manifest where Prettier wants spaces. Gating generated files
+# on a formatter it does not run makes every release PR fail.
+CHANGELOG.md
+.release-please-manifest.json
