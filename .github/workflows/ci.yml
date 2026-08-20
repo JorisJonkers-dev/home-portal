@@ -117,19 +117,6 @@ jobs:
           secrets: |
             github_token=${{ secrets.GITHUB_TOKEN }}
 
-  deploy-bundle:
-    name: Deploy Bundle
-    permissions:
-      contents: read
-      packages: write
-    uses: JorisJonkers-dev/github-workflows/.github/workflows/deploy-bundle.yml@v0.8.0
-    with:
-      images: deploy/images.json
-      bundle-name: home-portal
-      package-version: 0.9.0
-      publish: false
-    secrets: inherit
-
   pipeline-complete:
     name: Pipeline Complete
     if: '${{ always() }}'
@@ -139,7 +126,6 @@ jobs:
       - e2e
       - mutation
       - docker-build
-      - deploy-bundle
     runs-on: ubuntu-latest
     steps:
       - name: Check required jobs
