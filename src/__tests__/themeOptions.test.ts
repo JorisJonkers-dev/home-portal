@@ -44,7 +44,7 @@ describe('personalStackThemeOptions', () => {
 })
 
 describe('useTheme', () => {
-  it('applies this app\'s options rather than the library defaults', async () => {
+  it("applies this app's options rather than the library defaults", async () => {
     const commons = await import('@jorisjonkers-dev/vue-web-commons')
     useTheme()
     expect(commons.useTheme).toHaveBeenCalledWith(personalStackThemeOptions)
