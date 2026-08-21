@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.3](https://github.com/JorisJonkers-dev/home-portal/compare/v0.3.2...v0.3.3) (2026-08-21)
+
+
+### Bug Fixes
+
+* **platform:** make render-local.sh able to run ([#18](https://github.com/JorisJonkers-dev/home-portal/issues/18)) ([af81c7b](https://github.com/JorisJonkers-dev/home-portal/commit/af81c7baccd6e786a1d2c23476de588a16a7bf58))
+
 ## [0.3.2](https://github.com/JorisJonkers-dev/home-portal/compare/v0.3.1...v0.3.2) (2026-08-19)
 
 
