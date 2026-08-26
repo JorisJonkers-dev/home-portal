@@ -1,20 +1,31 @@
 # Deployment contract for home-portal (deployment v2).
+#
+# The live workload is named `app-ui` in `app-system`, not `home-portal` in
+# `home-system`. That is a deliberate, pre-existing divergence recorded in
+# fleet-infra/docs/live-divergence.md: "the service repository is home-portal;
+# live called the image app-ui. A rename, not a different image."
+#
+# This file names the live objects so a render adopts the running Deployment
+# instead of creating a second copy in a new namespace while `app-ui` keeps
+# Host(jorisjonkers.dev). The IMAGE stays `home-portal` - that is genuinely
+# what runs (ghcr.io/jorisjonkers-dev/home-portal), and it is what the
+# divergence note means.
 # Validated by deploy-preview.yml on every PR touching platform/ and rendered
 # into the deploy artifact by publish.yml. Run ./platform/render-local.sh for
 # a local CI-parity check.
 apiVersion: deployment.jorisjonkers.dev/v2
 kind: Deployment
 metadata:
-  name: home-portal
+  name: app-ui
 spec:
   schemaVersion: 0.16.0
-  namespace: home-system
+  namespace: app-system
   # platform.layer is REQUIRED for the first homelab-deploy registration
   # (register-service derives the registry layer from it).
   platform:
     layer: apps-core
   workloads:
-    - name: home-portal
+    - name: app-ui
       image: home-portal
       health:
         path: /
