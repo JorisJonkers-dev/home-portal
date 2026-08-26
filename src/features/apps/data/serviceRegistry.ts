@@ -169,6 +169,13 @@ export const SERVICE_REGISTRY: ServiceEntry[] = [
     iconUrl: '/icons/knowledge-api.svg',
     description: 'Knowledge-base MCP backend',
   },
+  {
+    permission: 'NOTES',
+    label: 'Outline',
+    url: buildServiceUrl('notes'),
+    iconUrl: '/icons/outline.svg',
+    description: 'Shared wiki and notes',
+  },
 ]
 
 export function getAccessibleServices(permissions: string[]): ServiceEntry[] {
