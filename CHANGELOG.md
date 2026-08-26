@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.4.0](https://github.com/JorisJonkers-dev/home-portal/compare/v0.3.2...v0.4.0) (2026-08-26)
+
+
+### Features
+
+* **apps:** surface Outline in the MyApps grid ([#31](https://github.com/JorisJonkers-dev/home-portal/issues/31)) ([7fb9afb](https://github.com/JorisJonkers-dev/home-portal/commit/7fb9afb5ba5e419d1c77fcd1728680d75a8df314))
+
+
+### Bug Fixes
+
+* **platform:** make render-local.sh able to run ([#18](https://github.com/JorisJonkers-dev/home-portal/issues/18)) ([af81c7b](https://github.com/JorisJonkers-dev/home-portal/commit/af81c7baccd6e786a1d2c23476de588a16a7bf58))
+* **platform:** name the live objects so a render adopts app-ui ([#30](https://github.com/JorisJonkers-dev/home-portal/issues/30)) ([30b4501](https://github.com/JorisJonkers-dev/home-portal/commit/30b45016d6ab44b0de5dd0cfa8207b147cc69671))
+
 ## [0.3.2](https://github.com/JorisJonkers-dev/home-portal/compare/v0.3.1...v0.3.2) (2026-08-19)
 
 
