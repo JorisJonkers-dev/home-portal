@@ -71,13 +71,14 @@ jobs:
         env:
           IMAGE_DIGEST: ${{ steps.digest.outputs.image-digest }}
         run: |
-          printf '{"home-portal":"ghcr.io/jorisjonkers-dev/home-portal@%s"}\n' "$IMAGE_DIGEST" \
+          # Alias key is the workload name (app-ui); the image itself is home-portal.
+          printf '{"app-ui":"ghcr.io/jorisjonkers-dev/home-portal@%s"}\n' "$IMAGE_DIGEST" \
             > platform/images.lock.json
           echo "Locked image: ghcr.io/jorisjonkers-dev/home-portal@${IMAGE_DIGEST}"
 
       - name: verify-lock
         run: |
-          lock_ref=$(jq -r '.["home-portal"]' platform/images.lock.json)
+          lock_ref=$(jq -r '.["app-ui"]' platform/images.lock.json)
           case "$lock_ref" in
             *@sha256:*) echo "Digest pin verified: $lock_ref" ;;
             *) echo "E_FLOATING_IMAGE: lock ref is not digest-pinned: $lock_ref" >&2; exit 1 ;;
