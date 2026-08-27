@@ -50,17 +50,20 @@ function clientResult<T>(data: T): {
   }
 }
 
-function lastHeaders(operation: ReturnType<typeof vi.fn>): Headers {
+// Returns the headers *after* the object spread the generated client performs,
+// which is the only way this assertion means anything. The helper used to
+// require a Headers instance and read it with .get(); that passed while
+// production was broken, because a Headers instance does hold the token -- it
+// just vanishes when spread into `{ 'Content-Type': ..., ...options.headers }`.
+function lastHeaders(operation: ReturnType<typeof vi.fn>): Record<string, string> {
   const call = operation.mock.calls.at(-1)
   expect(call).toBeDefined()
 
   const headers = call?.[0]?.headers
-  expect(headers).toBeInstanceOf(Headers)
-  if (!(headers instanceof Headers)) {
-    throw new TypeError('Expected client call to use Headers')
-  }
+  expect(headers).not.toBeInstanceOf(Headers)
 
-  return headers
+  const spread: Record<string, string> = { ...headers }
+  return spread
 }
 
 afterEach(() => {
@@ -147,7 +150,7 @@ describe('authApiOptions', () => {
 
     const options = authApiOptions(true)
 
-    expect(options.headers.get('X-XSRF-TOKEN')).toBe('test-csrf-token')
+    expect({ ...options.headers }['X-XSRF-TOKEN']).toBe('test-csrf-token')
   })
 
   it('sends CSRF token for mutating account calls', async () => {
@@ -156,6 +159,6 @@ describe('authApiOptions', () => {
 
     await updateProfile({ firstName: 'Bob', lastName: 'Jones' })
 
-    expect(lastHeaders(vi.mocked(updateProfileRequest)).get('X-XSRF-TOKEN')).toBe('account-token')
+    expect(lastHeaders(vi.mocked(updateProfileRequest))['X-XSRF-TOKEN']).toBe('account-token')
   })
 })
