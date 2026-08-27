@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.1](https://github.com/JorisJonkers-dev/home-portal/compare/v0.4.0...v0.4.1) (2026-08-27)
+
+
+### Bug Fixes
+
+* **auth:** stop dropping the CSRF header on every mutating request ([#32](https://github.com/JorisJonkers-dev/home-portal/issues/32)) ([f63dad8](https://github.com/JorisJonkers-dev/home-portal/commit/f63dad8570e65076932a64e5a44f1301e4620e2b))
+
 ## [0.4.0](https://github.com/JorisJonkers-dev/home-portal/compare/v0.3.2...v0.4.0) (2026-08-26)
 
 
