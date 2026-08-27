@@ -5,7 +5,12 @@ export { AUTH_BASE_URL }
 export interface AuthApiOptions {
   baseUrl: string
   credentials: RequestCredentials
-  headers: Headers
+  // A plain object, not a Headers instance. The generated client merges with
+  // `headers: { 'Content-Type': ..., ...options.headers }`, and spreading a
+  // Headers instance yields {} -- its entries are internal, not own enumerable
+  // properties. Passing a Headers here silently dropped X-XSRF-TOKEN from every
+  // mutating request, which auth-api answers with 401.
+  headers: Record<string, string>
   throwOnError: true
 }
 
@@ -16,10 +21,10 @@ export function getCsrfToken(): string | null {
 }
 
 export function authApiOptions(includeCsrf = false): AuthApiOptions {
-  const headers = new Headers()
+  const headers: Record<string, string> = {}
   const csrf = includeCsrf ? getCsrfToken() : null
   if (csrf) {
-    headers.set('X-XSRF-TOKEN', csrf)
+    headers['X-XSRF-TOKEN'] = csrf
   }
 
   return {

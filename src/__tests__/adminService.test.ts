@@ -44,17 +44,20 @@ function clientResult<T>(data: T): {
   }
 }
 
-function lastHeaders(operation: ReturnType<typeof vi.fn>): Headers {
+// Returns the headers *after* the object spread the generated client performs,
+// which is the only way this assertion means anything. The helper used to
+// require a Headers instance and read it with .get(); that passed while
+// production was broken, because a Headers instance does hold the token -- it
+// just vanishes when spread into `{ 'Content-Type': ..., ...options.headers }`.
+function lastHeaders(operation: ReturnType<typeof vi.fn>): Record<string, string> {
   const call = operation.mock.calls.at(-1)
   expect(call).toBeDefined()
 
   const headers = call?.[0]?.headers
-  expect(headers).toBeInstanceOf(Headers)
-  if (!(headers instanceof Headers)) {
-    throw new TypeError('Expected client call to use Headers')
-  }
+  expect(headers).not.toBeInstanceOf(Headers)
 
-  return headers
+  const spread: Record<string, string> = { ...headers }
+  return spread
 }
 
 afterEach(() => {
@@ -134,7 +137,7 @@ describe('request details', () => {
 
     await updateUserRole('1', 'ADMIN')
 
-    expect(lastHeaders(vi.mocked(updateRole)).get('X-XSRF-TOKEN')).toBe('test-csrf-token')
+    expect(lastHeaders(vi.mocked(updateRole))['X-XSRF-TOKEN']).toBe('test-csrf-token')
   })
 
   it('updateUserServices sends services array', async () => {
@@ -167,7 +170,7 @@ describe('request details', () => {
 
     await deleteUser('42')
 
-    expect(lastHeaders(vi.mocked(deleteUserRequest)).get('X-XSRF-TOKEN')).toBe('delete-token')
+    expect(lastHeaders(vi.mocked(deleteUserRequest))['X-XSRF-TOKEN']).toBe('delete-token')
   })
 
   it('all requests use credentials include', async () => {
