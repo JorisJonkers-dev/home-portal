@@ -65,6 +65,13 @@ export const SERVICE_REGISTRY: ServiceEntry[] = [
     description: 'AI agents',
   },
   {
+    permission: 'HERMES',
+    label: 'Hermes',
+    url: buildServiceUrl('hermes'),
+    iconUrl: '/icons/hermes.svg',
+    description: 'Autonomous agent dashboard',
+  },
+  {
     permission: 'DASHBOARD',
     label: 'Cluster Dashboard',
     url: buildServiceUrl('dashboard'),
