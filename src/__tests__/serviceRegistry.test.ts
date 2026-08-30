@@ -7,6 +7,7 @@ describe('service registry', () => {
     expect(permissions).toContain('VAULT')
     expect(permissions).toContain('GRAFANA')
     expect(permissions).toContain('AGENTS')
+    expect(permissions).toContain('HERMES')
     expect(permissions).toContain('DASHBOARD')
     expect(permissions).toContain('TRAEFIK')
     expect(permissions).toContain('RABBITMQ')
