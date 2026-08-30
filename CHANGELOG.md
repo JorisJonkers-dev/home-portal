@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.0](https://github.com/JorisJonkers-dev/home-portal/compare/v0.4.1...v0.5.0) (2026-08-30)
+
+
+### Features
+
+* **apps:** add the Hermes tile to MyApps ([#41](https://github.com/JorisJonkers-dev/home-portal/issues/41)) ([2fb5e91](https://github.com/JorisJonkers-dev/home-portal/commit/2fb5e91881384a1139a3d3a57472d2c2d66e45e2))
+
 ## [0.4.1](https://github.com/JorisJonkers-dev/home-portal/compare/v0.4.0...v0.4.1) (2026-08-27)
 
 
