@@ -36,6 +36,20 @@ describe('appsGrid', () => {
     expect(cards).toHaveLength(2)
   })
 
+  // Overleaf is the one tile whose grant is the ONLY gate in front of the
+  // service: Community Edition has no SSO, so the forward-auth middleware and
+  // SERVICE_OVERLEAF are the whole check. A registry entry keyed to a
+  // permission name that auth-api does not issue renders nothing and fails
+  // silently, so the pairing is asserted rather than eyeballed.
+  it('renders the Overleaf card for a grantee, pointing at the right host', () => {
+    const authStore = useAuthStore()
+    authStore.roles = ['ROLE_USER', 'SERVICE_OVERLEAF']
+
+    const wrapper = mountGrid()
+    expect(wrapper.findAll('a')).toHaveLength(1)
+    expect(wrapper.get('a').attributes('href')).toBe('https://overleaf.jorisjonkers.dev/')
+  })
+
   it('renders all services for admin with all permissions', () => {
     const authStore = useAuthStore()
     authStore.roles = [
