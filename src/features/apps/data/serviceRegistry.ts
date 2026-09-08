@@ -183,6 +183,13 @@ export const SERVICE_REGISTRY: ServiceEntry[] = [
     iconUrl: '/icons/outline.svg',
     description: 'Shared wiki and notes',
   },
+  {
+    permission: 'OVERLEAF',
+    label: 'Overleaf',
+    url: buildServiceUrl('overleaf'),
+    iconUrl: '/icons/overleaf.svg',
+    description: 'Collaborative LaTeX editor',
+  },
 ]
 
 export function getAccessibleServices(permissions: string[]): ServiceEntry[] {
