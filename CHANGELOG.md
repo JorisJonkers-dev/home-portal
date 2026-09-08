@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.6.0](https://github.com/JorisJonkers-dev/home-portal/compare/v0.5.0...v0.6.0) (2026-09-08)
+
+
+### Features
+
+* **apps:** add the Overleaf tile to MyApps ([#43](https://github.com/JorisJonkers-dev/home-portal/issues/43)) ([f0c0dc4](https://github.com/JorisJonkers-dev/home-portal/commit/f0c0dc41205e46bc31eb5b3ef710f5d6d725e33c))
+
 ## [0.5.0](https://github.com/JorisJonkers-dev/home-portal/compare/v0.4.1...v0.5.0) (2026-08-30)
 
 
