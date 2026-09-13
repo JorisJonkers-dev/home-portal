@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.7.0](https://github.com/JorisJonkers-dev/home-portal/compare/v0.6.0...v0.7.0) (2026-09-13)
+
+
+### Features
+
+* **home:** replace Personal Stack with an estate project overview ([#51](https://github.com/JorisJonkers-dev/home-portal/issues/51)) ([506fe46](https://github.com/JorisJonkers-dev/home-portal/commit/506fe46a70d07fecaff072d7b31dc54e845d8109))
+
 ## [0.6.0](https://github.com/JorisJonkers-dev/home-portal/compare/v0.5.0...v0.6.0) (2026-09-08)
 
 
