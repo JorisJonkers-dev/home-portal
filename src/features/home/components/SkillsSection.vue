@@ -1,10 +1,6 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
-import {
-  barWidth,
-  SKILL_CATEGORIES,
-  SOFT_SKILLS,
-} from '../data/skills'
+import { barWidth, SKILL_CATEGORIES, SOFT_SKILLS } from '../data/skills'
 
 const { t } = useI18n()
 </script>
@@ -22,10 +18,7 @@ const { t } = useI18n()
 
       <div class="mt-6 grid gap-8 sm:mt-10 sm:gap-12 md:grid-cols-2">
         <div v-for="category in SKILL_CATEGORIES" :key="category.key">
-          <h3
-            class="mb-4 font-mono text-xs font-semibold uppercase tracking-widest"
-            :class="category.accent"
-          >
+          <h3 class="mb-4 font-mono text-xs font-semibold uppercase tracking-widest" :class="category.accent">
             {{ t(`skills.categories.${category.key}`) }}
           </h3>
 

@@ -73,10 +73,7 @@ const statusPill = computed(() => {
         :class="repo.url ? 'transition-colors hover:border-terminal-green/40 hover:text-terminal-green' : ''"
       >
         {{ repo.name }}
-        <span
-          v-if="repo.private"
-          data-testid="repo-private"
-          class="ml-1 text-[var(--color-text-subtle)]"
+        <span v-if="repo.private" data-testid="repo-private" class="ml-1 text-[var(--color-text-subtle)]"
           >· private</span
         >
       </component>

@@ -32,14 +32,16 @@ interface Project {
 ## Cards (order fixed)
 
 ### 1 `homelab-platform` — Homelab Platform
+
 - status: production
 - githubUrl: `flux-modules`
-- repos: `platform/fleet-infra`*, `platform/nix-config`*, `platform/homelab-inventory`*, `platform/homelab-collections`*, `platform/flux-modules`, `platform/nixos-modules`
+- repos: `platform/fleet-infra`_, `platform/nix-config`_, `platform/homelab-inventory`_, `platform/homelab-collections`_, `platform/flux-modules`, `platform/nixos-modules`
 - tags: k3s, NixOS, Nix, Flux CD, Kustomize, Traefik, Vault, Longhorn, Garage, PostgreSQL, Grafana, Loki, Tempo
 - EN: A k3s cluster on NixOS spanning seven nodes over two sites — a cloud VPS in Frankfurt and six machines on the home network — reconciled from git by Flux CD and Kustomize. Traefik terminates ingress with Let's Encrypt and forward-auth, MetalLB and cert-manager carry load balancing and certificates, Vault projects every secret through the Vault Secrets Operator, Longhorn and Garage provide block and object storage, and the whole fleet is observable end to end: Alloy collects, Loki and Tempo hold logs and traces, Pyroscope profiles, Gatus probes every route, and Grafana Operator renders the dashboards. Host inventory is the source of truth for nodes, roles and labels; Flux module packs and NixOS modules are shared, versioned artifacts rather than per-repo copies.
 - NL: Een k3s-cluster op NixOS over zeven nodes verdeeld over twee locaties — een cloud-VPS in Frankfurt en zes machines in het thuisnetwerk — waarbij alle state vanuit git wordt gereconcilieerd door Flux CD en Kustomize. Traefik verzorgt ingress met Let's Encrypt en forward-auth, MetalLB en cert-manager regelen load balancing en certificaten, Vault projecteert secrets via de Vault Secrets Operator, Longhorn en Garage leveren block- en objectopslag, en de hele fleet is end-to-end observeerbaar: Alloy verzamelt, Loki en Tempo bewaren logs en traces, Pyroscope profileert, Gatus bewaakt elke route en Grafana Operator rendert de dashboards. Host-inventaris is de bron van waarheid voor nodes, rollen en labels; Flux-modulepacks en NixOS-modules zijn gedeelde, versiebeheerde artefacten in plaats van kopieën per repo.
 
 ### 2 `deployment` — Deployment Model & Compiler
+
 - status: in-progress
 - githubUrl: `deploy-config-schema` (it renders the estate today)
 - repos: `libs/deploy-config-schema`, `libs/deploy-kit`, `platform/homelab-collections`*
@@ -48,6 +50,7 @@ interface Project {
 - NL: Een service deployen op de estate betekent intent schrijven, geen manifests. De configuratie is een getypeerd model — service-intent per domein, een resolved deployment die als pure functie van gepinde inputs wordt afgeleid, en een deliverable set van gerenderde Flux- en Kustomize-bestanden — gevalideerd tegen JSON Schema's en vastgelegd met een onveranderlijke image lock. deploy-config-schema is de compiler die de estate vandaag rendert; deploy-kit is de opvolger: hetzelfde drielaagse model uitgeschreven als specificatie, met een decision record achter elke regel, en de compiler die daarheen wordt overgebracht. Collection specs voor third-party en platformservices staan in een eigen bron-van-waarheid-repo.
 
 ### 3 `agents` — Agent Platform
+
 - status: production
 - githubUrl: `agent-kit`
 - repos: `libs/agent-kit`, `inbox/openrouter-model-catalog`
@@ -56,6 +59,7 @@ interface Project {
 - NL: Een zelfgehost agentplatform rond Hermes Agent, draaiend als langlopende in-cluster gateway met een webdashboard, bring-your-own-key tegen OpenRouter. Skills en MCP-servers worden gegenereerd vanuit één registry, zodat een toevoeging tegelijk de gateway en de workstation bereikt; de modelcatalogus is een volledig gegenereerd manifest van elk tool-calling model dat de provider aanbiedt. Een eerder runner-platform — een Kotlin/Spring-orchestratie-API, een Vue-workspace-UI en runner-pods per workspace — is geparkeerd op nul replicas, overbodig gemaakt door dit platform en intact gehouden in plaats van verwijderd.
 
 ### 4 `knowledge` — Knowledge System
+
 - status: production
 - githubUrl: `knowledge`
 - repos: `services/knowledge`, `data/knowledge-vault`*
@@ -64,6 +68,7 @@ interface Project {
 - NL: Een knowledge base die in de eerste plaats een git-repository is: notities worden geschreven in Obsidian — in-cluster in de browser, of op de desktop via LiveSync — en via MCP aan agents aangeboden als lees- en schrijftools. Een Kotlin/Spring-API beheert persistentie, zoeken en het MCP-oppervlak op PostgreSQL en RabbitMQ; een Python-ingestworker verbruikt berichten, schrijft notities en werkt metadata bij. Retrieval en verrijking draaien ernaast als in-cluster services — LightRAG, Ollama en Hindsight — zodat agents dezelfde vault bevragen die een mens bewerkt.
 
 ### 5 `auth` — Auth Platform
+
 - status: production
 - githubUrl: `auth-api`
 - repos: `services/auth-api`, `ui/auth-ui`, `libs/authz-model`, `ui/home-portal`
@@ -72,6 +77,7 @@ interface Project {
 - NL: Eén identiteit voor alles op het domein: een Kotlin/Spring authorization server voor login, sessie, profiel, TOTP MFA, wachtwoordreset, e-mailbevestiging en OAuth2/OIDC, waarbij Traefik forward-auth hem voor elke interne route zet. De autorisatievocabulaire wordt vanuit één model gepubliceerd als gegenereerde TypeScript- en Kotlin-constanten, zodat geen enkele consumer een rol- of permissiestring kopieert. Een Vue-frontend verzorgt de login- en accountflows, en dit portaal gebruikt dezelfde sessie om de applicatie-launcher van de estate te worden.
 
 ### 6 `backup-dr` — Backup & Disaster Recovery
+
 - status: production
 - githubUrl: `flux-modules`
 - repos: `platform/flux-modules`, `platform/fleet-infra`*
@@ -80,6 +86,7 @@ interface Project {
 - NL: Backups zijn geplande jobs met een bijbehorende verify-stap, geen map vol dumps. Vault maakt raft-snapshots, PostgreSQL logische dumps en RabbitMQ exporteert zijn definities — elk met een eigen CronJob — terwijl de backup-, restore- en verify-scripts in een gedeeld platformartefact staan dat op caller-owned paden werkt. Een run is pas klaar als de verify-script zegt dat het archief terug te zetten is, en de restore-pad wordt op dezelfde manier geoefend als de backup gepland is.
 
 ### 7 `tooling` — Estate Tooling
+
 - status: production
 - githubUrl: `repo-template`
 - repos: `tooling/repo-template`, `tooling/github-workflows`, `tooling/github-defaults`, `tooling/gradle-conventions`, `tooling/openapi-client-gradle`, `tooling/api-contract-checks`, `tooling/renovate-config`, `libs/kotlin-spring-commons`, `libs/vue-web-commons`, `tools/stalwart-provisioner`, `tests/stack-integration-tests`, `workspace`
@@ -88,6 +95,7 @@ interface Project {
 - NL: Conventies zijn repositories, geen documenten. Elke repo start vanuit een template met de gedeelde branch-ruleset, de enige verplichte check `Pipeline Complete` en release-please-versiebeheer; CI- en release-workflows, Gradle-conventionplugins, een OpenAPI-clientplugin, contract-driftchecks en de Renovate-preset worden één keer gepubliceerd en per tag geconsumeerd. Gedeelde Kotlin/Spring- en Vue-commons worden als echte pakketten geleverd. Contract-drift breekt de build in plaats van de runtime, hele-stack integratietests gaten een deploy-PR tegen dezelfde gepinde images die hij gaat releasen, en de estate is samengesteld als een dev workspace van submodules zodat een cross-repo wijziging één PR is.
 
 ### 8 `esa-blueshell` — ESA Blueshell Website
+
 - status: production
 - githubUrl: `ESA-Blueshell/website`, liveUrl: `https://esa-blueshell.nl`
 - repos: `ESA-Blueshell/website`

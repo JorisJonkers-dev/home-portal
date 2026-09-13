@@ -71,9 +71,7 @@ describe('portfolioCard repos', () => {
   })
 
   it('names a private repo without linking it', () => {
-    const wrapper = mountCard(
-      project({ repos: [{ name: 'platform/fleet-infra', private: true }] }),
-    )
+    const wrapper = mountCard(project({ repos: [{ name: 'platform/fleet-infra', private: true }] }))
     const repo = wrapper.find('[data-testid="repo"]')
     expect(repo.text()).toContain('platform/fleet-infra')
     expect(repo.element.tagName).not.toBe('A')

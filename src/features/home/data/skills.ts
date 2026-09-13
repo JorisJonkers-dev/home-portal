@@ -108,12 +108,7 @@ export const SKILL_CATEGORIES: SkillCategory[] = [
   },
 ]
 
-export const SOFT_SKILLS = [
-  'Project Management',
-  'Public Relations',
-  'Communication',
-  'Critical Thinking',
-]
+export const SOFT_SKILLS = ['Project Management', 'Public Relations', 'Communication', 'Critical Thinking']
 
 /** Widest bar in the Languages category; matches the longest tenure. */
 const MAX_YEARS = 6

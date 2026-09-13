@@ -1,7 +1,7 @@
 # Home Portal
 
 The public portfolio and application launcher for `jorisjonkers.dev`. This
-context is about how the portal *presents* the estate to a visitor; it owns no
+context is about how the portal _presents_ the estate to a visitor; it owns no
 platform vocabulary of its own beyond the presentation terms below.
 
 ## Language
