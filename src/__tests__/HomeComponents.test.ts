@@ -111,7 +111,7 @@ describe('projectShowcase', () => {
 
   it('renders project entries', () => {
     const wrapper = mount(ProjectShowcase, { global: { plugins: plugins() } })
-    expect(wrapper.text()).toContain('Personal Stack')
+    expect(wrapper.text()).toContain('Homelab Platform')
     expect(wrapper.text()).toContain('ESA Blueshell Website')
   })
 
