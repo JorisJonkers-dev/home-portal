@@ -96,7 +96,7 @@ export default {
       'deployment': {
         title: 'Deployment Model & Compiler',
         description:
-          'Deploying a service means writing intent, not manifests. The configuration is a typed model — service intent per domain, a resolved deployment derived as a pure function of pinned inputs, and a deliverable set of rendered Flux and Kustomize files — validated against JSON Schemas and locked by an immutable image lock. The schema package is the compiler that renders the estate today; deploy-kit is the successor: the same three-layer model written up as a specification, with a decision record behind every rule, and the compiler being ported into it. Collection specs for third-party and platform services live in their own source-of-truth repository.',
+          'Deploying a service to the estate means writing intent, not manifests. The configuration is a typed model — service intent per domain, a resolved deployment derived as a pure function of pinned inputs, and a deliverable set of rendered Flux and Kustomize files — validated against JSON Schemas and locked by an immutable image lock. The schema package is the compiler that renders the estate today; deploy-kit is the successor: the same three-layer model written up as a specification, with a decision record behind every rule, and the compiler being ported into it. Collection specs for third-party and platform services live in their own source-of-truth repository.',
       },
       'agents': {
         title: 'Agent Platform',
@@ -106,7 +106,7 @@ export default {
       'knowledge': {
         title: 'Knowledge System',
         description:
-          'A knowledge base that is a git repository first: notes are written in Obsidian, in-cluster in the browser or on the desktop through LiveSync, and served to agents over MCP as read and write tools. A Kotlin and Spring API owns persistence, search and the MCP surface on PostgreSQL and RabbitMQ; a Python ingest worker consumes messages, writes notes and updates metadata. Retrieval and enrichment run alongside it as in-cluster services, so agents query the same vault a human edits.',
+          'A knowledge base that is a git repository first: notes are written in Obsidian, in-cluster in the browser or on the desktop through LiveSync, and served to agents over MCP as read and write tools. A Kotlin and Spring API owns persistence, search and the MCP surface on PostgreSQL and RabbitMQ; a Python ingest worker consumes messages, writes notes and updates metadata. Retrieval and enrichment run alongside it as in-cluster services — LightRAG, Ollama and Hindsight — so agents query the same vault a human edits.',
       },
       'auth': {
         title: 'Auth Platform',
@@ -121,7 +121,7 @@ export default {
       'tooling': {
         title: 'Estate Tooling',
         description:
-          'Conventions are repositories, not documents. Every repo is bootstrapped from a template carrying the shared branch ruleset, a single required status check and release-please versioning; CI and release workflows, Gradle convention plugins, an OpenAPI client plugin, contract-drift checks and the Renovate preset are published once and consumed by tag. Shared Kotlin and Vue commons ship as real packages, contract drift fails the build rather than the runtime, whole-stack integration tests gate a deploy pull request against the same pinned images it is about to release, and the estate is assembled as a dev workspace of submodules so a cross-repo change is one pull request.',
+          'Conventions are repositories, not documents. Every repo is bootstrapped from a template carrying the shared branch ruleset, the single required `Pipeline Complete` check and release-please versioning; CI and release workflows, Gradle convention plugins, an OpenAPI client plugin, contract-drift checks and the Renovate preset are published once and consumed by tag. Shared Kotlin and Vue commons ship as real packages, contract drift fails the build rather than the runtime, whole-stack integration tests gate a deploy pull request against the same pinned images it is about to release, and the estate is assembled as a dev workspace of submodules so a cross-repo change is one pull request.',
       },
       'esa-blueshell': {
         title: 'ESA Blueshell Website',

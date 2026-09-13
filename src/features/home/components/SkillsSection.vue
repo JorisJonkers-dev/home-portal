@@ -29,8 +29,7 @@ const { t } = useI18n()
             {{ t(`skills.categories.${category.key}`) }}
           </h3>
 
-          <!-- Languages carry tenure bars; every other category is pills. -->
-          <ul v-if="category.key === 'languages'" class="space-y-3">
+          <ul v-if="category.display === 'bars'" class="space-y-3">
             <li v-for="skill in category.skills" :key="skill.name">
               <div class="flex items-center justify-between font-mono text-sm">
                 <span class="text-[var(--color-text-primary)]">{{ skill.name }}</span>

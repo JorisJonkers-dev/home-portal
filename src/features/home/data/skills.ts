@@ -16,16 +16,18 @@ export interface SkillCategory {
   key: string
   /** Heading colour class. */
   accent: string
+  /** Languages carry tenure bars; every other category is pills. */
+  display: 'bars' | 'pills'
   skills: Skill[]
 }
 
 export const SKILL_CATEGORIES: SkillCategory[] = [
   {
     key: 'languages',
+    display: 'bars',
     accent: 'text-terminal-cyan',
     skills: [
-      { name: 'TypeScript', years: 6 },
-      { name: 'JavaScript', years: 6 },
+      { name: 'JavaScript / TypeScript', years: 6 },
       { name: 'Java', years: 6 },
       { name: 'Python', years: 6 },
       { name: 'Bash', years: 6 },
@@ -36,6 +38,7 @@ export const SKILL_CATEGORIES: SkillCategory[] = [
   },
   {
     key: 'frameworks',
+    display: 'pills',
     accent: 'text-terminal-purple',
     skills: [
       { name: 'Spring Boot' },
@@ -48,6 +51,7 @@ export const SKILL_CATEGORIES: SkillCategory[] = [
   },
   {
     key: 'platform',
+    display: 'pills',
     accent: 'text-terminal-amber',
     skills: [
       { name: 'k3s' },
@@ -68,6 +72,7 @@ export const SKILL_CATEGORIES: SkillCategory[] = [
   },
   {
     key: 'observability',
+    display: 'pills',
     accent: 'text-terminal-green',
     skills: [
       { name: 'Grafana' },
@@ -80,6 +85,7 @@ export const SKILL_CATEGORIES: SkillCategory[] = [
   },
   {
     key: 'agents',
+    display: 'pills',
     accent: 'text-accent-light',
     skills: [
       { name: 'Hermes Agent' },
@@ -91,6 +97,7 @@ export const SKILL_CATEGORIES: SkillCategory[] = [
   },
   {
     key: 'delivery',
+    display: 'pills',
     accent: 'text-terminal-cyan',
     skills: [
       { name: 'Gradle' },
@@ -98,7 +105,6 @@ export const SKILL_CATEGORIES: SkillCategory[] = [
       { name: 'Renovate' },
       { name: 'OpenAPI' },
       { name: 'pnpm' },
-      { name: 'Docker' },
     ],
   },
 ]
@@ -111,13 +117,17 @@ export const SOFT_SKILLS = [
 ]
 
 /** Widest bar in the Languages category; matches the longest tenure. */
-export const MAX_YEARS = 6
+const MAX_YEARS = 6
 
 export function barWidth(years: number): string {
   return `${(years / MAX_YEARS) * 100}%`
 }
 
+/**
+ * Every name a project tag may use. A slash-joined row such as
+ * "JavaScript / TypeScript" answers to either half.
+ */
 export const ALL_SKILL_NAMES: string[] = [
-  ...SKILL_CATEGORIES.flatMap((c) => c.skills.map((s) => s.name)),
+  ...SKILL_CATEGORIES.flatMap((c) => c.skills.flatMap((s) => s.name.split(' / '))),
   ...SOFT_SKILLS,
 ]

@@ -1,24 +1,15 @@
 <script setup lang="ts">
-import type { Project } from '../types'
+import type { Project, ProjectStatus } from '../types'
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 
 const props = defineProps<{
-  project: {
-    id: string
-    status?: Project['status']
-    title: string
-    description: string
-    technologies: string[]
-    repos?: Project['repos']
-    githubUrl?: string
-    liveUrl?: string
-  }
+  project: Project
 }>()
 
 const { t } = useI18n()
 
-const STATUS_CLASSES: Record<string, string> = {
+const STATUS_CLASSES: Partial<Record<ProjectStatus, string>> = {
   'in-progress': 'border-terminal-amber/30 bg-terminal-amber/10 text-terminal-amber',
   'parked': 'border-surface-border bg-surface-elevated text-[var(--color-text-subtle)]',
 }

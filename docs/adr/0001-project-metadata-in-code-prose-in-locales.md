@@ -14,6 +14,17 @@ would never change is not translatable data, and one copy cannot drift from
 itself. A unit test can now enforce that every project `id` has both
 translations and that every tag on a card is also listed in the Skills section.
 
+## Verification
+
+Both guards were shown to fail before being satisfied, then the data reverted:
+
+- renaming a project tag from `JSON Schema` to `JSONSchema` failed
+  `uses only tags that appear in the skills section`;
+- renaming the Dutch `esa-blueshell` entry to `other-thing` failed
+  `has a Dutch title and description for every project`,
+  `has no locale entry for a project that no longer exists` and
+  `keeps both locales in step`.
+
 ## Considered options
 
 - Keep everything in the locale files (status quo): simplest, but two copies of

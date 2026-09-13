@@ -28,13 +28,19 @@ describe('skillsSection', () => {
     for (const skill of SOFT_SKILLS) expect(text).toContain(skill)
   })
 
-  it('renders tenure bars for languages only', () => {
+  it('renders tenure bars for the languages category only', () => {
     const wrapper = mountSection()
     const languages = SKILL_CATEGORIES.find((c) => c.key === 'languages')!
     expect(wrapper.text()).toContain(`${languages.skills[0]?.years}y`)
     // Every other category renders pills, so no other "Ny" label appears.
     const tenures = wrapper.text().match(/\d+y/g) ?? []
     expect(tenures).toHaveLength(languages.skills.length)
+  })
+
+  it('keeps JavaScript and TypeScript on one row', () => {
+    const languages = SKILL_CATEGORIES.find((c) => c.key === 'languages')!
+    expect(languages.skills.map((s) => s.name)).toContain('JavaScript / TypeScript')
+    expect(languages.skills).toHaveLength(7)
   })
 
   it('has a Dutch heading for every category', () => {

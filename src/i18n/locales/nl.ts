@@ -96,7 +96,7 @@ export default {
       'deployment': {
         title: 'Deployment Model & Compiler',
         description:
-          'Een service deployen betekent intent schrijven, geen manifests. De configuratie is een getypeerd model — service-intent per domein, een resolved deployment die als pure functie van gepinde inputs wordt afgeleid, en een deliverable set van gerenderde Flux- en Kustomize-bestanden — gevalideerd tegen JSON Schema’s en vastgelegd met een onveranderlijke image lock. Het schema-pakket is de compiler die de estate vandaag rendert; deploy-kit is de opvolger: hetzelfde drielaagse model uitgeschreven als specificatie, met een decision record achter elke regel, en de compiler die daarheen wordt overgebracht. Collection specs voor third-party en platformservices staan in een eigen bron-van-waarheid-repository.',
+          'Een service deployen op de estate betekent intent schrijven, geen manifests. De configuratie is een getypeerd model — service-intent per domein, een resolved deployment die als pure functie van gepinde inputs wordt afgeleid, en een deliverable set van gerenderde Flux- en Kustomize-bestanden — gevalideerd tegen JSON Schema’s en vastgelegd met een onveranderlijke image lock. Het schema-pakket is de compiler die de estate vandaag rendert; deploy-kit is de opvolger: hetzelfde drielaagse model uitgeschreven als specificatie, met een decision record achter elke regel, en de compiler die daarheen wordt overgebracht. Collection specs voor third-party en platformservices staan in een eigen bron-van-waarheid-repository.',
       },
       'agents': {
         title: 'Agent Platform',
@@ -106,7 +106,7 @@ export default {
       'knowledge': {
         title: 'Kennissysteem',
         description:
-          'Een knowledge base die in de eerste plaats een git-repository is: notities worden geschreven in Obsidian, in-cluster in de browser of op de desktop via LiveSync, en via MCP aan agents aangeboden als lees- en schrijftools. Een Kotlin- en Spring-API beheert persistentie, zoeken en het MCP-oppervlak op PostgreSQL en RabbitMQ; een Python-ingestworker verbruikt berichten, schrijft notities en werkt metadata bij. Retrieval en verrijking draaien ernaast als in-cluster services, zodat agents dezelfde vault bevragen die een mens bewerkt.',
+          'Een knowledge base die in de eerste plaats een git-repository is: notities worden geschreven in Obsidian, in-cluster in de browser of op de desktop via LiveSync, en via MCP aan agents aangeboden als lees- en schrijftools. Een Kotlin- en Spring-API beheert persistentie, zoeken en het MCP-oppervlak op PostgreSQL en RabbitMQ; een Python-ingestworker verbruikt berichten, schrijft notities en werkt metadata bij. Retrieval en verrijking draaien ernaast als in-cluster services — LightRAG, Ollama en Hindsight — zodat agents dezelfde vault bevragen die een mens bewerkt.',
       },
       'auth': {
         title: 'Auth Platform',
@@ -121,7 +121,7 @@ export default {
       'tooling': {
         title: 'Estate Tooling',
         description:
-          'Conventies zijn repositories, geen documenten. Elke repo start vanuit een template met de gedeelde branch-ruleset, één verplichte statuscheck en release-please-versiebeheer; CI- en release-workflows, Gradle-conventionplugins, een OpenAPI-clientplugin, contract-driftchecks en de Renovate-preset worden één keer gepubliceerd en per tag geconsumeerd. Gedeelde Kotlin- en Vue-commons worden als echte pakketten geleverd, contract-drift breekt de build in plaats van de runtime, hele-stack integratietests gaten een deploy-pull-request tegen dezelfde gepinde images die hij gaat releasen, en de estate is samengesteld als een dev workspace van submodules zodat een cross-repo wijziging één pull request is.',
+          'Conventies zijn repositories, geen documenten. Elke repo start vanuit een template met de gedeelde branch-ruleset, de enige verplichte check `Pipeline Complete` en release-please-versiebeheer; CI- en release-workflows, Gradle-conventionplugins, een OpenAPI-clientplugin, contract-driftchecks en de Renovate-preset worden één keer gepubliceerd en per tag geconsumeerd. Gedeelde Kotlin- en Vue-commons worden als echte pakketten geleverd, contract-drift breekt de build in plaats van de runtime, hele-stack integratietests gaten een deploy-pull-request tegen dezelfde gepinde images die hij gaat releasen, en de estate is samengesteld als een dev workspace van submodules zodat een cross-repo wijziging één pull request is.',
       },
       'esa-blueshell': {
         title: 'ESA Blueshell Website',
