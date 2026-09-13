@@ -1,16 +1,21 @@
 <script setup lang="ts">
+import type { Project } from '../types'
+import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { PROJECTS } from '../data/projects'
 import PortfolioCard from './PortfolioCard.vue'
 
-const { t, tm } = useI18n()
+const { t } = useI18n()
 
-interface ProjectEntry {
-  title: string
-  description: string
-  technologies: string[]
-  githubUrl?: string
-  liveUrl?: string
-}
+// Metadata comes from code; the title and description come from the active
+// locale. Computing them keeps a locale switch reactive.
+const projects = computed<Project[]>(() =>
+  PROJECTS.map((meta) => ({
+    ...meta,
+    title: t(`projects.entries.${meta.id}.title`),
+    description: t(`projects.entries.${meta.id}.description`),
+  })),
+)
 </script>
 
 <template>
@@ -24,7 +29,7 @@ interface ProjectEntry {
         {{ t('projects.subtitle') }}
       </p>
       <div class="mt-6 grid gap-4 sm:mt-10 sm:gap-6 sm:grid-cols-2">
-        <PortfolioCard v-for="(project, i) in tm('projects.entries') as ProjectEntry[]" :key="i" :project="project" />
+        <PortfolioCard v-for="project in projects" :key="project.id" :project="project" />
       </div>
     </div>
   </section>

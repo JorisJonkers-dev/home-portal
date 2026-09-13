@@ -83,31 +83,63 @@ export default {
   projects: {
     title: 'Projecten',
     subtitle: 'Dingen die ik heb gebouwd of momenteel aan bouw.',
-    entries: [
-      {
-        title: 'Personal Stack',
+    status: {
+      'in-progress': 'in ontwikkeling',
+      'parked': 'geparkeerd',
+    },
+    entries: {
+      'homelab-platform': {
+        title: 'Homelab Platform',
         description:
-          'Een zelfgehost GitOps-platform: een k3s-cluster op NixOS-nodes verspreid over een cloud-VPS en een thuisnetwerk, waarbij alle state vanuit git wordt gereconcilieerd door Flux CD en Kustomize en image-uitrol wordt geautomatiseerd door Keel. Traefik verzorgt ingress, Vault beheert secrets en een stack met Grafana, Tempo en Loki levert observability. Het draait een auth-service (Spring Authorization Server met TOTP MFA), een AI-assistent en Vue.js-frontends, allemaal gebouwd met hexagonale architectuur en afgedwongen door ArchUnit.',
-        technologies: ['Kotlin', 'Spring Boot', 'Vue.js', 'k3s', 'NixOS', 'Flux CD', 'Traefik', 'Vault', 'PostgreSQL'],
-        githubUrl: 'https://github.com/JorisJonkers-dev/home-portal',
+          'Een k3s-cluster op NixOS over zeven nodes verdeeld over twee locaties — een cloud-VPS in Frankfurt en zes machines in het thuisnetwerk — waarbij alle state vanuit git wordt gereconcilieerd door Flux CD en Kustomize. Traefik verzorgt ingress met Let’s Encrypt en forward-auth, MetalLB en cert-manager regelen load balancing en certificaten, Vault projecteert secrets via de Vault Secrets Operator, en Longhorn en Garage leveren block- en objectopslag. De hele fleet is end-to-end observeerbaar: Alloy verzamelt, Loki en Tempo bewaren logs en traces, Pyroscope profileert, Gatus bewaakt elke route en Grafana Operator rendert de dashboards. Host-inventaris is de bron van waarheid voor nodes, rollen en labels; Flux-modulepacks en NixOS-modules zijn gedeelde, versiebeheerde artefacten in plaats van kopieën per repo.',
       },
-      {
+      'deployment': {
+        title: 'Deployment Model & Compiler',
+        description:
+          'Een service deployen op de estate betekent intent schrijven, geen manifests. De configuratie is een getypeerd model — service-intent per domein, een resolved deployment die als pure functie van gepinde inputs wordt afgeleid, en een deliverable set van gerenderde Flux- en Kustomize-bestanden — gevalideerd tegen JSON Schema’s en vastgelegd met een onveranderlijke image lock. Het schema-pakket is de compiler die de estate vandaag rendert; deploy-kit is de opvolger: hetzelfde drielaagse model uitgeschreven als specificatie, met een decision record achter elke regel, en de compiler die daarheen wordt overgebracht. Collection specs voor third-party en platformservices staan in een eigen bron-van-waarheid-repository.',
+      },
+      'agents': {
+        title: 'Agent Platform',
+        description:
+          'Een zelfgehost agentplatform rond Hermes Agent, draaiend als langlopende in-cluster gateway met een webdashboard, bring-your-own-key tegen OpenRouter. Skills en MCP-servers worden gegenereerd vanuit één registry, zodat een toevoeging tegelijk de gateway en de workstation bereikt, en de modelcatalogus is een volledig gegenereerd manifest van elk tool-calling model dat de provider aanbiedt. Een eerder runner-platform — een Kotlin- en Spring-orchestratie-API, een Vue-workspace-UI en runner-pods per workspace — is geparkeerd op nul replicas, overbodig gemaakt door dit platform en intact gehouden in plaats van verwijderd.',
+      },
+      'knowledge': {
+        title: 'Kennissysteem',
+        description:
+          'Een knowledge base die in de eerste plaats een git-repository is: notities worden geschreven in Obsidian, in-cluster in de browser of op de desktop via LiveSync, en via MCP aan agents aangeboden als lees- en schrijftools. Een Kotlin- en Spring-API beheert persistentie, zoeken en het MCP-oppervlak op PostgreSQL en RabbitMQ; een Python-ingestworker verbruikt berichten, schrijft notities en werkt metadata bij. Retrieval en verrijking draaien ernaast als in-cluster services — LightRAG, Ollama en Hindsight — zodat agents dezelfde vault bevragen die een mens bewerkt.',
+      },
+      'auth': {
+        title: 'Auth Platform',
+        description:
+          'Eén identiteit voor alles op het domein: een Kotlin- en Spring authorization server voor login, sessie, profiel, TOTP MFA, wachtwoordreset, e-mailbevestiging en OAuth2/OIDC, waarbij Traefik forward-auth hem voor elke interne route zet. De autorisatievocabulaire wordt vanuit één model gepubliceerd als gegenereerde TypeScript- en Kotlin-constanten, zodat geen enkele consumer een rol- of permissiestring kopieert. Een Vue-frontend verzorgt de login- en accountflows, en dit portaal gebruikt dezelfde sessie om de applicatie-launcher van de estate te worden.',
+      },
+      'backup-dr': {
+        title: 'Backup & Disaster Recovery',
+        description:
+          'Backups zijn geplande jobs met een bijbehorende verify-stap, geen map vol dumps. Vault maakt raft-snapshots, PostgreSQL logische dumps en RabbitMQ exporteert zijn definities, elk met een eigen CronJob, terwijl de backup-, restore- en verify-scripts in een gedeeld platformartefact staan dat op eigen paden van de aanroeper werkt. Een run is pas klaar als de verify-script zegt dat het archief terug te zetten is, en de restore-pad wordt op dezelfde manier geoefend als de backup gepland is.',
+      },
+      'tooling': {
+        title: 'Estate Tooling',
+        description:
+          'Conventies zijn repositories, geen documenten. Elke repo start vanuit een template met de gedeelde branch-ruleset, de enige verplichte check `Pipeline Complete` en release-please-versiebeheer; CI- en release-workflows, Gradle-conventionplugins, een OpenAPI-clientplugin, contract-driftchecks en de Renovate-preset worden één keer gepubliceerd en per tag geconsumeerd. Gedeelde Kotlin- en Vue-commons worden als echte pakketten geleverd, contract-drift breekt de build in plaats van de runtime, hele-stack integratietests gaten een deploy-pull-request tegen dezelfde gepinde images die hij gaat releasen, en de estate is samengesteld als een dev workspace van submodules zodat een cross-repo wijziging één pull request is.',
+      },
+      'esa-blueshell': {
         title: 'ESA Blueshell Website',
         description:
-          "Full-stack platform voor de grootste studentenesportsvereniging van Nederland. Beheert lidmaatschappen, evenementen, contributies en online inschrijvingen. Uitgerold op een k3s-cluster met Flux CD, Kustomize en Keel, achter Traefik met Let's Encrypt TLS, plus Stalwart voor e-mail.",
-        technologies: ['Spring Boot 4', 'Kotlin', 'Vue.js 3', 'TypeScript', 'k3s', 'Flux CD'],
-        liveUrl: 'https://esa-blueshell.nl',
-        githubUrl: 'https://github.com/ESA-Blueshell/website',
+          'Full-stack platform voor de grootste studentenesportsvereniging van Nederland: ledenadministratie, evenementbeheer, contributies en online inschrijvingen. Uitgerold op een k3s-cluster met Flux CD en Kustomize, achter Traefik met Let’s Encrypt TLS, plus Stalwart voor e-mail.',
       },
-    ],
+    },
   },
   skills: {
     title: 'Vaardigheden',
     subtitle: 'Talen, frameworks en tools waar ik mee werk.',
     categories: {
       languages: 'Programmeertalen',
-      frameworks: 'Frameworks & Technologieën',
-      tools: 'Tools & Platformen',
+      frameworks: 'Frameworks',
+      platform: 'Platform & Infrastructuur',
+      observability: 'Observability',
+      agents: 'Agents & AI',
+      delivery: 'Build & Delivery',
       soft: 'Persoonlijke Vaardigheden',
     },
   },
@@ -127,7 +159,7 @@ export default {
     nl: 'Nederlands',
   },
   footer: {
-    built: 'Gebouwd met Vue.js, Spring Boot & Kotlin',
+    built: 'Gebouwd met Vue.js, Spring Boot & Kotlin — uitgerold met Flux CD op k3s',
     source: 'Broncode',
   },
 }
