@@ -56,7 +56,6 @@ export const SKILL_CATEGORIES: SkillCategory[] = [
     skills: [
       { name: 'k3s' },
       { name: 'NixOS' },
-      { name: 'Nix' },
       { name: 'Flux CD' },
       { name: 'Kustomize' },
       { name: 'Traefik' },
@@ -67,7 +66,6 @@ export const SKILL_CATEGORIES: SkillCategory[] = [
       { name: 'cert-manager' },
       { name: 'PostgreSQL' },
       { name: 'RabbitMQ' },
-      { name: 'Docker' },
     ],
   },
   {
@@ -105,6 +103,7 @@ export const SKILL_CATEGORIES: SkillCategory[] = [
       { name: 'Renovate' },
       { name: 'OpenAPI' },
       { name: 'pnpm' },
+      { name: 'Docker' },
     ],
   },
 ]

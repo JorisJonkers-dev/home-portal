@@ -50,6 +50,12 @@ describe('skillsSection', () => {
     }
   })
 
+  it('lists each skill in exactly one category', () => {
+    const names = SKILL_CATEGORIES.flatMap((c) => c.skills.map((s) => s.name))
+    const duplicates = names.filter((n, i) => names.indexOf(n) !== i)
+    expect(duplicates, `duplicated skills: ${duplicates.join(', ')}`).toEqual([])
+  })
+
   it('drops the retired stack', () => {
     const text = mountSection().text()
     expect(text).not.toContain('Keel')
