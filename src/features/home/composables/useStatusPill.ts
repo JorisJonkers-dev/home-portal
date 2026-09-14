@@ -14,6 +14,18 @@ export interface StatusPill {
 }
 
 /**
+ * The pill for one status, in the language of the translator handed in.
+ * Production projects get no pill at all — the absence of a label says it.
+ *
+ * Pure, so a list view can map over it where a composable per row would not
+ * work; the composable below is the reactive wrapper around it.
+ */
+export function statusPill(t: (key: string) => string, status?: ProjectStatus): StatusPill | undefined {
+  if (!status || status === 'production') return undefined
+  return { label: t(`projects.status.${status}`), class: STATUS_CLASSES[status] }
+}
+
+/**
  * The status pill as it appears next to a project title, in the active locale.
  * Production projects get no pill at all — the absence of a label says it.
  */
@@ -22,9 +34,5 @@ export function useStatusPill(
 ): ComputedRef<StatusPill | undefined> {
   const { t } = useI18n()
 
-  return computed(() => {
-    const value = toValue(status)
-    if (!value || value === 'production') return undefined
-    return { label: t(`projects.status.${value}`), class: STATUS_CLASSES[value] }
-  })
+  return computed(() => statusPill(t, toValue(status)))
 }

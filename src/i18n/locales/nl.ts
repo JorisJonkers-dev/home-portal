@@ -90,7 +90,6 @@ export default {
     indexTitle: 'Alle projecten',
     indexSubtitle: 'Elk project in de estate, één compacte rij — open er een voor het volledige verhaal.',
     status: {
-      'production': 'productie',
       'in-progress': 'in ontwikkeling',
       'parked': 'geparkeerd',
     },
