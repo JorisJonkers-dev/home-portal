@@ -28,13 +28,34 @@ describe('skillsSection', () => {
     for (const skill of SOFT_SKILLS) expect(text).toContain(skill)
   })
 
-  it('renders tenure bars for the languages category only', () => {
+  it('renders tenure bars for the hands-on categories only', () => {
     const wrapper = mountSection()
-    const languages = SKILL_CATEGORIES.find((c) => c.key === 'languages')!
-    expect(wrapper.text()).toContain(`${languages.skills[0]?.years}y`)
-    // Every other category renders pills, so no other "Ny" label appears.
+    const bars = SKILL_CATEGORIES.filter((c) => c.display === 'bars')
+    const withYears = bars.flatMap((c) => c.skills).filter((s) => s.years)
+    // One "Ny" label per bar; pill categories contribute none.
     const tenures = wrapper.text().match(/\d+y/g) ?? []
-    expect(tenures).toHaveLength(languages.skills.length)
+    expect(tenures).toHaveLength(withYears.length)
+    expect(bars.map((c) => c.key)).toEqual(['languages', 'frameworks'])
+  })
+
+  it('gives every bar skill a year and every pill skill none', () => {
+    for (const category of SKILL_CATEGORIES) {
+      for (const skill of category.skills) {
+        if (category.display === 'bars') {
+          expect(skill.years, `${skill.name} is a bar but has no years`).toBeTypeOf('number')
+        } else {
+          expect(skill.years, `${skill.name} is a pill but has years`).toBeUndefined()
+        }
+      }
+    }
+  })
+
+  it('keeps runtimes out of the frameworks category', () => {
+    const frameworks = SKILL_CATEGORIES.find((c) => c.key === 'frameworks')!
+    const names = frameworks.skills.map((s) => s.name)
+    for (const runtime of ['k3s', 'NixOS', 'Nomad', 'Docker']) {
+      expect(names, `${runtime} is not a framework`).not.toContain(runtime)
+    }
   })
 
   it('keeps JavaScript and TypeScript on one row', () => {

@@ -136,7 +136,8 @@ export default {
     categories: {
       languages: 'Programmeertalen',
       frameworks: 'Frameworks',
-      platform: 'Platform & Infrastructuur',
+      platform: 'Platform',
+      infrastructure: 'Infrastructuur',
       observability: 'Observability',
       agents: 'Agents & AI',
       delivery: 'Build & Delivery',
