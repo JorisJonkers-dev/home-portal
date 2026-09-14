@@ -83,7 +83,14 @@ export default {
   projects: {
     title: 'Projects',
     subtitle: 'Things I have built or am building.',
+    backToIndex: 'All projects',
+    notFound: 'That project does not exist.',
+    highlights: 'Highlights',
+    repositories: 'Repositories',
+    indexTitle: 'All projects',
+    indexSubtitle: 'Every project in the estate, one dense row each — open one for the full write-up.',
     status: {
+      'production': 'production',
       'in-progress': 'in progress',
       'parked': 'parked',
     },

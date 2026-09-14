@@ -83,7 +83,14 @@ export default {
   projects: {
     title: 'Projecten',
     subtitle: 'Dingen die ik heb gebouwd of momenteel aan bouw.',
+    backToIndex: 'Alle projecten',
+    notFound: 'Dit project bestaat niet.',
+    highlights: 'Hoogtepunten',
+    repositories: "Repository's",
+    indexTitle: 'Alle projecten',
+    indexSubtitle: 'Elk project in de estate, één compacte rij — open er een voor het volledige verhaal.',
     status: {
+      'production': 'productie',
       'in-progress': 'in ontwikkeling',
       'parked': 'geparkeerd',
     },
