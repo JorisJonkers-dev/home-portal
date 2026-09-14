@@ -33,6 +33,13 @@ describe('projectShowcase', () => {
     expect(paths).toEqual(PROJECTS.map((p) => `~/projects/${p.id}`))
   })
 
+  it('offers a link to the projects overview', () => {
+    const wrapper = mountShowcase()
+    const link = wrapper.find('[data-testid="projects-overview-link"]')
+    expect(link.attributes('href')).toBe('/projects')
+    expect(link.text()).toContain(en.projects.viewAll)
+  })
+
   it('links every card to its own detail page', () => {
     const wrapper = mountShowcase()
     const hrefs = wrapper.findAll('[data-testid="card-link"]').map((n) => n.attributes('href'))

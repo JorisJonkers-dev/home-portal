@@ -88,7 +88,8 @@ export default {
     highlights: 'Highlights',
     repositories: 'Repositories',
     indexTitle: 'All projects',
-    indexSubtitle: 'Every project in the estate, one dense row each — open one for the full write-up.',
+    indexSubtitle: 'Every project in the estate, one card each — open one for the full write-up.',
+    viewAll: 'View all projects',
     status: {
       'in-progress': 'in progress',
       'parked': 'parked',
