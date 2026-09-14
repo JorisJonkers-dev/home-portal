@@ -28,7 +28,7 @@ watchEffect(() => {
     <div class="mx-auto max-w-3xl">
       <RouterLink
         data-testid="back-link"
-        to="/projects"
+        :to="{ path: '/', hash: '#projects' }"
         class="font-mono text-xs text-[var(--color-text-muted)] transition-colors hover:text-terminal-green"
       >
         &larr; {{ t('projects.backToIndex') }}

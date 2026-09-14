@@ -1,30 +1,30 @@
 import { expect, test } from '@playwright/test'
 
-test('opens a project from the index and returns to it via the back link', async ({ page }) => {
-  await page.goto('/projects')
+test('opens a project from the home page and returns via the back link', async ({ page }) => {
+  await page.goto('/#projects')
 
-  const projectRows = page.getByTestId('project-row-link')
-  await expect(projectRows).toHaveCount(8)
+  const cards = page.getByTestId('card-link')
+  await expect(cards).toHaveCount(8)
 
-  const project = projectRows.first()
-  const title = (await project.getByTestId('project-row-title').textContent())?.trim() ?? ''
-  const href = (await project.getAttribute('href')) ?? ''
-  expect(title).not.toBe('')
+  const card = cards.first()
+  const href = (await card.getAttribute('href')) ?? ''
   expect(href).toMatch(/^\/projects\/[a-z0-9-]+$/)
 
-  await project.click()
+  const title = (await page.getByTestId('card').first().locator('h3').textContent())?.trim() ?? ''
+  expect(title).not.toBe('')
+
+  await card.click()
 
   await expect(page).toHaveURL(href)
   await expect(page.getByTestId('detail-title')).toHaveText(title)
   await expect(page.getByTestId('detail-path')).toContainText(`~/projects/${href.replace('/projects/', '')}`)
 
   const backLink = page.getByTestId('back-link')
-  await expect(backLink).toHaveAttribute('href', '/projects')
+  await expect(backLink).toHaveAttribute('href', '/#projects')
   await backLink.click()
 
-  await expect(page).toHaveURL('/projects')
-  await expect(page.getByTestId('projects-index-title')).toBeVisible()
-  await expect(projectRows).toHaveCount(8)
+  await expect(page).toHaveURL('/#projects')
+  await expect(cards).toHaveCount(8)
 })
 
 test('unknown project id shows the not-found state', async ({ page }) => {

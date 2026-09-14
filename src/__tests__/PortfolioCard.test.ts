@@ -15,7 +15,7 @@ function createTestRouter() {
     history: createMemoryHistory(),
     routes: [
       { path: '/', component: { template: '<div />' } },
-      { path: '/projects', redirect: '/' },
+
       { path: '/projects/:id', name: 'project-detail', component: { template: '<div />' } },
     ],
   })
