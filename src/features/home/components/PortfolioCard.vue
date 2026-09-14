@@ -1,31 +1,38 @@
 <script setup lang="ts">
-import type { Project, ProjectStatus } from '../types'
+import type { Project } from '../types'
 import { computed } from 'vue'
-import { useI18n } from 'vue-i18n'
+import { RouterLink } from 'vue-router'
+import { useStatusPill } from '../composables/useStatusPill'
 
 const props = defineProps<{
   project: Project
 }>()
 
-const { t } = useI18n()
+const statusPill = useStatusPill(() => props.project.status)
 
-const STATUS_CLASSES: Partial<Record<ProjectStatus, string>> = {
-  'in-progress': 'border-terminal-amber/30 bg-terminal-amber/10 text-terminal-amber',
-  'parked': 'border-surface-border bg-surface-elevated text-[var(--color-text-subtle)]',
-}
-
-const statusPill = computed(() => {
-  const status = props.project.status
-  if (!status || status === 'production') return undefined
-  return { label: t(`projects.status.${status}`), class: STATUS_CLASSES[status] }
-})
+const detailTo = computed(() => `/projects/${props.project.id}`)
 </script>
 
 <template>
   <article
     data-testid="card"
-    class="group flex flex-col rounded-xl border border-surface-border bg-surface-elevated p-6 transition-all duration-300 hover:border-accent/40 hover:shadow-lg hover:shadow-accent/5"
+    class="group relative flex flex-col rounded-xl border border-surface-border bg-surface-elevated p-6 transition-all duration-300 hover:border-accent/40 hover:shadow-lg hover:shadow-accent/5"
   >
+    <!--
+      Stretched link: one absolute overlay makes the whole card a single tab
+      stop that navigates to the detail page. The card cannot simply be wrapped
+      in an anchor — the `github` and `live` links below would nest inside it,
+      which breaks keyboard and screen-reader navigation. Those two links carry
+      `relative z-10` so they stay above the overlay and independently
+      clickable and focusable.
+    -->
+    <RouterLink
+      data-testid="card-link"
+      :to="detailTo"
+      :aria-label="project.title"
+      class="absolute inset-0 rounded-xl focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+    />
+
     <!-- Terminal-style title bar -->
     <div class="mb-4 flex items-center gap-2">
       <div class="flex gap-1.5">
@@ -48,8 +55,8 @@ const statusPill = computed(() => {
     <h3 class="text-lg font-semibold text-[var(--color-text-primary)] group-hover:text-accent-light">
       {{ project.title }}
     </h3>
-    <p class="mt-2 flex-1 text-sm leading-relaxed text-[var(--color-text-muted)]">
-      {{ project.description }}
+    <p data-testid="card-summary" class="mt-2 flex-1 text-sm leading-relaxed text-[var(--color-text-muted)]">
+      {{ project.summary }}
     </p>
     <div class="mt-4 flex flex-wrap gap-2">
       <span
@@ -60,29 +67,11 @@ const statusPill = computed(() => {
         {{ tag }}
       </span>
     </div>
-    <div v-if="project.repos?.length" class="mt-4 flex flex-wrap gap-2">
-      <component
-        :is="repo.url ? 'a' : 'span'"
-        v-for="repo in project.repos"
-        :key="repo.name"
-        :href="repo.url"
-        :target="repo.url ? '_blank' : undefined"
-        :rel="repo.url ? 'noopener noreferrer' : undefined"
-        data-testid="repo"
-        class="rounded-md border border-surface-border bg-surface-card px-2 py-0.5 font-mono text-xs text-[var(--color-text-muted)]"
-        :class="repo.url ? 'transition-colors hover:border-terminal-green/40 hover:text-terminal-green' : ''"
-      >
-        {{ repo.name }}
-        <span v-if="repo.private" data-testid="repo-private" class="ml-1 text-[var(--color-text-subtle)]"
-          >· private</span
-        >
-      </component>
-    </div>
     <div class="mt-6 flex gap-4 font-mono text-sm">
       <a
         v-if="project.githubUrl"
         :href="project.githubUrl"
-        class="text-[var(--color-text-muted)] transition-colors hover:text-terminal-green"
+        class="relative z-10 text-[var(--color-text-muted)] transition-colors hover:text-terminal-green"
         rel="noopener noreferrer"
         target="_blank"
       >
@@ -91,7 +80,7 @@ const statusPill = computed(() => {
       <a
         v-if="project.liveUrl"
         :href="project.liveUrl"
-        class="text-[var(--color-text-muted)] transition-colors hover:text-terminal-cyan"
+        class="relative z-10 text-[var(--color-text-muted)] transition-colors hover:text-terminal-cyan"
         rel="noopener noreferrer"
         target="_blank"
       >

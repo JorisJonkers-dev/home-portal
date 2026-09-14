@@ -1,21 +1,13 @@
 <script setup lang="ts">
-import type { Project } from '../types'
-import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { PROJECTS } from '../data/projects'
+import { useProjects } from '../composables/useProjects'
 import PortfolioCard from './PortfolioCard.vue'
 
 const { t } = useI18n()
 
-// Metadata comes from code; the title and description come from the active
-// locale. Computing them keeps a locale switch reactive.
-const projects = computed<Project[]>(() =>
-  PROJECTS.map((meta) => ({
-    ...meta,
-    title: t(`projects.entries.${meta.id}.title`),
-    description: t(`projects.entries.${meta.id}.description`),
-  })),
-)
+// Metadata comes from code; the prose comes from the active locale. Composing
+// them keeps a locale switch reactive.
+const projects = useProjects()
 </script>
 
 <template>

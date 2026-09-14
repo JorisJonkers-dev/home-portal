@@ -13,6 +13,17 @@ const routes: RouteRecordRaw[] = [
     component: () => import('@/features/apps/views/AppsView.vue'),
   },
   {
+    // The index was removed: projects are reached from the home showcase.
+    // Kept as a redirect so an old bookmark still lands on the overview.
+    path: '/projects',
+    redirect: { path: '/', hash: '#projects' },
+  },
+  {
+    path: '/projects/:id',
+    name: 'project-detail',
+    component: () => import('@/features/home/views/ProjectDetailView.vue'),
+  },
+  {
     path: '/account',
     name: 'account',
     component: () => import('@/features/account/views/AccountView.vue'),

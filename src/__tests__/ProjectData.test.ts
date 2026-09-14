@@ -4,7 +4,7 @@ import { ALL_SKILL_NAMES } from '../features/home/data/skills'
 import en from '../i18n/locales/en'
 import nl from '../i18n/locales/nl'
 
-type Entries = Record<string, { title?: string; description?: string }>
+type Entries = Record<string, { title?: string; description?: string; summary?: string; highlights?: string[] }>
 
 const enEntries: Entries = en.projects.entries
 const nlEntries: Entries = nl.projects.entries
@@ -25,6 +25,26 @@ describe('project prose', () => {
       expect(entry, `missing NL entry for ${project.id}`).toBeDefined()
       expect(entry?.title, `missing NL title for ${project.id}`).toBeTruthy()
       expect(entry?.description, `missing NL description for ${project.id}`).toBeTruthy()
+    }
+  })
+
+  it('has an English summary and highlights for every project', () => {
+    for (const project of PROJECTS) {
+      const entry = enEntries[project.id]
+      expect(entry, `missing EN entry for ${project.id}`).toBeDefined()
+      expect(entry?.summary, `missing EN summary for ${project.id}`).toBeTruthy()
+      expect(entry?.highlights, `missing EN highlights for ${project.id}`).toBeDefined()
+      expect(entry?.highlights?.length, `empty EN highlights for ${project.id}`).toBeGreaterThan(0)
+    }
+  })
+
+  it('has a Dutch summary and highlights for every project', () => {
+    for (const project of PROJECTS) {
+      const entry = nlEntries[project.id]
+      expect(entry, `missing NL entry for ${project.id}`).toBeDefined()
+      expect(entry?.summary, `missing NL summary for ${project.id}`).toBeTruthy()
+      expect(entry?.highlights, `missing NL highlights for ${project.id}`).toBeDefined()
+      expect(entry?.highlights?.length, `empty NL highlights for ${project.id}`).toBeGreaterThan(0)
     }
   })
 
@@ -56,6 +76,14 @@ describe('project tag vocabulary', () => {
 })
 
 describe('project repos', () => {
+  it('describes every repo', () => {
+    for (const project of PROJECTS) {
+      for (const repo of project.repos ?? []) {
+        expect(repo.description.trim(), `${repo.name} has no description`).not.toBe('')
+      }
+    }
+  })
+
   it('never links a private repo', () => {
     for (const project of PROJECTS) {
       for (const repo of project.repos ?? []) {
