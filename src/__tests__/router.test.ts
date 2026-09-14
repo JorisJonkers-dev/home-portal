@@ -14,6 +14,18 @@ describe('router', () => {
     expect(route?.name).toBe('apps')
   })
 
+  it('has a projects index route at /projects', () => {
+    const route = router.getRoutes().find((r) => r.path === '/projects')
+    expect(route).toBeDefined()
+    expect(route?.name).toBe('projects')
+  })
+
+  it('has a project detail route at /projects/:id', () => {
+    const route = router.getRoutes().find((r) => r.path === '/projects/:id')
+    expect(route).toBeDefined()
+    expect(route?.name).toBe('project-detail')
+  })
+
   it('has an auth callback route at /callback', () => {
     const route = router.getRoutes().find((r) => r.path === '/callback')
     expect(route).toBeDefined()
