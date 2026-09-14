@@ -90,41 +90,104 @@ export default {
     entries: {
       'homelab-platform': {
         title: 'Homelab Platform',
+        summary: 'Seven-node k3s cluster on NixOS, reconciled from git across two sites.',
+        highlights: [
+          'Seven nodes over a Frankfurt VPS and the home network',
+          'Flux CD and Kustomize reconcile every change from git',
+          'Vault projects secrets through the Vault Secrets Operator',
+          'Longhorn block storage and Garage object storage',
+          'Loki, Tempo, Pyroscope and Gatus for full observability',
+        ],
         description:
           'A k3s cluster on NixOS spanning seven nodes over two sites — a cloud VPS in Frankfurt and six machines on the home network — reconciled from git by Flux CD and Kustomize. Traefik terminates ingress with Let’s Encrypt and forward-auth, MetalLB and cert-manager carry load balancing and certificates, Vault projects every secret through the Vault Secrets Operator, and Longhorn and Garage provide block and object storage. The whole fleet is observable end to end: Alloy collects, Loki and Tempo hold logs and traces, Pyroscope profiles, Gatus probes every route, and Grafana Operator renders the dashboards. Host inventory is the source of truth for nodes, roles and labels; Flux module packs and NixOS modules are shared, versioned artifacts rather than per-repo copies.',
       },
       'deployment': {
         title: 'Deployment Model & Compiler',
+        summary: 'Typed deployment intent compiled into rendered Flux and Kustomize files.',
+        highlights: [
+          'Service intent per domain, resolved as a pure function',
+          'Output is a deliverable set of rendered manifests',
+          'Validated against JSON Schemas with an immutable image lock',
+          'deploy-kit documents every rule as a decision record',
+        ],
         description:
           'Deploying a service to the estate means writing intent, not manifests. The configuration is a typed model — service intent per domain, a resolved deployment derived as a pure function of pinned inputs, and a deliverable set of rendered Flux and Kustomize files — validated against JSON Schemas and locked by an immutable image lock. The schema package is the compiler that renders the estate today; deploy-kit is the successor: the same three-layer model written up as a specification, with a decision record behind every rule, and the compiler being ported into it. Collection specs for third-party and platform services live in their own source-of-truth repository.',
       },
       'agents': {
         title: 'Agent Platform',
+        summary: 'Self-hosted agent gateway with shared skills and generated MCP servers.',
+        highlights: [
+          'Hermes Agent runs as a long-lived in-cluster gateway',
+          'Bring-your-own-key access to models via OpenRouter',
+          'Skills and MCP servers generated from one registry',
+          'Model catalog generated from every tool-calling model',
+          'Earlier runner platform parked at zero replicas',
+        ],
         description:
           'A self-hosted agent platform built around Hermes Agent, running as a long-lived in-cluster gateway with its web dashboard, bring-your-own-key against OpenRouter. Skills and MCP servers are generated from a single registry, so one addition reaches the gateway and the workstation at once, and the model catalog is a full generated manifest of every tool-calling model the provider advertises. An earlier runner platform — a Kotlin and Spring orchestration API, a Vue workspace UI and per-workspace runner pods — is parked at zero replicas, superseded by this one and kept intact rather than deleted.',
       },
       'knowledge': {
         title: 'Knowledge System',
+        summary: 'Git-backed knowledge base edited in Obsidian and served to agents over MCP.',
+        highlights: [
+          'Notes live in a git repository and Obsidian vault',
+          'Kotlin and Spring API on PostgreSQL and RabbitMQ',
+          'Python ingest worker consumes messages and updates metadata',
+          'Read and write tools exposed to agents over MCP',
+          'LightRAG, Ollama and Hindsight run in-cluster',
+        ],
         description:
           'A knowledge base that is a git repository first: notes are written in Obsidian, in-cluster in the browser or on the desktop through LiveSync, and served to agents over MCP as read and write tools. A Kotlin and Spring API owns persistence, search and the MCP surface on PostgreSQL and RabbitMQ; a Python ingest worker consumes messages, writes notes and updates metadata. Retrieval and enrichment run alongside it as in-cluster services — LightRAG, Ollama and Hindsight — so agents query the same vault a human edits.',
       },
       'auth': {
         title: 'Auth Platform',
+        summary: 'One domain-wide identity with forward-auth in front of every route.',
+        highlights: [
+          'OAuth2/OIDC, TOTP MFA, password reset and email confirmation',
+          'Kotlin and Spring authorization server at the core',
+          'Traefik forward-auth guards every internal route',
+          'Authorization vocabulary generated as TypeScript and Kotlin constants',
+          'Shared session turns this portal into the app launcher',
+        ],
         description:
           'One identity for everything on the domain: a Kotlin and Spring authorization server handling login, session, profile, TOTP MFA, password reset, email confirmation and OAuth2/OIDC, with Traefik forward-auth putting it in front of every internal route. The authorization vocabulary is published as generated TypeScript and Kotlin constants from one model, so no consumer copies a role or permission string. A Vue frontend covers the login and account flows, and this portal uses the same session to become the estate’s application launcher.',
       },
       'backup-dr': {
         title: 'Backup & Disaster Recovery',
+        summary: 'Scheduled backups that finish only once a verify proves restorability.',
+        highlights: [
+          'Vault raft snapshots, PostgreSQL dumps, RabbitMQ definitions',
+          'Every backup runs on its own Kubernetes CronJob',
+          'Shared backup, restore and verify platform artifact',
+          'A run ends only when the verify script passes',
+          'Restore path exercised as routinely as the backup',
+        ],
         description:
           'Backups are scheduled jobs with a matching verify step, not a folder of dumps. Vault takes raft snapshots, PostgreSQL takes logical dumps, and RabbitMQ exports its definitions, each on its own CronJob, while the backup, restore and verify scripts live in a shared platform artifact that operates on caller-owned paths. A run is only done when the verify script says the archive is restorable, and the restore path is exercised the same way the backup is scheduled.',
       },
       'tooling': {
         title: 'Estate Tooling',
+        summary: 'Shared conventions published once as repositories and consumed by tag.',
+        highlights: [
+          'Template repo with branch ruleset and release-please versioning',
+          'Gradle conventions and an OpenAPI client plugin',
+          'Contract drift fails the build, not the runtime',
+          'Stack integration tests gate deploy pull requests',
+          'Estate assembled as a dev workspace of submodules',
+        ],
         description:
           'Conventions are repositories, not documents. Every repo is bootstrapped from a template carrying the shared branch ruleset, the single required `Pipeline Complete` check and release-please versioning; CI and release workflows, Gradle convention plugins, an OpenAPI client plugin, contract-drift checks and the Renovate preset are published once and consumed by tag. Shared Kotlin and Vue commons ship as real packages, contract drift fails the build rather than the runtime, whole-stack integration tests gate a deploy pull request against the same pinned images it is about to release, and the estate is assembled as a dev workspace of submodules so a cross-repo change is one pull request.',
       },
       'esa-blueshell': {
         title: 'ESA Blueshell Website',
+        summary: 'Membership and event platform for a large student esports association.',
+        highlights: [
+          'Membership, events, contributions and online signups',
+          'Spring Boot and Kotlin backend with a Vue frontend',
+          'Deployed to k3s with Flux CD and Kustomize',
+          'Traefik ingress with Let’s Encrypt TLS',
+          'Stalwart handles the association’s email',
+        ],
         description:
           'Full-stack platform for the Netherlands’ largest student esports association: membership management, event administration, contribution tracking and online signups. Deployed to a k3s cluster with Flux CD and Kustomize, behind Traefik with Let’s Encrypt TLS, plus Stalwart for email.',
       },
