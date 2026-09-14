@@ -17,7 +17,9 @@ const project = useProject(() => {
 const statusPill = useStatusPill(() => project.value?.status)
 
 watchEffect(() => {
-  document.title = `${project.value?.title ?? t('projects.notFound')} — jorisjonkers.dev`
+  // An unknown id has no title to use, so the page keeps its own name rather
+  // than titling the tab with the not-found sentence.
+  document.title = project.value ? `${project.value.title} — jorisjonkers.dev` : 'jorisjonkers.dev'
 })
 </script>
 

@@ -1,36 +1,27 @@
 <script setup lang="ts">
-import type { StatusPill } from '../composables/useStatusPill'
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { RouterLink } from 'vue-router'
-import { useStatusPill } from '../composables/useStatusPill'
-import { PROJECTS } from '../data/projects'
+import { useProjects } from '../composables/useProjects'
+import { statusPill } from '../composables/useStatusPill'
 
 const { t } = useI18n()
 
-interface ProjectRow {
-  id: string
-  title: string
-  summary: string
-  pill: ReturnType<typeof useStatusPill>['value']
-}
+// The same joined projects the home page and the detail page use, so a title
+// or summary cannot read differently here. Composing inside a computed keeps
+// a locale switch reactive.
+const projects = useProjects()
 
-// Metadata comes from code, the prose from the active locale. Composing the
-// rows in a computed (instead of once at setup) keeps a locale switch reactive.
-const rows = computed<ProjectRow[]>(() =>
-  PROJECTS.map((project) => ({
+// A row cannot call a composable per item, so the pill is derived through the
+// same pure function the composable wraps: production stays unmarked here too.
+const rows = computed(() =>
+  projects.value.map((project) => ({
     id: project.id,
-    title: t(`projects.entries.${project.id}.title`),
-    summary: t(`projects.entries.${project.id}.summary`),
-    pill: statusPillFor(project.status),
+    title: project.title,
+    summary: project.summary,
+    pill: statusPill(t, project.status),
   })),
 )
-
-// The pill is shared with the card so both surfaces mark a project the same
-// way: production carries no label, in-progress is amber, parked is grey.
-function statusPillFor(status: (typeof PROJECTS)[number]['status']): StatusPill | undefined {
-  return useStatusPill(() => status).value
-}
 </script>
 
 <template>
