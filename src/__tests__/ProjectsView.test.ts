@@ -59,6 +59,15 @@ describe('projectsView', () => {
     expect(wrapper.find('[data-testid="projects-index-title"]').text()).toContain(en.projects.indexTitle)
   })
 
+  it('leaves a production project unmarked, like the card does', () => {
+    const wrapper = mountView()
+    // CONTEXT.md: production is "running, unmarked". Only in-progress and
+    // parked carry a label, so six of the eight rows show no status pill.
+    const marked = wrapper.findAll('[data-testid="project-row-status"]')
+    const expected = PROJECTS.filter((p) => p.status && p.status !== 'production')
+    expect(marked).toHaveLength(expected.length)
+  })
+
   it('renders in Dutch when the locale is Dutch', () => {
     const wrapper = mountView('nl')
     const entry = entryOf('nl', 'knowledge')
