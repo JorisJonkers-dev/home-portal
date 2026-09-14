@@ -88,7 +88,8 @@ export default {
     highlights: 'Hoogtepunten',
     repositories: "Repository's",
     indexTitle: 'Alle projecten',
-    indexSubtitle: 'Elk project in de estate, één compacte rij — open er een voor het volledige verhaal.',
+    indexSubtitle: 'Elk project in de estate, één kaart — open er een voor het volledige verhaal.',
+    viewAll: 'Bekijk alle projecten',
     status: {
       'in-progress': 'in ontwikkeling',
       'parked': 'geparkeerd',
