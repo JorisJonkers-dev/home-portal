@@ -1,42 +1,36 @@
 <script setup lang="ts">
-import type { ProjectStatus } from '../types'
+import type { StatusPill } from '../composables/useStatusPill'
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { RouterLink } from 'vue-router'
+import { useStatusPill } from '../composables/useStatusPill'
 import { PROJECTS } from '../data/projects'
 
 const { t } = useI18n()
-
-const STATUS_CLASSES: Record<ProjectStatus, string> = {
-  'production': 'border-terminal-green/30 bg-terminal-green/10 text-terminal-green',
-  'in-progress': 'border-terminal-amber/30 bg-terminal-amber/10 text-terminal-amber',
-  'parked': 'border-surface-border bg-surface-elevated text-[var(--color-text-subtle)]',
-}
 
 interface ProjectRow {
   id: string
   title: string
   summary: string
-  status: ProjectStatus
-  statusLabel: string
-  statusClass: string
+  pill: ReturnType<typeof useStatusPill>['value']
 }
 
 // Metadata comes from code, the prose from the active locale. Composing the
 // rows in a computed (instead of once at setup) keeps a locale switch reactive.
 const rows = computed<ProjectRow[]>(() =>
-  PROJECTS.map((project) => {
-    const status: ProjectStatus = project.status ?? 'production'
-    return {
-      id: project.id,
-      title: t(`projects.entries.${project.id}.title`),
-      summary: t(`projects.entries.${project.id}.summary`),
-      status,
-      statusLabel: t(`projects.status.${status}`),
-      statusClass: STATUS_CLASSES[status],
-    }
-  }),
+  PROJECTS.map((project) => ({
+    id: project.id,
+    title: t(`projects.entries.${project.id}.title`),
+    summary: t(`projects.entries.${project.id}.summary`),
+    pill: statusPillFor(project.status),
+  })),
 )
+
+// The pill is shared with the card so both surfaces mark a project the same
+// way: production carries no label, in-progress is amber, parked is grey.
+function statusPillFor(status: (typeof PROJECTS)[number]['status']): StatusPill | undefined {
+  return useStatusPill(() => status).value
+}
 </script>
 
 <template>
@@ -66,12 +60,14 @@ const rows = computed<ProjectRow[]>(() =>
               {{ row.title }}
             </span>
             <span
+              v-if="row.pill"
               data-testid="project-row-status"
               class="w-fit rounded-md border px-2 py-0.5 font-mono text-xs"
-              :class="row.statusClass"
+              :class="row.pill.class"
             >
-              {{ row.statusLabel }}
+              {{ row.pill.label }}
             </span>
+            <span v-else class="font-mono text-xs text-[var(--color-text-subtle)]">&mdash;</span>
             <span data-testid="project-row-summary" class="truncate text-sm text-[var(--color-text-muted)]">
               {{ row.summary }}
             </span>
