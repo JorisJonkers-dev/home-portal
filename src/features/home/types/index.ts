@@ -18,7 +18,12 @@ export interface Project {
   id: string
   status?: ProjectStatus
   title: string
+  /** One line for the index card; the whole card links to the detail page. */
+  summary: string
+  /** Full prose, shown only on the detail page. */
   description: string
+  /** Bullet points on the detail page. */
+  highlights: string[]
   technologies: string[]
   repos?: ProjectRepo[]
   githubUrl?: string

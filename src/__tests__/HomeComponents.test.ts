@@ -2,6 +2,7 @@ import { mount } from '@vue/test-utils'
 import { createPinia } from 'pinia'
 import { describe, expect, it } from 'vitest'
 import { createI18n } from 'vue-i18n'
+import { createMemoryHistory, createRouter } from 'vue-router'
 import AboutSection from '../features/home/components/AboutSection.vue'
 import ContactSection from '../features/home/components/ContactSection.vue'
 import ExperienceTimeline from '../features/home/components/ExperienceTimeline.vue'
@@ -18,7 +19,12 @@ const i18n = createI18n({
 })
 
 function plugins() {
-  return [createPinia(), i18n]
+  // Project cards carry a stretched RouterLink, so every mount needs a router.
+  const router = createRouter({
+    history: createMemoryHistory(),
+    routes: [{ path: '/projects/:id', name: 'project-detail', component: { template: '<div />' } }],
+  })
+  return [createPinia(), i18n, router]
 }
 
 describe('aboutSection', () => {
