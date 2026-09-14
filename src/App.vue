@@ -12,8 +12,7 @@ const authStore = useAuthStore()
 
 // Home is a single scrollable layout with section anchors. Each anchor
 // link routes back to `/` first so it resolves correctly even when the
-// user is on another route like /admin. Projects is a real route now —
-// `/projects` lists every project, home keeps the showcase as a teaser.
+// user is on another route like /admin.
 const navItems: AppShellNavItem[] = [
   {
     label: t('nav.about'),
@@ -27,7 +26,7 @@ const navItems: AppShellNavItem[] = [
   },
   {
     label: t('nav.projects'),
-    to: { path: '/projects' },
+    to: { path: '/', hash: '#projects' },
     testid: 'nav-projects',
   },
   {

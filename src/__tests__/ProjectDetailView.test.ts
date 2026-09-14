@@ -10,7 +10,6 @@ import nl from '../i18n/locales/nl'
 
 const routes: RouteRecordRaw[] = [
   { path: '/', component: { template: '<div />' } },
-  { path: '/projects', name: 'projects', component: { template: '<div />' } },
   { path: '/projects/:id', name: 'project-detail', component: ProjectDetailView },
 ]
 
@@ -82,11 +81,11 @@ describe('projectDetailView', () => {
     expect(wrapper.findAll('[data-testid="repo"]')).toHaveLength(0)
   })
 
-  it('always offers a translated way back to the index', async () => {
+  it('always offers a translated way back to the projects overview', async () => {
     const { wrapper } = await mountAt('/projects/knowledge')
     const back = wrapper.find('[data-testid="back-link"]')
     expect(back.text()).toContain(en.projects.backToIndex)
-    expect(back.attributes('href')).toBe('/projects')
+    expect(back.attributes('href')).toBe('/#projects')
   })
 
   it('sets the document title to the project', async () => {

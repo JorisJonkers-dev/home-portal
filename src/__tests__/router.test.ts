@@ -14,10 +14,10 @@ describe('router', () => {
     expect(route?.name).toBe('apps')
   })
 
-  it('has a projects index route at /projects', () => {
-    const route = router.getRoutes().find((r) => r.path === '/projects')
-    expect(route).toBeDefined()
-    expect(route?.name).toBe('projects')
+  it('redirects a stale /projects bookmark to the home overview', async () => {
+    await router.push('/projects')
+    expect(router.currentRoute.value.path).toBe('/')
+    expect(router.currentRoute.value.hash).toBe('#projects')
   })
 
   it('has a project detail route at /projects/:id', () => {
