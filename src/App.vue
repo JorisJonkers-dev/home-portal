@@ -10,9 +10,10 @@ import { useAuthStore } from './features/auth'
 const { t } = useI18n()
 const authStore = useAuthStore()
 
-// Home is a single scrollable layout with section anchors. Each
-// nav link routes back to `/` first so anchors resolve correctly
-// even when the user is on another route like /admin.
+// Home is a single scrollable layout with section anchors. Each anchor
+// link routes back to `/` first so it resolves correctly even when the
+// user is on another route like /admin. Projects is a real route now —
+// `/projects` lists every project, home keeps the showcase as a teaser.
 const navItems: AppShellNavItem[] = [
   {
     label: t('nav.about'),
@@ -26,7 +27,7 @@ const navItems: AppShellNavItem[] = [
   },
   {
     label: t('nav.projects'),
-    to: { path: '/', hash: '#projects' },
+    to: { path: '/projects' },
     testid: 'nav-projects',
   },
   {
