@@ -66,7 +66,7 @@ Platform: `k3s`, `NixOS`, `Flux CD`, `Kustomize`, `Traefik`, `Vault`,
 `Longhorn`, `Garage`, `MetalLB`, `cert-manager`, `PostgreSQL`, `RabbitMQ`.
 Observability: `Grafana`, `Loki`, `Tempo`, `Pyroscope`, `Alloy`, `Gatus`.
 Agents & AI: `Hermes Agent`, `MCP`, `Ollama`, `Obsidian`, `JSON Schema`.
-Build & Delivery: `Gradle`, `GitHub Actions`, `Renovate`, `OpenAPI`, `pnpm`,
-`Docker`.
+Build & Delivery: `Gradle`, `GitHub Actions`, `Renovate`, `OpenAPI`, `pnpm`.
+Infrastructure: `k3s`, `NixOS`, `Nomad`, `Docker`.
 _Avoid_: `Kubernetes (k3s)`, `Kubernetes`, `Vue.js 3`, `Vue 3`, `Spring Boot 4`,
 `Flux`, `FluxCD`, `HashiCorp Vault`, `Postgres`, `Hermes`, `Keel`

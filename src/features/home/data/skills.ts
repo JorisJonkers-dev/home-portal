@@ -16,8 +16,14 @@ export interface SkillCategory {
   key: string
   /** Heading colour class. */
   accent: string
-  /** Languages carry tenure bars; every other category is pills. */
+  /**
+   * Bars mean "years of hands-on use", which only makes sense for things you
+   * write or operate directly — languages and frameworks. Everything else is a
+   * pill: a runtime you deploy onto is not a skill you accumulate.
+   */
   display: 'bars' | 'pills'
+  /** Bar fill colour; only read when display is 'bars'. */
+  bar?: string
   skills: Skill[]
 }
 
@@ -26,6 +32,7 @@ export const SKILL_CATEGORIES: SkillCategory[] = [
     key: 'languages',
     display: 'bars',
     accent: 'text-terminal-cyan',
+    bar: 'from-accent to-terminal-cyan',
     skills: [
       { name: 'JavaScript / TypeScript', years: 6 },
       { name: 'Java', years: 6 },
@@ -38,15 +45,15 @@ export const SKILL_CATEGORIES: SkillCategory[] = [
   },
   {
     key: 'frameworks',
-    display: 'pills',
+    display: 'bars',
     accent: 'text-terminal-purple',
+    bar: 'from-terminal-purple to-terminal-pink',
     skills: [
-      { name: 'Spring Boot' },
-      { name: 'Vue.js' },
-      { name: 'Ruby on Rails' },
-      { name: 'Angular' },
-      { name: 'PyTorch' },
-      { name: 'Nomad' },
+      { name: 'Ruby on Rails', years: 4 },
+      { name: 'Vue.js', years: 3 },
+      { name: 'Angular', years: 3 },
+      { name: 'Spring Boot', years: 3 },
+      { name: 'PyTorch', years: 2 },
     ],
   },
   {
@@ -54,8 +61,6 @@ export const SKILL_CATEGORIES: SkillCategory[] = [
     display: 'pills',
     accent: 'text-terminal-amber',
     skills: [
-      { name: 'k3s' },
-      { name: 'NixOS' },
       { name: 'Flux CD' },
       { name: 'Kustomize' },
       { name: 'Traefik' },
@@ -67,6 +72,12 @@ export const SKILL_CATEGORIES: SkillCategory[] = [
       { name: 'PostgreSQL' },
       { name: 'RabbitMQ' },
     ],
+  },
+  {
+    key: 'infrastructure',
+    display: 'pills',
+    accent: 'text-terminal-amber',
+    skills: [{ name: 'k3s' }, { name: 'NixOS' }, { name: 'Nomad' }, { name: 'Docker' }],
   },
   {
     key: 'observability',
@@ -103,7 +114,6 @@ export const SKILL_CATEGORIES: SkillCategory[] = [
       { name: 'Renovate' },
       { name: 'OpenAPI' },
       { name: 'pnpm' },
-      { name: 'Docker' },
     ],
   },
 ]

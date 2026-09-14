@@ -30,7 +30,8 @@ const { t } = useI18n()
               </div>
               <div class="mt-1.5 h-1.5 overflow-hidden rounded-full bg-surface-elevated">
                 <div
-                  class="h-full rounded-full bg-gradient-to-r from-accent to-terminal-cyan transition-all duration-500"
+                  class="h-full rounded-full bg-gradient-to-r transition-all duration-500"
+                  :class="category.bar"
                   :style="{ width: barWidth(skill.years ?? 0) }"
                 />
               </div>
