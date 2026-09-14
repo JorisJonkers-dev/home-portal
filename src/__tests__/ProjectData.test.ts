@@ -76,6 +76,14 @@ describe('project tag vocabulary', () => {
 })
 
 describe('project repos', () => {
+  it('describes every repo', () => {
+    for (const project of PROJECTS) {
+      for (const repo of project.repos ?? []) {
+        expect(repo.description.trim(), `${repo.name} has no description`).not.toBe('')
+      }
+    }
+  })
+
   it('never links a private repo', () => {
     for (const project of PROJECTS) {
       for (const repo of project.repos ?? []) {

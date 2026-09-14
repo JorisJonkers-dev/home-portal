@@ -3,6 +3,11 @@ export type ProjectStatus = 'production' | 'in-progress' | 'parked'
 export interface ProjectRepo {
   /** Workspace path, e.g. `platform/fleet-infra`. Displayed verbatim. */
   name: string
+  /**
+   * One line on what the repo is for. Deliberately untranslated and kept
+   * beside the metadata it describes — see ADR-0002.
+   */
+  description: string
   /** Absent for a private repo, which is named but never linked. */
   url?: string
   private?: boolean

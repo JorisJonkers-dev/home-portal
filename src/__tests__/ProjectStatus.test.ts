@@ -59,7 +59,13 @@ describe('portfolioCard repos', () => {
   it('links a public repo', () => {
     const wrapper = mountCard(
       project({
-        repos: [{ name: 'libs/agent-kit', url: 'https://github.com/JorisJonkers-dev/agent-kit' }],
+        repos: [
+          {
+            name: 'libs/agent-kit',
+            description: 'Generated skills and MCP server registry for every agent',
+            url: 'https://github.com/JorisJonkers-dev/agent-kit',
+          },
+        ],
       }),
     )
     const repo = wrapper.find('[data-testid="repo"]')
@@ -71,7 +77,17 @@ describe('portfolioCard repos', () => {
   })
 
   it('names a private repo without linking it', () => {
-    const wrapper = mountCard(project({ repos: [{ name: 'platform/fleet-infra', private: true }] }))
+    const wrapper = mountCard(
+      project({
+        repos: [
+          {
+            name: 'platform/fleet-infra',
+            description: 'Flux manifests and cluster bootstrapping for the whole fleet',
+            private: true,
+          },
+        ],
+      }),
+    )
     const repo = wrapper.find('[data-testid="repo"]')
     expect(repo.text()).toContain('platform/fleet-infra')
     expect(repo.element.tagName).not.toBe('A')
@@ -83,8 +99,16 @@ describe('portfolioCard repos', () => {
     const wrapper = mountCard(
       project({
         repos: [
-          { name: 'platform/fleet-infra', private: true },
-          { name: 'platform/flux-modules', url: 'https://github.com/JorisJonkers-dev/flux-modules' },
+          {
+            name: 'platform/fleet-infra',
+            description: 'Flux manifests and cluster bootstrapping for the whole fleet',
+            private: true,
+          },
+          {
+            name: 'platform/flux-modules',
+            description: 'Versioned Flux module packs and the shared backup scripts',
+            url: 'https://github.com/JorisJonkers-dev/flux-modules',
+          },
         ],
       }),
     )
