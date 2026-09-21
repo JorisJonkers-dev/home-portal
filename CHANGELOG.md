@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.8.0](https://github.com/JorisJonkers-dev/home-portal/compare/v0.7.0...v0.8.0) (2026-09-21)
+
+
+### Features
+
+* **home:** project detail pages with an end-to-end path through index and detail ([#63](https://github.com/JorisJonkers-dev/home-portal/issues/63)) ([b391de0](https://github.com/JorisJonkers-dev/home-portal/commit/b391de010fcd8b9cd06d88e6d5f2f587ddf31a95))
+* **home:** restore tenure bars for frameworks, split out infrastructure ([#53](https://github.com/JorisJonkers-dev/home-portal/issues/53)) ([b86c5ef](https://github.com/JorisJonkers-dev/home-portal/commit/b86c5efd3131957a27ca39130e196e15bc9d1bb3))
+
 ## [0.7.0](https://github.com/JorisJonkers-dev/home-portal/compare/v0.6.0...v0.7.0) (2026-09-13)
 
 
