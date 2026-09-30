@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.9.0](https://github.com/JorisJonkers-dev/home-portal/compare/v0.8.0...v0.9.0) (2026-09-30)
+
+
+### Features
+
+* **apps:** add the Tribelt stats tile to MyApps ([#66](https://github.com/JorisJonkers-dev/home-portal/issues/66)) ([832c544](https://github.com/JorisJonkers-dev/home-portal/commit/832c54421df7130c3a17122f05386a6594e5640a))
+
 ## [0.8.0](https://github.com/JorisJonkers-dev/home-portal/compare/v0.7.0...v0.8.0) (2026-09-21)
 
 
