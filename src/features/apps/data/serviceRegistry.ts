@@ -190,6 +190,13 @@ export const SERVICE_REGISTRY: ServiceEntry[] = [
     iconUrl: '/icons/overleaf.svg',
     description: 'Collaborative LaTeX editor',
   },
+  {
+    permission: 'TRIBELT',
+    label: 'Tribelt stats',
+    url: buildServiceUrl('tribelt', '/stats'),
+    iconUrl: '/icons/tribelt.svg',
+    description: 'Visitor and crawler stats for the Tribelt mirror',
+  },
 ]
 
 export function getAccessibleServices(permissions: string[]): ServiceEntry[] {

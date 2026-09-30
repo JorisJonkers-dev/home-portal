@@ -50,6 +50,15 @@ describe('appsGrid', () => {
     expect(wrapper.get('a').attributes('href')).toBe('https://overleaf.jorisjonkers.dev/')
   })
 
+  it('renders the Tribelt stats card for a grantee, pointing at the stats path', () => {
+    const authStore = useAuthStore()
+    authStore.roles = ['ROLE_USER', 'SERVICE_TRIBELT']
+
+    const wrapper = mountGrid()
+    expect(wrapper.findAll('a')).toHaveLength(1)
+    expect(wrapper.get('a').attributes('href')).toBe('https://tribelt.jorisjonkers.dev/stats')
+  })
+
   it('renders all services for admin with all permissions', () => {
     const authStore = useAuthStore()
     authStore.roles = [
