@@ -23,6 +23,7 @@ describe('service registry', () => {
     expect(permissions).toContain('QBITTORRENT')
     expect(permissions).toContain('ADGUARD')
     expect(permissions).toContain('WOLF')
+    expect(permissions).toContain('TRIBELT')
   })
 
   it('every entry has required fields', () => {
