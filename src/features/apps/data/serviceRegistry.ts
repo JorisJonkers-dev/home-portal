@@ -197,6 +197,13 @@ export const SERVICE_REGISTRY: ServiceEntry[] = [
     iconUrl: '/icons/tribelt.svg',
     description: 'Visitor and crawler stats for the Tribelt mirror',
   },
+  {
+    permission: 'GRIMOIRE',
+    label: 'Grimoire',
+    url: buildServiceUrl('grimoire'),
+    iconUrl: '/icons/grimoire.svg',
+    description: 'D&D 5e campaigns and live table',
+  },
 ]
 
 export function getAccessibleServices(permissions: string[]): ServiceEntry[] {
