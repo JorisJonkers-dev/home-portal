@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.10.0](https://github.com/JorisJonkers-dev/home-portal/compare/v0.9.0...v0.10.0) (2026-10-01)
+
+
+### Features
+
+* **apps:** add the Grimoire tile and permission to MyApps ([#68](https://github.com/JorisJonkers-dev/home-portal/issues/68)) ([07667e0](https://github.com/JorisJonkers-dev/home-portal/commit/07667e0d2fe7d2aadd5201e3edff2f9caf076441))
+
 ## [0.9.0](https://github.com/JorisJonkers-dev/home-portal/compare/v0.8.0...v0.9.0) (2026-09-30)
 
 
