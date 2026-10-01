@@ -59,6 +59,15 @@ describe('appsGrid', () => {
     expect(wrapper.get('a').attributes('href')).toBe('https://tribelt.jorisjonkers.dev/stats')
   })
 
+  it('renders the Grimoire card for a grantee, pointing at the app root', () => {
+    const authStore = useAuthStore()
+    authStore.roles = ['ROLE_USER', 'SERVICE_GRIMOIRE']
+
+    const wrapper = mountGrid()
+    expect(wrapper.findAll('a')).toHaveLength(1)
+    expect(wrapper.get('a').attributes('href')).toBe('https://grimoire.jorisjonkers.dev/')
+  })
+
   it('renders all services for admin with all permissions', () => {
     const authStore = useAuthStore()
     authStore.roles = [
