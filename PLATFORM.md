@@ -35,15 +35,17 @@ Review `out/scorecard.md` for any failures before committing.
 
 ## Files
 
-| File                                   | Purpose                                                                                           |
-| -------------------------------------- | ------------------------------------------------------------------------------------------------- |
-| `platform/deployment.yml`              | Deployment contract (v2): namespace, `platform.layer`, workloads, health, routes, rollback policy |
-| `platform/images.lock.json`            | Digest-pinned image references (object form; no `:latest`)                                        |
-| `platform/production.env`              | Non-secret production environment values                                                          |
-| `platform/render-local.sh`             | Local CI-parity render: validate → render → kubeconform → leak-scan → scorecard                   |
-| `.github/workflows/release.yml`        | release-please with mandatory App token (no GITHUB_TOKEN fallback)                                |
-| `.github/workflows/publish.yml`        | Tag-triggered image + deploy-artifact publish and registry PR                                     |
-| `.github/workflows/deploy-preview.yml` | PR validation with sticky scorecard comment                                                       |
+| File                                   | Purpose                                                                                                    |
+| -------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| `deploy/app.project.yml`               | The estate path's deploy-kit Project Intent: Project `app`, Process `app-ui`, served on `jorisjonkers.dev` |
+| `deploy/package.json`                  | Pins the deploy-kit release that validates and packs the Intent Fragment                                   |
+| `platform/deployment.yml`              | Deployment contract (v2): namespace, `platform.layer`, workloads, health, routes, rollback policy          |
+| `platform/images.lock.json`            | Digest-pinned image references (object form; no `:latest`)                                                 |
+| `platform/production.env`              | Non-secret production environment values                                                                   |
+| `platform/render-local.sh`             | Local CI-parity render: validate → render → kubeconform → leak-scan → scorecard                            |
+| `.github/workflows/release.yml`        | release-please with mandatory App token (no GITHUB_TOKEN fallback)                                         |
+| `.github/workflows/publish.yml`        | Tag-triggered image + deploy-artifact publish and registry PR                                              |
+| `.github/workflows/deploy-preview.yml` | PR validation with sticky scorecard comment                                                                |
 
 ## Readiness scorecard (SC-11)
 

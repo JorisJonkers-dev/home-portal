@@ -22,7 +22,11 @@ RUN VITE_AUTH_URL=${VITE_AUTH_URL} \
     VITE_FARO_URL=${VITE_FARO_URL} \
     pnpm build
 
-FROM nginx:alpine
+# The unprivileged nginx runs as uid 101 and keeps its pid and temp files under
+# /tmp, so it meets the estate's restricted posture (deploy-kit spec/v1,
+# chapter 10, Pod hardening): non-root, a read-only root filesystem with /tmp
+# mounted, and no capability to bind a port below 1024.
+FROM nginxinc/nginx-unprivileged:alpine
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 COPY --from=build /app/dist /usr/share/nginx/html
-EXPOSE 80
+EXPOSE 8080
