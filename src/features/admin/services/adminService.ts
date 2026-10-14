@@ -6,7 +6,7 @@ import {
   updateRole,
   updateServicePermissions,
 } from '@jorisjonkers-dev/auth-api-client'
-import { SERVICE_REGISTRY } from '@/features/apps'
+import { GRANT_ONLY_PERMISSIONS, SERVICE_REGISTRY } from '@/features/apps'
 import { authApiOptions, toRequestError } from '@/lib/authApiClient'
 
 export type AdminUser = AdminUserResponse
@@ -52,4 +52,4 @@ export async function deleteUser(id: string): Promise<void> {
 }
 
 export const ALL_ROLES = ['ADMIN', 'USER', 'READONLY'] as const
-export const ALL_SERVICES = SERVICE_REGISTRY.map((s) => s.permission)
+export const ALL_SERVICES = [...SERVICE_REGISTRY.map((s) => s.permission), ...GRANT_ONLY_PERMISSIONS]
