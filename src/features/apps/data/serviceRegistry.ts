@@ -177,6 +177,13 @@ export const SERVICE_REGISTRY: ServiceEntry[] = [
     description: 'Knowledge-base MCP backend',
   },
   {
+    permission: 'MEMORY_API',
+    label: 'Hindsight',
+    url: buildServiceUrl('hindsight'),
+    iconUrl: '/icons/hindsight.svg',
+    description: 'Shared agent memory',
+  },
+  {
     permission: 'NOTES',
     label: 'Outline',
     url: buildServiceUrl('notes'),
@@ -205,6 +212,9 @@ export const SERVICE_REGISTRY: ServiceEntry[] = [
     description: 'D&D 5e campaigns and live table',
   },
 ]
+
+// Grantable from the admin page but without a web UI, so no tile.
+export const GRANT_ONLY_PERMISSIONS: string[] = ['MEMORY_MCP']
 
 export function getAccessibleServices(permissions: string[]): ServiceEntry[] {
   const permSet = new Set(permissions)

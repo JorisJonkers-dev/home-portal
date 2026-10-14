@@ -6,7 +6,13 @@ import {
   updateServicePermissions,
 } from '@jorisjonkers-dev/auth-api-client'
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import { deleteUser, fetchUsers, updateUserRole, updateUserServices } from '../features/admin/services/adminService'
+import {
+  ALL_SERVICES,
+  deleteUser,
+  fetchUsers,
+  updateUserRole,
+  updateUserServices,
+} from '../features/admin/services/adminService'
 
 vi.mock('@jorisjonkers-dev/auth-api-client', () => ({
   deleteUser: vi.fn(),
@@ -189,5 +195,42 @@ describe('request details', () => {
     vi.mocked(deleteUserRequest).mockResolvedValue(clientResult(undefined))
     await deleteUser('1')
     expect(deleteUserRequest).toHaveBeenCalledWith(expect.objectContaining({ credentials: 'include' }))
+  })
+})
+
+// Mirrors ServicePermission in auth-api. A permission missing here cannot be granted from the admin page.
+const AUTH_API_SERVICE_PERMISSIONS = [
+  'VAULT',
+  'MAIL',
+  'N8N',
+  'GRAFANA',
+  'DASHBOARD',
+  'TRAEFIK',
+  'RABBITMQ',
+  'AGENTS',
+  'STATUS',
+  'JELLYFIN',
+  'JELLYSEERR',
+  'SONARR',
+  'RADARR',
+  'BAZARR',
+  'PROWLARR',
+  'QBITTORRENT',
+  'IMMICH',
+  'ADGUARD',
+  'WOLF',
+  'KNOWLEDGE_API',
+  'NOTES',
+  'HERMES',
+  'OVERLEAF',
+  'MEMORY_API',
+  'MEMORY_MCP',
+  'TRIBELT',
+  'GRIMOIRE',
+]
+
+describe('admin service permissions', () => {
+  it('offers every auth-api service permission exactly once', () => {
+    expect([...ALL_SERVICES].sort()).toEqual([...AUTH_API_SERVICE_PERMISSIONS].sort())
   })
 })
