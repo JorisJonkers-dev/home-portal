@@ -177,7 +177,8 @@ export const SERVICE_REGISTRY: ServiceEntry[] = [
     description: 'Knowledge-base MCP backend',
   },
   {
-    permission: 'MEMORY_API',
+    // The UI shows every bank, private included, so it takes the private grant.
+    permission: 'MEMORY_PRIVATE',
     label: 'Hindsight',
     url: buildServiceUrl('hindsight'),
     iconUrl: '/icons/hindsight.svg',
@@ -214,7 +215,7 @@ export const SERVICE_REGISTRY: ServiceEntry[] = [
 ]
 
 // Grantable from the admin page but without a web UI, so no tile.
-export const GRANT_ONLY_PERMISSIONS: string[] = ['MEMORY_MCP']
+export const GRANT_ONLY_PERMISSIONS: string[] = ['MEMORY_API', 'MEMORY_MCP']
 
 export function getAccessibleServices(permissions: string[]): ServiceEntry[] {
   const permSet = new Set(permissions)
