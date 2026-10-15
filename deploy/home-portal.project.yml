@@ -1,21 +1,11 @@
-# deploy-kit Project Intent for home-portal, the estate's landing page.
-#
-# The Project is `app`, so the namespace derives as `app-system`, where
-# home-portal already runs, and the Process is `app-ui`, the name the live
-# Deployment already has: the estate path takes over the live objects rather
-# than creating a second copy (deploy-kit spec/v1/60-setup.md#adopting-a-live-application).
-# The image is still home-portal; `app-ui` is the alias the images lock
-# resolves it under.
-#
-# A static site: one Process, no storage, no secrets and no dependency, which
-# is why it is the first Project handed over to the estate path
-# (deploy-kit spec/v1/60-setup.md#handing-over-one-project-at-a-time).
+# deploy-kit Project Intent for home-portal, the estate's landing page: a static
+# site with one Process and no storage, secrets or dependency.
 
 apiVersion: intent.jorisjonkers.dev/v1
 kind: Project
 schemaVersion: 1.0.0
 
-project: app # the namespace derives: app-system
+project: home-portal # the namespace derives: home-portal-system
 owner: joris
 
 applications:
@@ -30,13 +20,13 @@ applications:
         routes:
           - path: /
             match: prefix
-            process: app-ui
+            process: home-portal
             surface: http
 
     processes:
-      - name: app-ui
+      - name: home-portal
         lifecycle: application
-        image: app-ui # nginx serving the built site; the lock resolves digest, uid and gid
+        image: home-portal # nginx serving the built site; the lock resolves digest, uid and gid
         runtime: static
 
         provides:
