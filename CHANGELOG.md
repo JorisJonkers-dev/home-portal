@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.12.0](https://github.com/JorisJonkers-dev/home-portal/compare/v0.11.0...v0.12.0) (2026-10-15)
+
+
+### Features
+
+* **admin:** make MEMORY_API and MEMORY_MCP grantable, with a Hindsight tile ([#73](https://github.com/JorisJonkers-dev/home-portal/issues/73)) ([4fa6d90](https://github.com/JorisJonkers-dev/home-portal/commit/4fa6d90518ba91b03795a1ce0bdc909cb9f19217))
+* **admin:** make MEMORY_PRIVATE grantable and gate the Hindsight tile with it ([#75](https://github.com/JorisJonkers-dev/home-portal/issues/75)) ([4e79dfc](https://github.com/JorisJonkers-dev/home-portal/commit/4e79dfcaea3eddd9eb88f5109b65bb839b269d33))
+
 ## [0.11.0](https://github.com/JorisJonkers-dev/home-portal/compare/v0.10.0...v0.11.0) (2026-10-08)
 
 
