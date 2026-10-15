@@ -38,7 +38,6 @@ Review `out/scorecard.md` for any failures before committing.
 | File                                   | Purpose                                                                                                    |
 | -------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
 | `deploy/app.project.yml`               | The estate path's deploy-kit Project Intent: Project `app`, Process `app-ui`, served on `jorisjonkers.dev` |
-| `deploy/package.json`                  | Pins the deploy-kit release that validates and packs the Intent Fragment                                   |
 | `platform/deployment.yml`              | Deployment contract (v2): namespace, `platform.layer`, workloads, health, routes, rollback policy          |
 | `platform/images.lock.json`            | Digest-pinned image references (object form; no `:latest`)                                                 |
 | `platform/production.env`              | Non-secret production environment values                                                                   |
