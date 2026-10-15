@@ -101,7 +101,7 @@ jobs:
 
       - name: lock-fragment-image
         # The estate path's images lock: the same digest, under the alias the
-        # project file names (`app-ui`), with the numeric user the image runs
+        # project file names (`home-portal`), with the numeric user the image runs
         # as, read back from what was pushed rather than assumed from the
         # Dockerfile (deploy-kit spec/v1/20-resolved-deployment.md#the-images-lock).
         # The unprivileged nginx states its uid alone; its group is the same
@@ -120,9 +120,9 @@ jobs:
           apiVersion: lock.jorisjonkers.dev/v1
           kind: ImagesLock
           schemaVersion: 1.0.0
-          name: app
+          name: home-portal
           images:
-            app-ui:
+            home-portal:
               repository: ${IMAGE}
               digest: "${IMAGE_DIGEST}"
               uid: ${user%%:*}
@@ -171,7 +171,7 @@ jobs:
       id-token: write
     uses: JorisJonkers-dev/github-workflows/.github/workflows/publish-fragment.yml@8637ee1224dfefd807d9b8be616eeb59f94ba126 # v0.23.0
     with:
-      project-file: deploy/app.project.yml
+      project-file: deploy/home-portal.project.yml
       version: ${{ github.ref_name }}
       images-lock-artifact: ${{ needs.resolve-image-lock.outputs.fragment-images-lock-artifact }}
     secrets:
