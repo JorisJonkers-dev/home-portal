@@ -68,18 +68,18 @@ describe('appsGrid', () => {
     expect(wrapper.get('a').attributes('href')).toBe('https://grimoire.jorisjonkers.dev/')
   })
 
-  it('renders the Hindsight card for a MEMORY_API grantee, pointing at the dashboard', () => {
+  it('renders the Hindsight card for a MEMORY_PRIVATE grantee, pointing at the dashboard', () => {
     const authStore = useAuthStore()
-    authStore.roles = ['ROLE_USER', 'SERVICE_MEMORY_API']
+    authStore.roles = ['ROLE_USER', 'SERVICE_MEMORY_PRIVATE']
 
     const wrapper = mountGrid()
     expect(wrapper.findAll('a')).toHaveLength(1)
     expect(wrapper.get('a').attributes('href')).toBe('https://hindsight.jorisjonkers.dev/')
   })
 
-  it('renders no card for MEMORY_MCP, which has no web UI', () => {
+  it('renders no card for the API-only memory grants', () => {
     const authStore = useAuthStore()
-    authStore.roles = ['ROLE_USER', 'SERVICE_MEMORY_MCP']
+    authStore.roles = ['ROLE_USER', 'SERVICE_MEMORY_MCP', 'SERVICE_MEMORY_API']
 
     expect(mountGrid().findAll('a')).toHaveLength(0)
   })
