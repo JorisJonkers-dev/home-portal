@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.13.0](https://github.com/JorisJonkers-dev/home-portal/compare/v0.12.0...v0.13.0) (2026-10-15)
+
+
+### Features
+
+* publish as the Project home-portal ([#81](https://github.com/JorisJonkers-dev/home-portal/issues/81)) ([0bc368a](https://github.com/JorisJonkers-dev/home-portal/commit/0bc368a3a47f3c7a22b4f52b5a89174df233eb93))
+* publish as the Project home-portal ([#81](https://github.com/JorisJonkers-dev/home-portal/issues/81)) ([cfa6f72](https://github.com/JorisJonkers-dev/home-portal/commit/cfa6f72373536d224d954ce0436454ff22a8caad))
+
 ## [0.12.0](https://github.com/JorisJonkers-dev/home-portal/compare/v0.11.0...v0.12.0) (2026-10-15)
 
 
