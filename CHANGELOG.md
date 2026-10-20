@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.13.1](https://github.com/JorisJonkers-dev/home-portal/compare/v0.13.0...v0.13.1) (2026-10-20)
+
+
+### Bug Fixes
+
+* drop the retired Knowledge API app tile ([#85](https://github.com/JorisJonkers-dev/home-portal/issues/85)) ([a04dcd5](https://github.com/JorisJonkers-dev/home-portal/commit/a04dcd53e25267a6bb0ea03df2cecdeb4f9fa9c9))
+
 ## [0.13.0](https://github.com/JorisJonkers-dev/home-portal/compare/v0.12.0...v0.13.0) (2026-10-15)
 
 
