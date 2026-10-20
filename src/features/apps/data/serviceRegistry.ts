@@ -170,13 +170,6 @@ export const SERVICE_REGISTRY: ServiceEntry[] = [
     description: 'Game streaming control',
   },
   {
-    permission: 'KNOWLEDGE_API',
-    label: 'Knowledge API',
-    url: buildServiceUrl('kb', '/api/actuator/health'),
-    iconUrl: '/icons/knowledge-api.svg',
-    description: 'Knowledge-base MCP backend',
-  },
-  {
     // The UI shows every bank, private included, so it takes the private grant.
     permission: 'MEMORY_PRIVATE',
     label: 'Hindsight',
