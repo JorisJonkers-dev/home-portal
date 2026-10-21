@@ -28,7 +28,7 @@ jobs:
   # Reusable workflow: consume its results via needs.<job>.outputs downstream;
   # a `uses:` job must not redeclare an outputs: block.
   publish-image:
-    uses: JorisJonkers-dev/github-workflows/.github/workflows/container-publish.yml@6d4af5313cc39386fff796fa89ea940ef5f0819d # v0.16.1
+    uses: JorisJonkers-dev/github-workflows/.github/workflows/container-publish.yml@870429202376dac2e9434746941c54f9a2be605f # v0.33.0
     with:
       # Restored: adopting the shared publish flow dropped the inline
       # build-push-action's platforms value, so this fell back to the
@@ -98,44 +98,16 @@ jobs:
           name: images-lock-${{ github.run_id }}
           path: platform/images.lock.json
           retention-days: 1
-
+      # The estate path's images lock share: the same digest, under the alias the project file names,
+      # with the user the image runs as and the version it ships, read back from what was pushed.
       - name: lock-fragment-image
-        # The estate path's images lock: the same digest, under the alias the
-        # project file names (`home-portal`), with the numeric user the image runs
-        # as, read back from what was pushed rather than assumed from the
-        # Dockerfile (deploy-kit spec/v1/20-resolved-deployment.md#the-images-lock).
-        # The unprivileged nginx states its uid alone; its group is the same
-        # number.
-        env:
-          IMAGE: ghcr.io/jorisjonkers-dev/home-portal
-          IMAGE_DIGEST: ${{ steps.digest.outputs.image-digest }}
-        run: |
-          set -euo pipefail
-          user="$(docker buildx imagetools inspect "${IMAGE}@${IMAGE_DIGEST}" --format '{{ json .Image }}' \
-            | jq -r 'if has("linux/amd64") then .["linux/amd64"] else . end | .config.User')"
-          case "$user" in
-            *[!0-9:]*|"") echo "::error::home-portal runs as '${user}', not a numeric uid[:gid]"; exit 1 ;;
-          esac
-          cat > images.lock.yml <<LOCK
-          apiVersion: lock.jorisjonkers.dev/v1
-          kind: ImagesLock
-          schemaVersion: 1.0.0
-          name: home-portal
-          images:
-            home-portal:
-              repository: ${IMAGE}
-              digest: "${IMAGE_DIGEST}"
-              uid: ${user%%:*}
-              gid: ${user##*:}
-          LOCK
-          cat images.lock.yml >> "$GITHUB_STEP_SUMMARY"
-
-      - name: upload-fragment-image-lock
-        uses: actions/upload-artifact@v5
+        uses: JorisJonkers-dev/github-workflows/actions/resolve-image-lock@870429202376dac2e9434746941c54f9a2be605f # v0.33.0
         with:
-          name: fragment-images-lock-${{ github.run_id }}
-          path: images.lock.yml
-          retention-days: 1
+          name: home-portal
+          images: |
+            home-portal
+          tag: ${{ github.ref_name }}
+          artifact-name: fragment-images-lock-${{ github.run_id }}
 
   # -- 3. Render and publish the deploy artifact ----------------------------
   # The reusable workflow downloads the image-lock artifact itself;
@@ -169,7 +141,7 @@ jobs:
       contents: read
       packages: write
       id-token: write
-    uses: JorisJonkers-dev/github-workflows/.github/workflows/publish-fragment.yml@8637ee1224dfefd807d9b8be616eeb59f94ba126 # v0.23.0
+    uses: JorisJonkers-dev/github-workflows/.github/workflows/publish-fragment.yml@79e57122f7ed1fb442c90a7487f861c5d1465ec6 # v0.34.0
     with:
       project-file: deploy/home-portal.project.yml
       version: ${{ github.ref_name }}
