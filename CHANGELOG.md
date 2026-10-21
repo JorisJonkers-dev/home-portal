@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.14.0](https://github.com/JorisJonkers-dev/home-portal/compare/v0.13.1...v0.14.0) (2026-10-21)
+
+
+### Features
+
+* the images lock records the image's software version, through the shared lock step ([#89](https://github.com/JorisJonkers-dev/home-portal/issues/89)) ([9257e4e](https://github.com/JorisJonkers-dev/home-portal/commit/9257e4e855ef010fa3a77c420b4b4410d77febb0))
+
 ## [0.13.1](https://github.com/JorisJonkers-dev/home-portal/compare/v0.13.0...v0.13.1) (2026-10-20)
 
 
