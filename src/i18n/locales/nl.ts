@@ -150,11 +150,10 @@ export default {
           'OAuth2/OIDC, TOTP MFA, wachtwoordreset en e-mailbevestiging',
           'Kotlin- en Spring authorization server als basis',
           'Traefik forward-auth bewaakt elke interne route',
-          'Autorisatievocabulaire gegenereerd als TypeScript- en Kotlin-constanten',
           'Gedeelde sessie maakt dit portaal tot applicatie-launcher',
         ],
         description:
-          'Eén identiteit voor alles op het domein: een Kotlin- en Spring authorization server voor login, sessie, profiel, TOTP MFA, wachtwoordreset, e-mailbevestiging en OAuth2/OIDC, waarbij Traefik forward-auth hem voor elke interne route zet. De autorisatievocabulaire wordt vanuit één model gepubliceerd als gegenereerde TypeScript- en Kotlin-constanten, zodat geen enkele consumer een rol- of permissiestring kopieert. Een Vue-frontend verzorgt de login- en accountflows, en dit portaal gebruikt dezelfde sessie om de applicatie-launcher van de estate te worden.',
+          'Eén identiteit voor alles op het domein: een Kotlin- en Spring authorization server voor login, sessie, profiel, TOTP MFA, wachtwoordreset, e-mailbevestiging en OAuth2/OIDC, waarbij Traefik forward-auth hem voor elke interne route zet. Een Vue-frontend verzorgt de login- en accountflows, en dit portaal gebruikt dezelfde sessie om de applicatie-launcher van de estate te worden.',
       },
       'backup-dr': {
         title: 'Backup & Disaster Recovery',

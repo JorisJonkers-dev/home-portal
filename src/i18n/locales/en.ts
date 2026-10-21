@@ -150,11 +150,10 @@ export default {
           'OAuth2/OIDC, TOTP MFA, password reset and email confirmation',
           'Kotlin and Spring authorization server at the core',
           'Traefik forward-auth guards every internal route',
-          'Authorization vocabulary generated as TypeScript and Kotlin constants',
           'Shared session turns this portal into the app launcher',
         ],
         description:
-          'One identity for everything on the domain: a Kotlin and Spring authorization server handling login, session, profile, TOTP MFA, password reset, email confirmation and OAuth2/OIDC, with Traefik forward-auth putting it in front of every internal route. The authorization vocabulary is published as generated TypeScript and Kotlin constants from one model, so no consumer copies a role or permission string. A Vue frontend covers the login and account flows, and this portal uses the same session to become the estate’s application launcher.',
+          'One identity for everything on the domain: a Kotlin and Spring authorization server handling login, session, profile, TOTP MFA, password reset, email confirmation and OAuth2/OIDC, with Traefik forward-auth putting it in front of every internal route. A Vue frontend covers the login and account flows, and this portal uses the same session to become the estate’s application launcher.',
       },
       'backup-dr': {
         title: 'Backup & Disaster Recovery',
