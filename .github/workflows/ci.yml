@@ -38,7 +38,7 @@ jobs:
 
   web-check:
     name: 'Lint, Typecheck, Test, Build'
-    uses: JorisJonkers-dev/github-workflows/.github/workflows/node-ci.yml@v0.14.1
+    uses: JorisJonkers-dev/github-workflows/.github/workflows/node-ci.yml@583993e5865cd5b8761fe52db5843130fb107c51 # v0.34.2
     with:
       node-version: '24'
       package-manager: pnpm
