@@ -155,11 +155,6 @@ export const PROJECTS: ProjectMeta[] = [
         url: gh('auth-ui'),
       },
       {
-        name: 'libs/authz-model',
-        description: 'One model generating role and permission constants',
-        url: gh('authz-model'),
-      },
-      {
         name: 'ui/home-portal',
         description: 'This portal: application launcher for the whole estate',
         url: gh('home-portal'),

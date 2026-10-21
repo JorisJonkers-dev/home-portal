@@ -71,10 +71,10 @@ interface Project {
 
 - status: production
 - githubUrl: `auth-api`
-- repos: `services/auth-api`, `ui/auth-ui`, `libs/authz-model`, `ui/home-portal`
+- repos: `services/auth-api`, `ui/auth-ui`, `ui/home-portal`
 - tags: Kotlin, Spring Boot, Vue.js, TypeScript, PostgreSQL
-- EN: One identity for everything on the domain: a Kotlin/Spring authorization server handling login, session, profile, TOTP MFA, password reset, email confirmation and OAuth2/OIDC, with Traefik forward-auth putting it in front of every internal route. The authorization vocabulary is published as generated TypeScript and Kotlin constants from one model, so no consumer copies a role or permission string. A Vue frontend covers the login and account flows, and this portal uses the same session to become the estate's application launcher.
-- NL: Eén identiteit voor alles op het domein: een Kotlin/Spring authorization server voor login, sessie, profiel, TOTP MFA, wachtwoordreset, e-mailbevestiging en OAuth2/OIDC, waarbij Traefik forward-auth hem voor elke interne route zet. De autorisatievocabulaire wordt vanuit één model gepubliceerd als gegenereerde TypeScript- en Kotlin-constanten, zodat geen enkele consumer een rol- of permissiestring kopieert. Een Vue-frontend verzorgt de login- en accountflows, en dit portaal gebruikt dezelfde sessie om de applicatie-launcher van de estate te worden.
+- EN: One identity for everything on the domain: a Kotlin/Spring authorization server handling login, session, profile, TOTP MFA, password reset, email confirmation and OAuth2/OIDC, with Traefik forward-auth putting it in front of every internal route. A Vue frontend covers the login and account flows, and this portal uses the same session to become the estate's application launcher.
+- NL: Eén identiteit voor alles op het domein: een Kotlin/Spring authorization server voor login, sessie, profiel, TOTP MFA, wachtwoordreset, e-mailbevestiging en OAuth2/OIDC, waarbij Traefik forward-auth hem voor elke interne route zet. Een Vue-frontend verzorgt de login- en accountflows, en dit portaal gebruikt dezelfde sessie om de applicatie-launcher van de estate te worden.
 
 ### 6 `backup-dr` — Backup & Disaster Recovery
 
