@@ -25,6 +25,7 @@ describe('service registry', () => {
     expect(permissions).toContain('WOLF')
     expect(permissions).toContain('TRIBELT')
     expect(permissions).toContain('GRIMOIRE')
+    expect(permissions).toContain('FINDABILITY_EXPLORER')
   })
 
   it('every entry has required fields', () => {

@@ -205,6 +205,13 @@ export const SERVICE_REGISTRY: ServiceEntry[] = [
     iconUrl: '/icons/grimoire.svg',
     description: 'D&D 5e campaigns and live table',
   },
+  {
+    permission: 'FINDABILITY_EXPLORER',
+    label: 'Findability Explorer',
+    url: buildServiceUrl('digital-strategy'),
+    iconUrl: '/icons/findability-explorer.svg',
+    description: 'How Tribelt is found by search engines and AI assistants',
+  },
 ]
 
 // Grantable from the admin page but without a web UI, so no tile.
