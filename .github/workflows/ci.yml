@@ -49,10 +49,42 @@ jobs:
     secrets:
       packages-token: '${{ secrets.GITHUB_TOKEN }}'
 
-  e2e:
-    name: Playwright E2E
+  # The Playwright version the lockfile resolves, so the container below always carries the
+  # browsers that version expects, also after Renovate bumps @playwright/test.
+  e2e-version:
+    name: Playwright version
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 5
+    outputs:
+      version: '${{ steps.read.outputs.version }}'
+    steps:
+      - uses: actions/checkout@v6
+      - id: read
+        shell: bash
+        run: |
+          set -euo pipefail
+          version="$(grep -m1 -E "^  '@playwright/test@[0-9]" pnpm-lock.yaml | sed -E "s/^  '@playwright\/test@([0-9][^']*)':.*/\1/")"
+          [[ "$version" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]] || { echo "no @playwright/test version in pnpm-lock.yaml" >&2; exit 1; }
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+
+  # Each browser in two shards, six jobs at once. The official Playwright image already holds the
+  # browsers and every system package they need, so no job waits on apt mirrors.
+  e2e:
+    name: 'Playwright E2E (${{ matrix.browser }} ${{ matrix.shard }}/2)'
+    needs: e2e-version
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    container:
+      image: 'mcr.microsoft.com/playwright:v${{ needs.e2e-version.outputs.version }}-noble'
+      options: --ipc=host
+    env:
+      # Firefox refuses a HOME the container's root user does not own.
+      HOME: /root
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [chromium, firefox, webkit]
+        shard: [1, 2]
     steps:
       - uses: actions/checkout@v6
 
@@ -73,8 +105,57 @@ jobs:
           pnpm config set //npm.pkg.github.com/:_authToken "$NODE_AUTH_TOKEN"
           pnpm install --frozen-lockfile
 
-      - run: pnpm exec playwright install --with-deps
-      - run: 'pnpm test:e2e'
+      - name: Run the shard
+        run: 'pnpm test:e2e --project=${{ matrix.browser }} --shard=${{ matrix.shard }}/2'
+
+      - name: Keep the shard's report
+        if: '${{ !cancelled() }}'
+        uses: actions/upload-artifact@v4
+        with:
+          name: 'blob-report-${{ matrix.browser }}-${{ matrix.shard }}'
+          path: blob-report
+          retention-days: 7
+
+  # One HTML report from every shard, for reading a failure; not a required check.
+  e2e-report:
+    name: Playwright report
+    if: '${{ !cancelled() }}'
+    needs: e2e
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: pnpm/action-setup@v6
+        with:
+          version: 9.15.4
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '${{ env.NODE_VERSION }}'
+          cache: pnpm
+          cache-dependency-path: pnpm-lock.yaml
+
+      - name: Install dependencies
+        env:
+          NODE_AUTH_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
+        run: |
+          pnpm config set //npm.pkg.github.com/:_authToken "$NODE_AUTH_TOKEN"
+          pnpm install --frozen-lockfile
+
+      - uses: actions/download-artifact@v4
+        with:
+          path: all-blob-reports
+          pattern: blob-report-*
+          merge-multiple: true
+
+      - run: pnpm exec playwright merge-reports --reporter html ./all-blob-reports
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright-report
+          retention-days: 7
 
   mutation:
     name: Mutation Tests
@@ -127,6 +208,7 @@ jobs:
     needs:
       - workflow-lint
       - web-check
+      - e2e-version
       - e2e
       - mutation
       - docker-build
