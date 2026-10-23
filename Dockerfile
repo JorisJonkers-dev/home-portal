@@ -1,4 +1,4 @@
-# syntax=docker/dockerfile:1.7
+# syntax=docker/dockerfile:1.28
 
 FROM node:26.12.1-alpine AS build
 # Node 25's alpine image dropped corepack from the base layer but still
