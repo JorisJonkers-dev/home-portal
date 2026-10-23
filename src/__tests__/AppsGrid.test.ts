@@ -68,6 +68,15 @@ describe('appsGrid', () => {
     expect(wrapper.get('a').attributes('href')).toBe('https://grimoire.jorisjonkers.dev/')
   })
 
+  it('renders the Findability Explorer card for a grantee, pointing at the app root', () => {
+    const authStore = useAuthStore()
+    authStore.roles = ['ROLE_USER', 'SERVICE_FINDABILITY_EXPLORER']
+
+    const wrapper = mountGrid()
+    expect(wrapper.findAll('a')).toHaveLength(1)
+    expect(wrapper.get('a').attributes('href')).toBe('https://digital-strategy.jorisjonkers.dev/')
+  })
+
   it('renders the Hindsight card for a MEMORY_PRIVATE grantee, pointing at the dashboard', () => {
     const authStore = useAuthStore()
     authStore.roles = ['ROLE_USER', 'SERVICE_MEMORY_PRIVATE']

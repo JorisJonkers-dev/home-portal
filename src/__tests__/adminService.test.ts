@@ -227,6 +227,7 @@ const AUTH_API_SERVICE_PERMISSIONS = [
   'MEMORY_PRIVATE',
   'TRIBELT',
   'GRIMOIRE',
+  'FINDABILITY_EXPLORER',
 ]
 
 describe('admin service permissions', () => {
