@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.15.0](https://github.com/JorisJonkers-dev/home-portal/compare/v0.14.0...v0.15.0) (2026-10-23)
+
+
+### Features
+
+* **apps:** add the Findability Explorer tile and permission to MyApps ([#93](https://github.com/JorisJonkers-dev/home-portal/issues/93)) ([1a6a416](https://github.com/JorisJonkers-dev/home-portal/commit/1a6a41609786a3305227109bde6bdcaf48aeebe7))
+
 ## [0.14.0](https://github.com/JorisJonkers-dev/home-portal/compare/v0.13.1...v0.14.0) (2026-10-21)
 
 
