@@ -88,9 +88,8 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
+      # The version is package.json's packageManager; naming it here too fails the step.
       - uses: pnpm/action-setup@v6
-        with:
-          version: 9.15.4
 
       - uses: actions/setup-node@v6
         with:
@@ -126,9 +125,8 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
+      # The version is package.json's packageManager; naming it here too fails the step.
       - uses: pnpm/action-setup@v6
-        with:
-          version: 9.15.4
 
       - uses: actions/setup-node@v6
         with:
@@ -164,9 +162,8 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
+      # The version is package.json's packageManager; naming it here too fails the step.
       - uses: pnpm/action-setup@v6
-        with:
-          version: 9.15.4
 
       - uses: actions/setup-node@v6
         with:
