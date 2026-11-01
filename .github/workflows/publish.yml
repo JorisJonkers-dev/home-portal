@@ -1,19 +1,7 @@
-# Tag-triggered publish flow for deploy-platform service repos.
+# Tag-triggered publish flow.
 #
 # push of a v*.*.* tag (authored by release.yml via the App token) drives:
-#   publish-image -> resolve-image-lock -> publish-deploy-artifact -> register-service
-#                                       -> fragment (the estate path)
-#
-# Two paths run side by side while home-portal is handed over to the estate
-# (deploy-kit spec/v1/60-setup.md#handing-over-one-project-at-a-time): the
-# deploy artifact is the old path's, and the Intent Fragment the estate's. The
-# estate composes the fragment but delivers nothing for it until its handover
-# ledger moves `app` from `legacy` to `estate`.
-#
-# Boundary rule (R1-2): the image lock crosses the reusable-workflow boundary
-# as an UPLOADED ARTIFACT (image-lock-artifact), never as a runner-local path.
-# deploy-artifact.yml downloads the artifact itself; there is no intermediate
-# download job and no image-lock-path input on the deploy-artifact call.
+#   publish-image -> resolve-image-lock -> fragment (the estate path)
 name: Publish
 
 on:
@@ -49,56 +37,9 @@ jobs:
       contents: read
       packages: read
     outputs:
-      images-lock-artifact: images-lock-${{ github.run_id }}
       fragment-images-lock-artifact: fragment-images-lock-${{ github.run_id }}
     steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-        with:
-          ref: ${{ github.ref }}
-
-      - name: resolve-image-digest
-        id: digest
-        # container-publish.yml does not expose a digest output; resolve the
-        # digest of the tag it just pushed from the registry.
-        env:
-          GH_TOKEN: ${{ github.token }}
-          IMAGE: ghcr.io/jorisjonkers-dev/home-portal
-          TAG: ${{ github.ref_name }}
-        run: |
-          set -euo pipefail
-          printf '%s' "$GH_TOKEN" | docker login ghcr.io -u "$GITHUB_ACTOR" --password-stdin
-          digest="$(docker buildx imagetools inspect "${IMAGE}:${TAG}" --format '{{json .Manifest}}' | jq -r '.digest')"
-          if [ -z "$digest" ] || [ "$digest" = "null" ]; then
-            echo "E_FLOATING_IMAGE: could not resolve a digest for ${IMAGE}:${TAG}" >&2
-            exit 1
-          fi
-          echo "image-digest=$digest" >> "$GITHUB_OUTPUT"
-
-      - name: lock-image
-        # Pins the exact digest from publish-image into images.lock.json.
-        env:
-          IMAGE_DIGEST: ${{ steps.digest.outputs.image-digest }}
-        run: |
-          # Alias key is the workload name (app-ui); the image itself is home-portal.
-          printf '{"app-ui":"ghcr.io/jorisjonkers-dev/home-portal@%s"}\n' "$IMAGE_DIGEST" \
-            > platform/images.lock.json
-          echo "Locked image: ghcr.io/jorisjonkers-dev/home-portal@${IMAGE_DIGEST}"
-
-      - name: verify-lock
-        run: |
-          lock_ref=$(jq -r '.["app-ui"]' platform/images.lock.json)
-          case "$lock_ref" in
-            *@sha256:*) echo "Digest pin verified: $lock_ref" ;;
-            *) echo "E_FLOATING_IMAGE: lock ref is not digest-pinned: $lock_ref" >&2; exit 1 ;;
-          esac
-
-      - name: upload-image-lock
-        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5.0.0
-        with:
-          name: images-lock-${{ github.run_id }}
-          path: platform/images.lock.json
-          retention-days: 1
-      # The estate path's images lock share: the same digest, under the alias the project file names,
+      # The estate path's images lock share: this release's image, under the alias the project file names,
       # with the user the image runs as and the version it ships, read back from what was pushed.
       - name: lock-fragment-image
         uses: JorisJonkers-dev/github-workflows/actions/resolve-image-lock@f3bb6cabaa6ee33694f8632ce273a4e703d60780 # v0.38.0
@@ -109,29 +50,7 @@ jobs:
           tag: ${{ github.ref_name }}
           artifact-name: fragment-images-lock-${{ github.run_id }}
 
-  # -- 3. Render and publish the deploy artifact ----------------------------
-  # The reusable workflow downloads the image-lock artifact itself;
-  # image-lock-artifact is the ONLY lock input passed across the boundary.
-  publish-deploy-artifact:
-    needs: [resolve-image-lock]
-    uses: JorisJonkers-dev/github-workflows/.github/workflows/deploy-artifact.yml@f3bb6cabaa6ee33694f8632ce273a4e703d60780 # v0.38.0
-    with:
-      ref: ${{ github.ref }}
-      artifact-name: home-portal
-      artifact-version: ${{ github.ref_name }}
-      schema-version: 0.22.0
-      apply-bundle: true
-      context-ref: ghcr.io/jorisjonkers-dev/cluster-deploy-context-public@sha256:95dc39fc695694c8fb4b0c538d7fe13038d407c7302c3725c98f0496c6a83499
-      image-lock-artifact: ${{ needs.resolve-image-lock.outputs.images-lock-artifact }}
-      environments: production
-      deploy-dir: platform
-    permissions:
-      contents: read
-      packages: write
-      id-token: write
-      attestations: write
-
-  # -- 4. Publish the Intent Fragment and start composition ------------------
+  # -- 3. Publish the Intent Fragment and start composition ------------------
   # The project file, packed with this release's share of the images lock,
   # pushed, signed keyless and verified, then composition dispatched in
   # JorisJonkers-dev/estate (deploy-kit spec/v1/40-composition.md#fragments).
