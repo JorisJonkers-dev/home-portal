@@ -8,7 +8,6 @@ FROM node:26.12.1-alpine AS build
 RUN --mount=type=secret,id=packages-npmrc,target=/run/secrets/packages-npmrc,required=false \
     NPM_CONFIG_USERCONFIG=/run/secrets/packages-npmrc npm install -g pnpm@9.15.4
 WORKDIR /app
-RUN --mount=type=secret,id=packages-netrc,target=/run/secrets/packages-netrc,required=false --mount=type=secret,id=packages-npmrc,target=/run/secrets/packages-npmrc,required=false test -s /run/secrets/packages-netrc && test -s /run/secrets/packages-npmrc && echo SECRETS_MOUNTED
 COPY .npmrc package.json pnpm-lock.yaml ./
 RUN --mount=type=secret,id=github_token \
     --mount=type=secret,id=packages-npmrc,target=/run/secrets/packages-npmrc,required=false \
