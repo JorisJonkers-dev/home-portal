@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.15.1](https://github.com/JorisJonkers-dev/home-portal/compare/v0.15.0...v0.15.1) (2026-11-10)
+
+
+### Bug Fixes
+
+* **deps:** pin dependencies ([#83](https://github.com/JorisJonkers-dev/home-portal/issues/83)) ([310c87f](https://github.com/JorisJonkers-dev/home-portal/commit/310c87f0f84f8dcea94889b120336d3e1e9bf042))
+* **deps:** update minor and patch dependencies ([#88](https://github.com/JorisJonkers-dev/home-portal/issues/88)) ([12be9d9](https://github.com/JorisJonkers-dev/home-portal/commit/12be9d9703a9b60a050ccef49e399a7d0b844ee2))
+
 ## [0.15.0](https://github.com/JorisJonkers-dev/home-portal/compare/v0.14.0...v0.15.0) (2026-10-23)
 
 
