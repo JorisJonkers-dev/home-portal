@@ -1,7 +1,7 @@
 {
   "name": "@jorisjonkers-dev/home-portal",
   "type": "module",
-  "version": "0.15.1",
+  "version": "0.15.2",
   "private": true,
   "packageManager": "pnpm@9.15.9",
   "license": "LicenseRef-JorisJonkers-Proprietary-1.0",

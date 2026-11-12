@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.15.2](https://github.com/JorisJonkers-dev/home-portal/compare/v0.15.1...v0.15.2) (2026-11-12)
+
+
+### Bug Fixes
+
+* **deps:** update minor and patch dependencies ([#113](https://github.com/JorisJonkers-dev/home-portal/issues/113)) ([ce3b49a](https://github.com/JorisJonkers-dev/home-portal/commit/ce3b49a68ff74cf90663cde7f929e396fdc61a31))
+* **hygiene:** never cancel a run of the required hygiene checks ([#117](https://github.com/JorisJonkers-dev/home-portal/issues/117)) ([66a68bd](https://github.com/JorisJonkers-dev/home-portal/commit/66a68bd194b0bef6aa9e721febe730f859867aa8))
+
 ## [0.15.1](https://github.com/JorisJonkers-dev/home-portal/compare/v0.15.0...v0.15.1) (2026-11-10)
 
 
