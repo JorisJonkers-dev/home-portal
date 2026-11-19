@@ -29,7 +29,7 @@ RUN VITE_AUTH_URL=${VITE_AUTH_URL} \
 # /tmp, so it meets the estate's restricted posture (deploy-kit spec/v1,
 # chapter 10, Pod hardening): non-root, a read-only root filesystem with /tmp
 # mounted, and no capability to bind a port below 1024.
-FROM nginxinc/nginx-unprivileged:alpine
+FROM nginx/nginx-unprivileged:alpine
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 COPY --from=build /app/dist /usr/share/nginx/html
 EXPOSE 8080
