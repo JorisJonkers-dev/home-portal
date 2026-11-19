@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.15.3](https://github.com/JorisJonkers-dev/home-portal/compare/v0.15.2...v0.15.3) (2026-11-19)
+
+
+### Bug Fixes
+
+* **docker:** build on nginx 1.31.9 from the nginx/nginx-unprivileged namespace ([#121](https://github.com/JorisJonkers-dev/home-portal/issues/121)) ([344ec79](https://github.com/JorisJonkers-dev/home-portal/commit/344ec79f6c4624778d52972ee389b37dfb305010))
+
 ## [0.15.2](https://github.com/JorisJonkers-dev/home-portal/compare/v0.15.1...v0.15.2) (2026-11-12)
 
 
